@@ -15,6 +15,16 @@ const MemeGenerator = () => {
       setImageSrc(files[0]);
     }
   };
+
+  const savebtn = () => {
+    const data = canvasRef.current?.getDataURL();
+    if (data) {
+      const a = document.createElement("a");
+      a.href = data;
+      a.download = "image.png";
+      a.click();
+    }
+  };
   const clearbtn = () => {
     canvasRef.current?.clear();
   };
@@ -23,7 +33,7 @@ const MemeGenerator = () => {
   };
   return (
     <div>
-      <button onClick={homebtn} className="btn btn-ghost text-base font-bold">
+      <button onClick={homebtn} className="btn btn-ghost text-2xl font-bold">
         NyangPiece
       </button>
       <h1>MEME GENERATOR SECTION</h1>
@@ -44,7 +54,14 @@ const MemeGenerator = () => {
             }}
           />
         </div>
-        <div>저장</div>
+        <div>
+          <button
+            onClick={savebtn}
+            className="btn btn-ghost text-base font-bold"
+          >
+            저장
+          </button>
+        </div>
         <div>
           <button
             onClick={clearbtn}
