@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import Wantedmodal from "../../components/Wantedmodal";
 import Wanted from "../Wanted";
 import { getCookie, removeCookie } from "../../util/Cookie";
@@ -27,7 +26,7 @@ const Main = () => {
       <div>
         <div>
           <div className="btn btn-ghost normal-case text-2xl" onClick={homebtn}>
-            NyangPiece
+            ME:ME
           </div>
           {!cookie ? (
             <div className="text-right">

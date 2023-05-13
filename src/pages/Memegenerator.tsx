@@ -15,6 +15,8 @@ const MemeGenerator = () => {
       setImageSrc(files[0]);
     }
   };
+
+  const savebtn = () => {};
   const clearbtn = () => {
     canvasRef.current?.clear();
   };
@@ -23,8 +25,8 @@ const MemeGenerator = () => {
   };
   return (
     <div>
-      <button onClick={homebtn} className="btn btn-ghost text-base font-bold">
-        NyangPiece
+      <button onClick={homebtn} className="btn btn-ghost text-2xl font-bold">
+        ME:ME
       </button>
       <h1>MEME GENERATOR SECTION</h1>
       <input
@@ -44,7 +46,14 @@ const MemeGenerator = () => {
             }}
           />
         </div>
-        <div>저장</div>
+        <div>
+          <button
+            onClick={savebtn}
+            className="btn btn-ghost text-base font-bold"
+          >
+            저장
+          </button>
+        </div>
         <div>
           <button
             onClick={clearbtn}
