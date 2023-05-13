@@ -16,15 +16,7 @@ const MemeGenerator = () => {
     }
   };
 
-  const savebtn = () => {
-    const data = canvasRef.current?.getDataURL();
-    if (data) {
-      const a = document.createElement("a");
-      a.href = data;
-      a.download = "image.png";
-      a.click();
-    }
-  };
+  const savebtn = () => {};
   const clearbtn = () => {
     canvasRef.current?.clear();
   };
@@ -34,7 +26,7 @@ const MemeGenerator = () => {
   return (
     <div>
       <button onClick={homebtn} className="btn btn-ghost text-2xl font-bold">
-        NyangPiece
+        ME:ME
       </button>
       <h1>MEME GENERATOR SECTION</h1>
       <input
