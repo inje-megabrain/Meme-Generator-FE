@@ -26,6 +26,7 @@
       "@components/*": ["src/components/*"] //@components로 시작하면 components/ 하위 디렉토리를 의미한다.
     }
   },
-  "include": ["src","postcss.config.cjs", "tailwind.config.cjs","vite.config.ts",".eslintrc.js"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src","postcss.config.cjs", "tailwind.config.cjs","vite.config.ts",".eslintrc.js","src/**/*","**/*.json"],
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "exclude": ["node_modules", "./public/"]
 }
