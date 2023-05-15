@@ -57,5 +57,7 @@ export const imageDownloadAPI = async (
     })
     .catch((error) => {
       console.log(error);
+
+      
     });
 };

@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Wantedmodal from "../../components/Wantedmodal";
-import Wanted from "../Wanted";
 import { getCookie, removeCookie } from "../../util/Cookie";
 
 const Main = () => {
@@ -68,8 +67,10 @@ const Main = () => {
         </div>
       </div>
       <Wantedmodal modalnumber="my-modal-1" />
-      <Wanted />
     </>
+
+
+
   );
 };
 export default Main;
