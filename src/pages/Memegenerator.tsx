@@ -1,30 +1,60 @@
-import CanvasDraw from 'react-canvas-draw';
 import { useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { useNavigate } from 'react-router-dom';
 import { Stage, Layer, Line } from 'react-konva';
+import Konva from 'konva';
 
-const KonvaScript = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
+// const KonvaScript = () => {
+//   const [isLoaded, setIsLoaded] = useState(false);
 
-  const handleScriptLoad = () => {
-    setIsLoaded(true);
-  };
+//   const handleScriptLoad = () => {
+//     setIsLoaded(true);
+//   };
 
-  return (
-    <script
-      src='https://unpkg.com/konva@9.0.2/konva.min.js'
-      onLoad={handleScriptLoad}
-      async
-    ></script>
-  );
-};
+//   return (
+//     <script
+//       src='https://unpkg.com/konva@9.0.2/konva.min.js'
+//       onLoad={handleScriptLoad}
+//       async
+//     ></script>
+//   );
+// };
 
 const MemeGenerator = () => {
   const navigate = useNavigate();
   const [imageSrc, setImageSrc] = useState<File | undefined>();
   const [color, setColor] = useState('#000000');
-  const canvasRef = useRef<CanvasDraw>(null);
+  const [tool, setTool] = useState<string>('pen');
+  const [lines, setLines] = useState<any>([]);
+  const isDrawing = useRef(false);
+
+  const handleMouseDown = (e: Konva.KonvaEventObject<MouseEvent>) => {
+    isDrawing.current = true;
+    const pos = e.target.getStage()?.getPointerPosition();
+    if (pos) {
+      setLines([...lines, { tool, color, points: [pos.x, pos.y] }]);
+    }
+  };
+
+  const handleMouseMove = (e: Konva.KonvaEventObject<MouseEvent>) => {
+    if (!isDrawing.current) {
+      return;
+    }
+    const stage = e.target.getStage();
+    const point = stage?.getPointerPosition();
+    if (point) {
+      let lastLine = lines[lines.length - 1];
+      // add point
+      lastLine.points = lastLine.points.concat([point.x, point.y]);
+      // replace last
+      lines.splice(lines.length - 1, 1, lastLine);
+      setLines(lines.concat());
+    }
+  };
+
+  const handleMouseUp = () => {
+    isDrawing.current = false;
+  };
 
   const handleFileOnChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -34,9 +64,7 @@ const MemeGenerator = () => {
   };
 
   const savebtn = () => {};
-  const clearbtn = () => {
-    canvasRef.current?.clear();
-  };
+  const clearbtn = () => {};
   const homebtn = () => {
     navigate('/');
   };
@@ -80,15 +108,40 @@ const MemeGenerator = () => {
           </button>
         </div>
       </div>
+      <div className='mb-4'>
+        <select
+          className='select select-bordered select-base max-w-xs'
+          onChange={(e) => setTool(e.target.value)}
+        >
+          <option value='pen'>펜</option>
+          <option value='eraser'>지우개</option>
+        </select>
+      </div>
       <div className='grid place-items-center'>
-        <CanvasDraw
-          ref={canvasRef}
-          canvasWidth={500}
-          canvasHeight={500}
-          brushColor={color}
-          brushRadius={5}
-          lazyRadius={0}
-        />
+        <Stage
+          width={600}
+          height={600}
+          className='border-2 border-black border-solid'
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+        >
+          <Layer>
+            {lines.map((line: any, i: number) => (
+              <Line
+                key={i}
+                points={line.points}
+                stroke={color}
+                strokeWidth={5}
+                tension={0.5}
+                lineCap='round'
+                globalCompositeOperation={
+                  tool === 'eraser' ? 'destination-out' : 'source-over'
+                }
+              />
+            ))}
+          </Layer>
+        </Stage>
       </div>
     </div>
   );
