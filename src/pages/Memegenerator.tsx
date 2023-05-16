@@ -12,6 +12,8 @@ const MemeGenerator = () => {
   const [color, setColor] = useState('#000000');
   const [tool, setTool] = useState<string>('pen');
   const [lines, setLines] = useState<any>([]);
+  const [name, setName] = useState<string>('');
+  const [image] = useImage(previewimage);
   const isDrawing = useRef(false);
   const stageRef = useRef<Konva.Stage>(null);
 
@@ -48,15 +50,19 @@ const MemeGenerator = () => {
       setPreviewimage(URL.createObjectURL(files[0]));
     }
   };
-  const [image] = useImage(previewimage);
+  const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+
   const savebtn = () => {
     const uri = stageRef.current?.toDataURL();
     const link = document.createElement('a');
-    link.download = 'download.png';
+    link.download = name + '.png';
     link.href = uri!;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    setName('');
   };
   const clearbtn = () => {
     setLines([]);
@@ -105,6 +111,13 @@ const MemeGenerator = () => {
         </div>
       </div>
       <div className='mb-4'>
+        <input
+          type='text'
+          placeholder='파일명'
+          className='input input-bordered max-w-xs'
+          maxLength={8}
+          onChange={nameChange}
+        />
         <select
           className='select select-bordered select-base max-w-xs'
           onChange={(e) => setTool(e.target.value)}
