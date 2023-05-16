@@ -12,7 +12,7 @@ const MemeGenerator = () => {
   const [color, setColor] = useState('#000000');
   const [tool, setTool] = useState<string>('pen');
   const [lines, setLines] = useState<any>([]);
-  const [name, setName] = useState<string>('');
+  const [name, setName] = useState<string>('meme');
   const [pensize, setPensize] = useState<number>(10);
   const [image] = useImage(previewimage);
   const isDrawing = useRef(false);
@@ -85,13 +85,37 @@ const MemeGenerator = () => {
         ME:ME
       </button>
       <h1>MEME GENERATOR SECTION</h1>
-      <input
-        type='file'
-        className='file-input file-input-ghost file-input-sm max-w-xs mb-2'
-        onChange={handleFileOnChange}
-        accept='image/jpg, image/jpeg,image/png'
-      />
-      <div className='grid grid-cols-3 mt-4'>
+      <div className='grid place-items-center'>
+        <input
+          type='file'
+          className='file-input file-input-ghost file-input-sm max-w-xs mb-2'
+          onChange={handleFileOnChange}
+          accept='image/jpg, image/jpeg,image/png'
+        />
+      </div>
+
+      <div className='mb-4 grid place-items-center'>
+        <div className='grid grid-cols-2'>
+          <div>
+            <input
+              type='text'
+              placeholder='저장 할 파일명'
+              className='input input-bordered max-w-xs'
+              maxLength={8}
+              onChange={nameChange}
+            />
+          </div>
+          <div>
+            <button
+              onClick={savebtn}
+              className='btn btn-ghost text-base font-bold'
+            >
+              저장
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className='grid place-items-center'>
         <div>
           <HexColorPicker
             color={color}
@@ -102,34 +126,9 @@ const MemeGenerator = () => {
             }}
           />
         </div>
-        <div>
-          <button
-            onClick={savebtn}
-            className='btn btn-ghost text-base font-bold'
-          >
-            저장
-          </button>
-        </div>
-        <div>
-          <button
-            onClick={clearbtn}
-            className='btn btn-ghost text-base font-bold'
-          >
-            지우기
-          </button>
-        </div>
-      </div>
-      <div className='mb-4'>
-        <input
-          type='text'
-          placeholder='파일명'
-          className='input input-bordered max-w-xs'
-          maxLength={8}
-          onChange={nameChange}
-        />
       </div>
       <div className='grid place-items-center mb-4'>
-        <div className='grid grid-cols-2'>
+        <div className='grid grid-cols-3'>
           <div>
             <select
               className='select select-bordered select-base max-w-xs'
@@ -141,6 +140,12 @@ const MemeGenerator = () => {
           </div>
 
           <div className='grid grid-cols-4 place-items-center gap-3'>
+            <button
+              onClick={() => setPensize(5)}
+              className='w-[40px] rounded-full bg-white font-bold'
+            >
+              5
+            </button>
             <button
               onClick={() => setPensize(10)}
               className='w-[40px] rounded-full bg-white font-bold'
@@ -159,11 +164,13 @@ const MemeGenerator = () => {
             >
               20
             </button>
+          </div>
+          <div>
             <button
-              onClick={() => setPensize(30)}
-              className='w-[40px] rounded-full bg-white font-bold'
+              onClick={clearbtn}
+              className='btn btn-ghost text-base font-bold'
             >
-              30
+              지우기
             </button>
           </div>
         </div>
