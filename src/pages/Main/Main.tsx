@@ -4,7 +4,6 @@ import { getCookie, removeCookie } from '../../util/Cookie';
 
 const Main = () => {
   const navigate = useNavigate();
-
   const cookie = getCookie('access_token');
 
   const homebtn = () => {
