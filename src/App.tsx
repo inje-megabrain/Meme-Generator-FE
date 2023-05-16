@@ -1,20 +1,20 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import "./App.css";
-import { Main } from "./pages";
-import Loginform from "./pages/Loginform";
-import MemeGenerator from "./pages/Memegenerator";
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import './App.css';
+import { Main } from './pages';
+import Loginform from './pages/Loginform';
+import MemeGenerator from './pages/Memegenerator';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Main />,
   },
   {
-    path: "/login",
+    path: '/login',
     element: <Loginform />,
   },
   {
-    path: "/generator",
+    path: '/generator',
     element: <MemeGenerator />,
   },
 ]);
