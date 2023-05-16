@@ -1,12 +1,29 @@
-import CanvasDraw from "react-canvas-draw";
-import { useRef, useState } from "react";
-import { HexColorPicker } from "react-colorful";
-import { useNavigate } from "react-router-dom";
+import CanvasDraw from 'react-canvas-draw';
+import { useRef, useState } from 'react';
+import { HexColorPicker } from 'react-colorful';
+import { useNavigate } from 'react-router-dom';
+import { Stage, Layer, Line } from 'react-konva';
+
+const KonvaScript = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const handleScriptLoad = () => {
+    setIsLoaded(true);
+  };
+
+  return (
+    <script
+      src='https://unpkg.com/konva@9.0.2/konva.min.js'
+      onLoad={handleScriptLoad}
+      async
+    ></script>
+  );
+};
 
 const MemeGenerator = () => {
   const navigate = useNavigate();
   const [imageSrc, setImageSrc] = useState<File | undefined>();
-  const [color, setColor] = useState("#000000");
+  const [color, setColor] = useState('#000000');
   const canvasRef = useRef<CanvasDraw>(null);
 
   const handleFileOnChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,35 +38,35 @@ const MemeGenerator = () => {
     canvasRef.current?.clear();
   };
   const homebtn = () => {
-    navigate("/");
+    navigate('/');
   };
   return (
     <div>
-      <button onClick={homebtn} className="btn btn-ghost text-2xl font-bold">
+      <button onClick={homebtn} className='btn btn-ghost text-2xl font-bold'>
         ME:ME
       </button>
       <h1>MEME GENERATOR SECTION</h1>
       <input
-        type="file"
-        className="file-input file-input-ghost file-input-sm max-w-xs mb-2"
+        type='file'
+        className='file-input file-input-ghost file-input-sm max-w-xs mb-2'
         onChange={handleFileOnChange}
-        accept="image/jpg, image/jpeg,image/png"
+        accept='image/jpg, image/jpeg,image/png'
       />
-      <div className="grid grid-cols-3 mt-4">
+      <div className='grid grid-cols-3 mt-4'>
         <div>
           <HexColorPicker
             color={color}
             onChange={setColor}
             style={{
-              height: "150px",
-              width: "150px",
+              height: '150px',
+              width: '150px',
             }}
           />
         </div>
         <div>
           <button
             onClick={savebtn}
-            className="btn btn-ghost text-base font-bold"
+            className='btn btn-ghost text-base font-bold'
           >
             저장
           </button>
@@ -57,29 +74,20 @@ const MemeGenerator = () => {
         <div>
           <button
             onClick={clearbtn}
-            className="btn btn-ghost text-base font-bold"
+            className='btn btn-ghost text-base font-bold'
           >
             지우기
           </button>
         </div>
       </div>
-      <div className="grid place-items-center">
+      <div className='grid place-items-center'>
         <CanvasDraw
           ref={canvasRef}
-          hideGrid={false}
-          hideInterface={false}
-          lazyRadius={0}
+          canvasWidth={500}
+          canvasHeight={500}
           brushColor={color}
-          style={{
-            boxShadow:
-              "0 13px 27px -5px rgba(50,50,93,0.5), 0 8px 16px -8px rgba(0,0,0,0.2)",
-            backgroundImage: imageSrc
-              ? `url(${URL.createObjectURL(imageSrc)})`
-              : "",
-            backgroundSize: "cover",
-            width: "800px",
-            height: "600px",
-          }}
+          brushRadius={5}
+          lazyRadius={0}
         />
       </div>
     </div>
