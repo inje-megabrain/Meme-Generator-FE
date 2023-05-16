@@ -3,13 +3,12 @@ import { HexColorPicker } from 'react-colorful';
 import { useNavigate } from 'react-router-dom';
 import { Stage, Layer, Line, Image } from 'react-konva';
 import Konva from 'konva';
+import useImage from 'use-image';
 
 const MemeGenerator = () => {
   const navigate = useNavigate();
   const [imageSrc, setImageSrc] = useState<File | undefined>();
-  const [previewimage, setPreviewimage] = useState<
-    CanvasImageSource | undefined
-  >(undefined);
+  const [previewimage, setPreviewimage] = useState<string>('');
   const [color, setColor] = useState('#000000');
   const [tool, setTool] = useState<string>('pen');
   const [lines, setLines] = useState<any>([]);
@@ -45,10 +44,10 @@ const MemeGenerator = () => {
     const files = e.target.files;
     if (files) {
       setImageSrc(files[0]);
-      setPreviewimage();
+      setPreviewimage(URL.createObjectURL(files[0]));
     }
   };
-
+  const [image] = useImage(previewimage);
   const savebtn = () => {};
   const clearbtn = () => {
     setLines([]);
@@ -115,7 +114,7 @@ const MemeGenerator = () => {
           onMouseUp={handleMouseUp}
         >
           <Layer>
-            <Image image={previewimage} />
+            <Image image={image} width={600} height={600} />
             {lines.map((line: any, i: number) => (
               <Line
                 key={i}
