@@ -10,7 +10,7 @@ const MemeGenerator = () => {
   const [imageSrc, setImageSrc] = useState<File | undefined>();
   const [previewimage, setPreviewimage] = useState<string>('');
   const [color, setColor] = useState('#000000');
-  const [tool, setTool] = useState<string>('pen');
+  const [tool, setTool] = useState<string>('');
   const [lines, setLines] = useState<any>([]);
   const [name, setName] = useState<string>('meme');
   const [text, setText] = useState<string>('');
@@ -141,9 +141,11 @@ const MemeGenerator = () => {
             <select
               className='select select-bordered select-base max-w-xs'
               onChange={(e) => setTool(e.target.value)}
+              defaultValue={'hand'}
             >
               <option value='pen'>펜</option>
               <option value='eraser'>지우개</option>
+              <option value='hand'>손잡이</option>
             </select>
           </div>
           <div className='grid grid-cols-4 place-items-center gap-3'>
