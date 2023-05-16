@@ -1,15 +1,19 @@
-import { atom } from "recoil";
-import { WantedType } from "../types";
+import { atom } from 'recoil';
+import { WantedType } from '../types';
 
 const WantedDataState = atom<WantedType>({
-  key: "WantedDataState",
+  key: 'WantedDataState',
   default: [
     {
-      name: "",
+      name: '',
       prize: 0,
-      description: "",
-      imageUrl: "",
+      description: '',
+      imageUrl: '',
     },
   ],
 });
-export { WantedDataState };
+const WantedPage = atom<number>({
+  key: 'WantedPage',
+  default: 0,
+});
+export { WantedDataState, WantedPage };

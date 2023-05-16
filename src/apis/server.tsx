@@ -1,11 +1,12 @@
-import axios from "axios";
-import { API_URL } from "../constants/Constants";
-import { WantedType } from "../types";
-import { SetterOrUpdater } from "recoil";
+import axios from 'axios';
+import { API_URL } from '../constants/Constants';
+import { WantedType } from '../types';
+import { SetterOrUpdater } from 'recoil';
+import { getCookie } from '@src/util/Cookie';
 
 const headerConfig = {
-  "Content-Type": "application/json",
-  "Access-Control-Allow-Origin": "*",
+  'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': '*',
 };
 
 export const imageUploadApi = async (
@@ -15,17 +16,18 @@ export const imageUploadApi = async (
   money: number
 ) => {
   const formData = new FormData();
-  formData.append("image", image); // {contentType: 'multipart/form-data'}
+  formData.append('image', image); // {contentType: 'multipart/form-data'}
   const obj = { description: detail, name: name, prize: money };
   formData.append(
-    "dto",
-    new Blob([JSON.stringify(obj)], { type: "application/json" })
+    'dto',
+    new Blob([JSON.stringify(obj)], { type: 'application/json' })
   ); // {contentType: 'application/json'}
   await axios
-    .post(API_URL + "/wanted", formData, {
+    .post(API_URL + '/wanted', formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
-        "Access-Control-Allow-Origin": "*",
+        'Content-Type': 'multipart/form-data',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: 'Bearer ' + getCookie('access_token'),
       },
       transformRequest: (data) => {
         return data;
@@ -40,20 +42,22 @@ export const imageUploadApi = async (
 };
 export const imageDownloadAPI = async (
   page: number,
-  setWantedList: SetterOrUpdater<WantedType>
+  setWantedList: SetterOrUpdater<WantedType>,
+  setTotalpage: SetterOrUpdater<number>
 ) => {
   await axios
-    .get(API_URL + "/wanted", {
+    .get(API_URL + '/wanted', {
       params: {
         page: page,
         size: 9,
-        sort_direction: "desc",
+        sort_direction: 'desc',
       },
       headers: headerConfig,
     })
     .then((response) => {
       console.log(response.data.dtos);
       setWantedList(response.data.dtos);
+      setTotalpage(response.data.pageInfo.totalPages);
     })
     .catch((error) => {
       console.log(error);

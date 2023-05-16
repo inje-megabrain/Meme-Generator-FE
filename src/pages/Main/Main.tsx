@@ -1,15 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Wantedmodal from "../../components/Wantedmodal";
-import Wanted from "../Wanted";
 import { getCookie, removeCookie } from "../../util/Cookie";
 
 const Main = () => {
   const navigate = useNavigate();
+
   const cookie = getCookie("access_token");
+
   const homebtn = () => {
     window.location.reload();
   };
+
   const signbtn = () => {
     navigate("/login");
   };
@@ -68,7 +70,6 @@ const Main = () => {
         </div>
       </div>
       <Wantedmodal modalnumber="my-modal-1" />
-      <Wanted />
     </>
   );
 };
