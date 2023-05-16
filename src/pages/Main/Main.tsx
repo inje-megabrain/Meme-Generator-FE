@@ -18,6 +18,9 @@ const Main = () => {
   const generator = () => {
     navigate('/generator');
   };
+  const templatebtn = () => {
+    navigate('/template');
+  };
 
   return (
     <>
@@ -48,12 +51,12 @@ const Main = () => {
         </div>
         <div className='grid grid-cols-2 gap-3'>
           <div>
-            <label
-              htmlFor='my-modal-1'
+            <button
               className='btn btn-ghost text-base font-bold'
+              onClick={templatebtn}
             >
-              수배
-            </label>
+              템플릿
+            </button>
           </div>
           <div>
             <button

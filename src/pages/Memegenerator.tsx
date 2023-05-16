@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { useNavigate } from 'react-router-dom';
-import { Stage, Layer, Line, Image } from 'react-konva';
+import { Stage, Layer, Line, Image, Text } from 'react-konva';
 import Konva from 'konva';
 import useImage from 'use-image';
 
@@ -13,10 +13,16 @@ const MemeGenerator = () => {
   const [tool, setTool] = useState<string>('pen');
   const [lines, setLines] = useState<any>([]);
   const [name, setName] = useState<string>('meme');
+  const [text, setText] = useState<string>('');
   const [pensize, setPensize] = useState<number>(10);
   const [image] = useImage(previewimage);
   const isDrawing = useRef(false);
   const stageRef = useRef<Konva.Stage>(null);
+  const [textstate, setTextstate] = useState<any>({
+    isDragging: false,
+    x: 50,
+    y: 50,
+  });
 
   const handleMouseDown = (e: Konva.KonvaEventObject<MouseEvent>) => {
     isDrawing.current = true;
@@ -62,6 +68,9 @@ const MemeGenerator = () => {
   const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
+  const textChage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+  };
 
   const savebtn = () => {
     const uri = stageRef.current?.toDataURL();
@@ -93,7 +102,6 @@ const MemeGenerator = () => {
           accept='image/jpg, image/jpeg,image/png'
         />
       </div>
-
       <div className='mb-4 grid place-items-center'>
         <div className='grid grid-cols-2'>
           <div>
@@ -138,7 +146,6 @@ const MemeGenerator = () => {
               <option value='eraser'>지우개</option>
             </select>
           </div>
-
           <div className='grid grid-cols-4 place-items-center gap-3'>
             <button
               onClick={() => setPensize(5)}
@@ -176,6 +183,16 @@ const MemeGenerator = () => {
         </div>
       </div>
       <div className='grid place-items-center'>
+        <div>
+          <input
+            type='text'
+            placeholder='TEXT'
+            className='input input-bordered max-w-xs'
+            onChange={textChage}
+          />
+        </div>
+      </div>
+      <div className='grid place-items-center mt-4'>
         <Stage
           width={600}
           height={600}
@@ -187,6 +204,28 @@ const MemeGenerator = () => {
         >
           <Layer>
             <Image image={image} width={600} height={600} />
+          </Layer>
+          <Layer>
+            <Text
+              text={text}
+              fontSize={30}
+              x={textstate.x}
+              y={textstate.y}
+              draggable
+              fill='black'
+              onDragStart={() => {
+                setTextstate({
+                  isDragging: true,
+                });
+              }}
+              onDragEnd={(e) => {
+                setTextstate({
+                  x: e.target.x(),
+                  y: e.target.y(),
+                  isDragging: false,
+                });
+              }}
+            />
           </Layer>
           <Layer>
             {lines.map((line: any, i: number) => (

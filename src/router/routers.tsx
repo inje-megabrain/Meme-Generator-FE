@@ -1,3 +1,4 @@
+import Template from '@src/pages/Templete';
 import { Main } from '../pages';
 import Loginform from '../pages/Loginform';
 import MemeGenerator from '../pages/Memegenerator';
@@ -16,6 +17,11 @@ const Router = [
     title: 'Meme Generator',
     url: '/generator',
     component: <MemeGenerator />,
+  },
+  {
+    title: 'Meme Templalte',
+    url: '/template',
+    component: <Template />,
   },
 ];
 export default Router;

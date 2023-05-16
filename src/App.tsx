@@ -3,6 +3,7 @@ import './App.css';
 import { Main } from './pages';
 import Loginform from './pages/Loginform';
 import MemeGenerator from './pages/Memegenerator';
+import Template from './pages/Templete';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: '/generator',
     element: <MemeGenerator />,
+  },
+  {
+    path: '/template',
+    element: <Template />,
   },
 ]);
 
