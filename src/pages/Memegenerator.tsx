@@ -79,6 +79,7 @@ const MemeGenerator = () => {
   const homebtn = () => {
     navigate('/');
   };
+  console.log(lines);
   return (
     <div>
       <button onClick={homebtn} className='btn btn-ghost text-2xl font-bold'>
@@ -153,7 +154,7 @@ const MemeGenerator = () => {
               <Line
                 key={i}
                 points={line.points}
-                stroke={color}
+                stroke={line.color}
                 strokeWidth={10}
                 tension={0.5}
                 lineCap='round'
