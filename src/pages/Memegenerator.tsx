@@ -42,14 +42,12 @@ const MemeGenerator = () => {
     }
     const stage = e.target.getStage();
     const point = stage?.getPointerPosition();
-    if (point) {
-      let lastLine = lines[lines.length - 1];
-      // add point
-      lastLine.points = lastLine.points.concat([point.x, point.y]);
-      // replace last
-      lines.splice(lines.length - 1, 1, lastLine);
-      setLines(lines.concat());
-    }
+    let lastLine = lines[lines.length - 1];
+    // add point
+    lastLine.points = lastLine.points.concat([point?.x, point?.y]);
+    // replace last
+    lines.splice(lines.length - 1, 1, lastLine);
+    setLines(lines.concat());
   };
 
   const handleMouseUp = () => {
@@ -64,7 +62,9 @@ const MemeGenerator = () => {
   };
 
   const savebtn = () => {};
-  const clearbtn = () => {};
+  const clearbtn = () => {
+    setLines([]);
+  };
   const homebtn = () => {
     navigate('/');
   };
@@ -132,11 +132,11 @@ const MemeGenerator = () => {
                 key={i}
                 points={line.points}
                 stroke={color}
-                strokeWidth={5}
+                strokeWidth={10}
                 tension={0.5}
                 lineCap='round'
                 globalCompositeOperation={
-                  tool === 'eraser' ? 'destination-out' : 'source-over'
+                  line.tool === 'eraser' ? 'destination-out' : 'source-over'
                 }
               />
             ))}
