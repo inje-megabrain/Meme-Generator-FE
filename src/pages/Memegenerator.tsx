@@ -13,6 +13,7 @@ const MemeGenerator = () => {
   const [tool, setTool] = useState<string>('pen');
   const [lines, setLines] = useState<any>([]);
   const [name, setName] = useState<string>('');
+  const [pensize, setPensize] = useState<number>(10);
   const [image] = useImage(previewimage);
   const isDrawing = useRef(false);
   const stageRef = useRef<Konva.Stage>(null);
@@ -27,12 +28,11 @@ const MemeGenerator = () => {
           (line: any) => !(line.points[0] == pos.x && line.points[1] == pos.y)
         );
       } else {
-        nlines = [...lines, { tool, color, points: [pos.x, pos.y] }];
+        nlines = [...lines, { tool, color, pensize, points: [pos.x, pos.y] }];
       }
       setLines(nlines);
     }
   };
-  console.log(lines, tool);
 
   const handleMouseMove = (e: Konva.KonvaEventObject<MouseEvent>) => {
     if (!isDrawing.current) {
@@ -79,7 +79,6 @@ const MemeGenerator = () => {
   const homebtn = () => {
     navigate('/');
   };
-  console.log(lines);
   return (
     <div>
       <button onClick={homebtn} className='btn btn-ghost text-2xl font-bold'>
@@ -128,13 +127,46 @@ const MemeGenerator = () => {
           maxLength={8}
           onChange={nameChange}
         />
-        <select
-          className='select select-bordered select-base max-w-xs'
-          onChange={(e) => setTool(e.target.value)}
-        >
-          <option value='pen'>펜</option>
-          <option value='eraser'>지우개</option>
-        </select>
+      </div>
+      <div className='grid place-items-center mb-4'>
+        <div className='grid grid-cols-2'>
+          <div>
+            <select
+              className='select select-bordered select-base max-w-xs'
+              onChange={(e) => setTool(e.target.value)}
+            >
+              <option value='pen'>펜</option>
+              <option value='eraser'>지우개</option>
+            </select>
+          </div>
+
+          <div className='grid grid-cols-4 place-items-center gap-3'>
+            <button
+              onClick={() => setPensize(10)}
+              className='w-[40px] rounded-full bg-white font-bold'
+            >
+              10
+            </button>
+            <button
+              onClick={() => setPensize(15)}
+              className='w-[40px] rounded-full bg-white font-bold'
+            >
+              15
+            </button>
+            <button
+              onClick={() => setPensize(20)}
+              className='w-[40px] rounded-full bg-white font-bold'
+            >
+              20
+            </button>
+            <button
+              onClick={() => setPensize(30)}
+              className='w-[40px] rounded-full bg-white font-bold'
+            >
+              30
+            </button>
+          </div>
+        </div>
       </div>
       <div className='grid place-items-center'>
         <Stage
@@ -155,7 +187,7 @@ const MemeGenerator = () => {
                 key={i}
                 points={line.points}
                 stroke={line.color}
-                strokeWidth={10}
+                strokeWidth={line.pensize}
                 tension={0.5}
                 lineCap='round'
                 globalCompositeOperation={
