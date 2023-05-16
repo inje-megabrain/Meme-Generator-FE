@@ -1,28 +1,15 @@
 import { useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { useNavigate } from 'react-router-dom';
-import { Stage, Layer, Line } from 'react-konva';
+import { Stage, Layer, Line, Image } from 'react-konva';
 import Konva from 'konva';
-
-// const KonvaScript = () => {
-//   const [isLoaded, setIsLoaded] = useState(false);
-
-//   const handleScriptLoad = () => {
-//     setIsLoaded(true);
-//   };
-
-//   return (
-//     <script
-//       src='https://unpkg.com/konva@9.0.2/konva.min.js'
-//       onLoad={handleScriptLoad}
-//       async
-//     ></script>
-//   );
-// };
 
 const MemeGenerator = () => {
   const navigate = useNavigate();
   const [imageSrc, setImageSrc] = useState<File | undefined>();
+  const [previewimage, setPreviewimage] = useState<
+    CanvasImageSource | undefined
+  >(undefined);
   const [color, setColor] = useState('#000000');
   const [tool, setTool] = useState<string>('pen');
   const [lines, setLines] = useState<any>([]);
@@ -58,6 +45,7 @@ const MemeGenerator = () => {
     const files = e.target.files;
     if (files) {
       setImageSrc(files[0]);
+      setPreviewimage();
     }
   };
 
@@ -127,6 +115,7 @@ const MemeGenerator = () => {
           onMouseUp={handleMouseUp}
         >
           <Layer>
+            <Image image={previewimage} />
             {lines.map((line: any, i: number) => (
               <Line
                 key={i}
