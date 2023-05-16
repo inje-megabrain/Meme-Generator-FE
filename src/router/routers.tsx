@@ -1,20 +1,20 @@
-import { Main } from "../pages";
-import Loginform from "../pages/Loginform";
-import MemeGenerator from "../pages/Memegenerator";
+import { Main } from '../pages';
+import Loginform from '../pages/Loginform';
+import MemeGenerator from '../pages/Memegenerator';
 const Router = [
   {
-    title: "Home",
-    url: "/",
+    title: 'Home',
+    url: '/',
     component: <Main />,
   },
   {
-    title: "LoginForm",
-    url: "/login",
+    title: 'LoginForm',
+    url: '/login',
     component: <Loginform />,
   },
   {
-    title: "Meme Generator",
-    url: "/generator",
+    title: 'Meme Generator',
+    url: '/generator',
     component: <MemeGenerator />,
   },
 ];

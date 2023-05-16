@@ -21,9 +21,18 @@ const MemeGenerator = () => {
     isDrawing.current = true;
     const pos = e.target.getStage()?.getPointerPosition();
     if (pos) {
-      setLines([...lines, { tool, color, points: [pos.x, pos.y] }]);
+      let nlines = null;
+      if (tool == 'erase') {
+        nlines = lines.filter(
+          (line: any) => !(line.points[0] == pos.x && line.points[1] == pos.y)
+        );
+      } else {
+        nlines = [...lines, { tool, color, points: [pos.x, pos.y] }];
+      }
+      setLines(nlines);
     }
   };
+  console.log(lines, tool);
 
   const handleMouseMove = (e: Konva.KonvaEventObject<MouseEvent>) => {
     if (!isDrawing.current) {
@@ -138,6 +147,8 @@ const MemeGenerator = () => {
         >
           <Layer>
             <Image image={image} width={600} height={600} />
+          </Layer>
+          <Layer>
             {lines.map((line: any, i: number) => (
               <Line
                 key={i}
@@ -147,7 +158,7 @@ const MemeGenerator = () => {
                 tension={0.5}
                 lineCap='round'
                 globalCompositeOperation={
-                  line.tool === 'eraser' ? 'destination-out' : 'source-over'
+                  line.tool === 'pen' ? 'source-over' : 'destination-out'
                 }
               />
             ))}
