@@ -13,6 +13,7 @@ const MemeGenerator = () => {
   const [tool, setTool] = useState<string>('pen');
   const [lines, setLines] = useState<any>([]);
   const isDrawing = useRef(false);
+  const stageRef = useRef<Konva.Stage>(null);
 
   const handleMouseDown = (e: Konva.KonvaEventObject<MouseEvent>) => {
     isDrawing.current = true;
@@ -48,7 +49,15 @@ const MemeGenerator = () => {
     }
   };
   const [image] = useImage(previewimage);
-  const savebtn = () => {};
+  const savebtn = () => {
+    const uri = stageRef.current?.toDataURL();
+    const link = document.createElement('a');
+    link.download = 'download.png';
+    link.href = uri!;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   const clearbtn = () => {
     setLines([]);
   };
@@ -112,6 +121,7 @@ const MemeGenerator = () => {
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
+          ref={stageRef}
         >
           <Layer>
             <Image image={image} width={600} height={600} />
