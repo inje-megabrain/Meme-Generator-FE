@@ -27,6 +27,7 @@ const MemeGenerator = () => {
     x: 50,
     y: 50,
   });
+  const [textsize, setTextsize] = useState<number>(30);
 
   const handleMouseDown = (e: Konva.KonvaEventObject<MouseEvent>) => {
     isDrawing.current = true;
@@ -182,13 +183,46 @@ const MemeGenerator = () => {
         </div>
       </div>
       <div className='grid place-items-center'>
-        <div>
-          <input
-            type='text'
-            placeholder='TEXT'
-            className='input input-bordered max-w-xs'
-            onChange={textChage}
-          />
+        <div className='grid gird-cols-1 md:grid-cols-3'>
+          <div className='grid place-items-center'>
+            <input
+              type='text'
+              placeholder='TEXT'
+              className='input input-bordered max-w-xs'
+              onChange={textChage}
+            />
+          </div>
+          <div className='grid place-items-center font-bold'>
+            글씨 크기 : {textsize}px
+          </div>
+          <div className='grid place-items-center'>
+            <div
+              className='btn mb-2'
+              onClick={() => {
+                let size = textsize;
+                if (textsize < 100) {
+                  setTextsize((size += 5));
+                } else {
+                  setTextsize(100);
+                }
+              }}
+            >
+              ▲
+            </div>
+            <div
+              className='btn'
+              onClick={() => {
+                let size = textsize;
+                if (textsize > 1) {
+                  setTextsize((size -= 5));
+                } else {
+                  setTextsize(0);
+                }
+              }}
+            >
+              ▼
+            </div>
+          </div>
         </div>
       </div>
       <div className='grid place-items-center mt-4'>
@@ -207,7 +241,7 @@ const MemeGenerator = () => {
           <Layer>
             <Text
               text={text}
-              fontSize={30}
+              fontSize={textsize}
               x={textstate.x}
               y={textstate.y}
               draggable
