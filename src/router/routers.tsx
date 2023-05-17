@@ -2,6 +2,7 @@ import Template from '@src/pages/Templete';
 import { Main } from '../pages';
 import Loginform from '../pages/Loginform';
 import MemeGenerator from '../pages/Memegenerator';
+import GoogleLogin from '@src/components/GoogleLogin';
 import Share from '@src/pages/Share';
 const Router = [
   {
@@ -13,6 +14,11 @@ const Router = [
     title: 'LoginForm',
     url: '/login',
     component: <Loginform />,
+  },
+  {
+    title: 'GoogleLogin',
+    url: '/googlelogin',
+    component: <GoogleLogin />,
   },
   {
     title: 'Meme Generator',

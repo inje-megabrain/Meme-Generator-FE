@@ -92,7 +92,7 @@ const MemeGenerator = () => {
   return (
     <div>
       <div className='grid place-items-center'>
-        <button onClick={homebtn} className='btn btn-ghost text-2xl font-bold'>
+        <button onClick={homebtn} className='btn btn-ghost text-3xl font-bold'>
           ME:ME
         </button>
       </div>

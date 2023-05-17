@@ -5,6 +5,7 @@ import Loginform from './pages/Loginform';
 import MemeGenerator from './pages/Memegenerator';
 import Template from './pages/Templete';
 import Share from './pages/Share';
+import GoogleLogin from './components/GoogleLogin';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Loginform />,
+  },
+  {
+    path: '/oauth2/redirect',
+    element: <GoogleLogin />,
   },
   {
     path: '/generator',
