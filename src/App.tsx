@@ -7,6 +7,7 @@ import Template from './pages/Templete';
 import Share from './pages/Share';
 import GoogleLogin from './components/GoogleLogin';
 import Upload from './pages/Upload';
+import Profile from './pages/Profile';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: '/upload',
     element: <Upload />,
+  },
+  {
+    path: '/profile',
+    element: <Profile />,
   },
 ]);
 

@@ -22,6 +22,9 @@ const Main = () => {
   const templatebtn = () => {
     navigate('/template');
   };
+  const profilebtn = () => {
+    navigate('/profile');
+  };
   if (status === 'login success') {
     toast.success('로그인 성공');
     removeCookie('status', { path: '/' });
@@ -39,7 +42,7 @@ const Main = () => {
     <>
       <div>
         <div>
-          <div className='btn btn-ghost normal-case text-2xl' onClick={homebtn}>
+          <div className='btn btn-ghost normal-case text-3xl' onClick={homebtn}>
             ME:ME
           </div>
           {!cookie ? (
@@ -53,6 +56,12 @@ const Main = () => {
             </div>
           ) : (
             <div className='text-right'>
+              <div
+                className='btn btn-ghost normal-case text-base'
+                onClick={profilebtn}
+              >
+                내 정보
+              </div>
               <div
                 className='btn btn-ghost normal-case text-base'
                 onClick={logoutbtn}

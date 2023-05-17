@@ -5,6 +5,7 @@ import MemeGenerator from '../pages/Memegenerator';
 import GoogleLogin from '@src/components/GoogleLogin';
 import Share from '@src/pages/Share';
 import Upload from '@src/pages/Upload';
+import Profile from '@src/pages/Profile';
 const Router = [
   {
     title: 'Home',
@@ -40,6 +41,11 @@ const Router = [
     title: 'Upload',
     url: '/upload',
     component: <Upload />,
+  },
+  {
+    title: 'Profile',
+    url: '/profile',
+    component: <Profile />,
   },
 ];
 export default Router;

@@ -74,7 +74,7 @@ const Loginform = () => {
   return (
     <>
       <div>
-        <div className='btn btn-ghost normal-case text-2xl' onClick={homebtn}>
+        <div className='btn btn-ghost normal-case text-3xl' onClick={homebtn}>
           ME:ME
         </div>
         <div>
