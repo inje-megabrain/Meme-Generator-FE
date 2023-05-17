@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCookie, removeCookie } from '../../util/Cookie';
-
+import Meme from '../Meme';
 const Main = () => {
   const navigate = useNavigate();
   const cookie = getCookie('access_token');
@@ -57,6 +57,7 @@ const Main = () => {
           </div>
         </div>
       </div>
+      <Meme />
     </>
   );
 };

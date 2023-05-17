@@ -22,6 +22,7 @@ const Template = () => {
             <li className='step step-primary'>Template</li>
             <li className='step'>Meme-Generator</li>
             <li className='step'>Save & Share</li>
+            <li className='step'>Upload</li>
           </ul>
         </div>
       </div>

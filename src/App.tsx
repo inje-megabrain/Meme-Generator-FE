@@ -6,6 +6,7 @@ import MemeGenerator from './pages/Memegenerator';
 import Template from './pages/Templete';
 import Share from './pages/Share';
 import GoogleLogin from './components/GoogleLogin';
+import Upload from './pages/Upload';
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: '/share',
     element: <Share />,
+  },
+  {
+    path: '/upload',
+    element: <Upload />,
   },
 ]);
 

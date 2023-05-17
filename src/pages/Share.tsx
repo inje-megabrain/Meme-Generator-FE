@@ -3,9 +3,12 @@ import { PreviewDateState } from '@src/states/atom';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Buffer } from 'buffer';
+import { getCookie, setCookie } from '@src/util/Cookie';
+import { toast } from 'react-toastify';
 
 const Share = () => {
   const navigate = useNavigate();
+  const status = getCookie('status');
   const [previewimage, setPreviewimage] =
     useRecoilState<string>(PreviewDateState);
   const [name, setName] = useState<string>('meme');
@@ -19,9 +22,10 @@ const Share = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    setName('');
-    setPreviewimage('');
-    navigate('/');
+    setCookie('status', 'save success');
+    if (status === 'save success') {
+      toast.success('저장 성공');
+    }
   };
   const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -73,6 +77,9 @@ const Share = () => {
   const memebtn = () => {
     navigate('/generator');
   };
+  const uploadpage = () => {
+    navigate('/upload');
+  };
 
   return (
     <div>
@@ -87,13 +94,22 @@ const Share = () => {
           <li className='step step-primary'>Template</li>
           <li className='step step-primary'>Meme-Generator</li>
           <li className='step step-primary'>Save & Share</li>
+          <li className='step'>Upload</li>
         </ul>
       </div>
-      <div
-        className='btn btn-ghost font-bold text-2xl rounded-xl'
-        onClick={memebtn}
-      >
-        Previous
+      <div className='grid grid-cols-2'>
+        <div
+          className='btn btn-ghost font-bold text-2xl rounded-xl'
+          onClick={memebtn}
+        >
+          Previous
+        </div>
+        <div
+          className='btn btn-ghost font-bold text-2xl rounded-xl'
+          onClick={uploadpage}
+        >
+          Next
+        </div>
       </div>
       <div className='mb-4 grid place-items-center'>
         <div className='grid grid-cols-3'>
@@ -133,6 +149,7 @@ const Share = () => {
           </div>
         </div>
       </div>
+
       <div className='grid place-items-center'>
         <div>
           <img src={previewimage} alt='' />

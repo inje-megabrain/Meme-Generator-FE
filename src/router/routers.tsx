@@ -4,6 +4,7 @@ import Loginform from '../pages/Loginform';
 import MemeGenerator from '../pages/Memegenerator';
 import GoogleLogin from '@src/components/GoogleLogin';
 import Share from '@src/pages/Share';
+import Upload from '@src/pages/Upload';
 const Router = [
   {
     title: 'Home',
@@ -34,6 +35,11 @@ const Router = [
     title: 'Share & Save',
     url: '/share',
     component: <Share />,
+  },
+  {
+    title: 'Upload',
+    url: '/upload',
+    component: <Upload />,
   },
 ];
 export default Router;

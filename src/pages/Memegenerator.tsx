@@ -75,6 +75,7 @@ const MemeGenerator = () => {
     const uri = stageRef.current?.toDataURL();
     setPreviewimage(uri!);
   };
+
   const textChage = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
@@ -101,6 +102,7 @@ const MemeGenerator = () => {
           <li className='step step-primary'>Template</li>
           <li className='step step-primary'>Meme-Generator</li>
           <li className='step'>Save & Share</li>
+          <li className='step'>Upload</li>
         </ul>
       </div>
       <div className='grid place-items-center'>

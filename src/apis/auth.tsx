@@ -4,6 +4,8 @@ import { API_URL } from '../constants/Constants';
 import jwtDecode from 'jwt-decode';
 import { decodedjwtType } from '../types';
 import { setCookie } from '../util/Cookie';
+import jinInterceptor from './interceptor';
+import { toast } from 'react-toastify';
 
 const headerConfig = {
   'Content-Type': 'application/json',
@@ -44,7 +46,7 @@ const oauthLoginAPI = (code: string) => {
 };
 
 const loginAPI = (id: string, password: string) => {
-  axios
+  jinInterceptor
     .post(
       API_URL + '/login',
       { username: id, password: password },
@@ -53,19 +55,22 @@ const loginAPI = (id: string, password: string) => {
       }
     )
     .then((response) => {
-      console.log(response);
       const decodeToken: decodedjwtType = jwtDecode(response.data.accessToken);
-      setCookie('access_token', decodeToken.sub, {
+      setCookie('name', decodeToken.sub, {
         path: '/',
       });
-      console.log(decodeToken);
+      setCookie('access_token', response.data.accessToken, {
+        path: '/',
+      });
+      setCookie('refresh_token', response.data.refreshToken, {
+        path: '/',
+      });
+      setCookie('role', decodeToken.auth, {
+        path: '/',
+      });
       if (response.data.accessToken) {
         window.location.href = '/';
-      }
-    })
-    .catch((error) => {
-      if (error.response.status == 401) {
-        alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+        setCookie('status', 'login success');
       }
     });
 };
@@ -75,7 +80,7 @@ const SignUpAPI = (
   name: string,
   email: string
 ) => {
-  axios
+  jinInterceptor
     .post(
       API_URL + '/member',
       { username: id, password: password, name: name, email: email },
@@ -84,7 +89,7 @@ const SignUpAPI = (
       }
     )
     .then((response) => {
-      console.log(response);
+      if (response.status == 201) toast.success('회원가입 성공');
       window.location.href = '/login';
     })
     .catch((error) => {
