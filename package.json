@@ -28,6 +28,7 @@
     "react-colorful": "^5.6.1",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.8.0",
     "react-konva": "^18.2.8",
     "react-router-dom": "^6.8.0",
     "react-toastify": "^9.1.3",

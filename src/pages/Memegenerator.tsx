@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Stage, Layer, Line, Image, Text } from 'react-konva';
 import Konva from 'konva';
 import useImage from 'use-image';
+import { SlPencil } from 'react-icons/sl';
+import { BsEraser } from 'react-icons/bs';
 
 const MemeGenerator = () => {
   const navigate = useNavigate();
@@ -88,6 +90,7 @@ const MemeGenerator = () => {
   const homebtn = () => {
     navigate('/');
   };
+
   return (
     <div>
       <button onClick={homebtn} className='btn btn-ghost text-2xl font-bold'>
@@ -137,39 +140,44 @@ const MemeGenerator = () => {
       </div>
       <div className='grid place-items-center mb-4'>
         <div className='grid grid-cols-3'>
-          <div>
-            <select
-              className='select select-bordered select-base max-w-xs'
-              onChange={(e) => setTool(e.target.value)}
-              defaultValue={'hand'}
-            >
-              <option value='pen'>펜</option>
-              <option value='eraser'>지우개</option>
-              <option value='hand'>손잡이</option>
-            </select>
+          <div className='grid grid-cols-2'>
+            <div>
+              <SlPencil
+                className='btn btn-ghost text-lg'
+                onClick={() => setTool('pen')}
+              />
+              <div>Pen</div>
+            </div>
+            <div>
+              <BsEraser
+                className='btn btn-ghost text-lg'
+                onClick={() => setTool('eraser')}
+              />
+              <div>Eraser</div>
+            </div>
           </div>
           <div className='grid grid-cols-4 place-items-center gap-3'>
             <button
               onClick={() => setPensize(5)}
-              className='w-[40px] rounded-full bg-white font-bold'
+              className='w-[40px] rounded-full bg-white font-bold text-base'
             >
               5
             </button>
             <button
               onClick={() => setPensize(10)}
-              className='w-[40px] rounded-full bg-white font-bold'
+              className='w-[40px] rounded-full bg-white font-bold text-base'
             >
               10
             </button>
             <button
               onClick={() => setPensize(15)}
-              className='w-[40px] rounded-full bg-white font-bold'
+              className='w-[40px] rounded-full bg-white font-bold text-base'
             >
               15
             </button>
             <button
               onClick={() => setPensize(20)}
-              className='w-[40px] rounded-full bg-white font-bold'
+              className='w-[40px] rounded-full bg-white font-bold text-base'
             >
               20
             </button>
