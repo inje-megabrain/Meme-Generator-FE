@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCookie, removeCookie } from '../../util/Cookie';
 
@@ -14,9 +14,6 @@ const Main = () => {
   const logoutbtn = () => {
     removeCookie('access_token', { path: '/' });
     window.location.reload();
-  };
-  const generator = () => {
-    navigate('/generator');
   };
   const templatebtn = () => {
     navigate('/template');

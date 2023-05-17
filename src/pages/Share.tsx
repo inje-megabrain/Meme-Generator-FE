@@ -2,6 +2,7 @@ import { useRecoilState } from 'recoil';
 import { PreviewDateState } from '@src/states/atom';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { Buffer } from 'buffer';
 
 const Share = () => {
   const navigate = useNavigate();
@@ -25,6 +26,50 @@ const Share = () => {
   const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
+  const base64ToFile = (dataurl: string, filename: string) => {
+    let arr = dataurl.split(','),
+      mime = arr[0].match(/:(.*?);/)![1],
+      bstr = Buffer.from(arr[1], 'base64'),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr[n];
+    }
+    return new File([u8arr], filename, { type: mime });
+  };
+  const file = base64ToFile(previewimage, name);
+  const myurl = 'https://localhost:5174'; // url
+  const sharebtn = async () => {
+    const shareurl = (
+      await window.Kakao.Share.uploadImage({
+        file: [file],
+      })
+    ).infos.original.url;
+    window.Kakao.Share.createDefaultButton({
+      container: '#kakao-share-btn',
+      objectType: 'feed',
+      content: {
+        title: '짤 생성기',
+        description: '모든 짤들을 생성해보세요!',
+        imageUrl: shareurl,
+        link: {
+          webUrl: myurl,
+        },
+      },
+      buttons: [
+        {
+          title: '짤 생성기',
+          link: {
+            webUrl: myurl,
+          },
+        },
+      ],
+      callback() {
+        navigate('/');
+      },
+    });
+    (document.querySelector('#kakao-share-btn') as HTMLButtonElement).click();
+  };
 
   return (
     <div>
@@ -42,7 +87,7 @@ const Share = () => {
         </ul>
       </div>
       <div className='mb-4 grid place-items-center'>
-        <div className='grid grid-cols-2'>
+        <div className='grid grid-cols-3'>
           <div>
             <input
               type='text'
@@ -58,6 +103,23 @@ const Share = () => {
               className='btn btn-ghost text-base font-bold'
             >
               저장
+            </button>
+          </div>
+          <div>
+            <button
+              id='kakao-share-btn'
+              onClick={sharebtn}
+              style={{
+                display: 'none',
+              }}
+            >
+              카카오톡 이미지 업로드 버튼
+            </button>
+            <button
+              onClick={sharebtn}
+              className='btn btn-ghost text-base font-bold'
+            >
+              공유
             </button>
           </div>
         </div>
