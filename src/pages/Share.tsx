@@ -70,6 +70,9 @@ const Share = () => {
     });
     (document.querySelector('#kakao-share-btn') as HTMLButtonElement).click();
   };
+  const memebtn = () => {
+    navigate('/generator');
+  };
 
   return (
     <div>
@@ -85,6 +88,12 @@ const Share = () => {
           <li className='step step-primary'>Meme-Generator</li>
           <li className='step step-primary'>Save & Share</li>
         </ul>
+      </div>
+      <div
+        className='btn btn-ghost font-bold text-2xl rounded-xl'
+        onClick={memebtn}
+      >
+        Previous
       </div>
       <div className='mb-4 grid place-items-center'>
         <div className='grid grid-cols-3'>

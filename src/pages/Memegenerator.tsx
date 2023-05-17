@@ -85,6 +85,9 @@ const MemeGenerator = () => {
   const homebtn = () => {
     navigate('/');
   };
+  const templatebtn = () => {
+    navigate('/template');
+  };
 
   return (
     <div>
@@ -110,13 +113,23 @@ const MemeGenerator = () => {
           />
         </div>
       </div>
-      <div
-        className='btn btn-ghost font-bold text-2xl rounded-xl'
-        onClick={sharepage}
-      >
-        NEXT
-      </div>
       <div className='grid place-items-center'>
+        <div className='grid grid-cols-2'>
+          <div
+            className='btn btn-ghost font-bold text-2xl rounded-xl'
+            onClick={templatebtn}
+          >
+            Previous
+          </div>
+          <div
+            className='btn btn-ghost font-bold text-2xl rounded-xl'
+            onClick={sharepage}
+          >
+            Next
+          </div>
+        </div>
+      </div>
+      <div className='grid place-items-center mt-2'>
         <div>
           <HexColorPicker
             color={color}
