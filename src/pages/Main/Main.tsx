@@ -34,7 +34,11 @@ const Main = () => {
     removeCookie('status', { path: '/' });
   }
   if (status === 'upload success') {
-    toast.success('수배글 업로드 성공');
+    toast.success('짤 업로드 성공');
+    removeCookie('status', { path: '/' });
+  }
+  if (status === 'delete success') {
+    toast.success('짤 삭제 성공');
     removeCookie('status', { path: '/' });
   }
 

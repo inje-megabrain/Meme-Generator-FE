@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { imageDownloadAPI } from '../apis/server';
+import { MemeDeleteAPI, imageDownloadAPI } from '../apis/server';
 import { useRecoilState } from 'recoil';
-import { MemeDataState, MemePage } from '../states/atom';
+import { MemeDataState, MemeID, MemePage } from '../states/atom';
 import { MemeType } from '../types';
 
 const Meme = () => {
@@ -9,6 +9,8 @@ const Meme = () => {
   const [memeList, setMemeList] = useRecoilState<MemeType>(MemeDataState);
   const [page, setPage] = useState<number>(0);
   const [totalpage, setTotalpage] = useRecoilState<number>(MemePage);
+  const [id, setId] = useRecoilState<number>(MemeID);
+  const MemeId = useRecoilState<number>(MemeID);
   const prevpage = () => {
     if (page > 0) {
       setPage(page - 1);
@@ -17,6 +19,11 @@ const Meme = () => {
   const nextpage = () => {
     setPage(page + 1);
   };
+
+  const deletebtn = () => {
+    MemeDeleteAPI(MemeId[0]);
+  };
+
   useEffect(() => {
     imageDownloadAPI(page, setMemeList, setTotalpage);
   }, [page]);
@@ -33,6 +40,15 @@ const Meme = () => {
               <div className='inline-block'>
                 <div className='font-bold text-xl text-start'>
                   <div>사진명 : {meme.name}</div>
+                </div>
+                <div
+                  className='btn btn-ghost font-bold'
+                  onClick={() => {
+                    setId(meme.wantedId);
+                    deletebtn();
+                  }}
+                >
+                  X
                 </div>
               </div>
             </div>

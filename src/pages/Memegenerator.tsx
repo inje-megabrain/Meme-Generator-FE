@@ -210,9 +210,9 @@ const MemeGenerator = () => {
           <div className='grid place-items-center font-bold'>
             글씨 크기 : {textsize}px
           </div>
-          <div className='grid place-items-center'>
+          <div className='grid place-items-start'>
             <div
-              className='btn mb-2'
+              className='btn btn-ghost text-xs'
               onClick={() => {
                 let size = textsize;
                 if (textsize < 100) {
@@ -225,7 +225,7 @@ const MemeGenerator = () => {
               ▲
             </div>
             <div
-              className='btn'
+              className='btn btn-ghost text-xs'
               onClick={() => {
                 let size = textsize;
                 if (textsize > 1) {

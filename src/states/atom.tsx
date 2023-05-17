@@ -5,6 +5,7 @@ const MemeDataState = atom<MemeType>({
   key: 'MemeDataState',
   default: [
     {
+      wantedId: 0,
       name: '',
       imageUrl: '',
     },
@@ -22,4 +23,8 @@ const PreviewDateState = atom<string>({
   key: 'PreviewDateState',
   default: '',
 });
-export { MemeDataState, MemePage, imageUploadState, PreviewDateState };
+const MemeID = atom<number>({
+  key: 'MemeID',
+  default: 0,
+});
+export { MemeDataState, MemePage, imageUploadState, PreviewDateState, MemeID };

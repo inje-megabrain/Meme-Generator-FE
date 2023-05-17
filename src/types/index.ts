@@ -1,4 +1,5 @@
 type MemeType = {
+  wantedId: number;
   imageUrl: string;
   name: string;
 }[];

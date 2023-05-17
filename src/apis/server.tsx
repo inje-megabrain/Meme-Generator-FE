@@ -57,11 +57,32 @@ export const imageDownloadAPI = async (
       headers: headerConfig,
     })
     .then((response) => {
-      //console.log(response.data.dtos);
+      console.log(response.data.dtos);
       setWantedList(response.data.dtos);
       setTotalpage(response.data.pageInfo.totalPages);
     })
     .catch((error) => {
       console.log(error);
+    });
+};
+export const MemeDeleteAPI = async (memeid: number) => {
+  await jinInterceptor
+    .delete(API_URL + `/meme/${memeid}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: 'Bearer ' + getCookie('access_token'),
+      },
+    })
+    .then((response) => {
+      //console.log(response);
+      if (response.status === 200) {
+        window.location.href = '/';
+        setCookie('status', 'delete success');
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error('삭제 권한이없습니다.');
     });
 };
