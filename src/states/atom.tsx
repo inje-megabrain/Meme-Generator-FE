@@ -16,4 +16,12 @@ const WantedPage = atom<number>({
   key: 'WantedPage',
   default: 0,
 });
-export { WantedDataState, WantedPage };
+const imageUploadState = atom<File>({
+  key: 'imageUploadState',
+  default: new File([], ''),
+});
+const PreviewDateState = atom<string>({
+  key: 'PreviewDateState',
+  default: '',
+});
+export { WantedDataState, WantedPage, imageUploadState, PreviewDateState };

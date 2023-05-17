@@ -61,7 +61,7 @@ const Main = () => {
           <div>
             <button
               className='btn btn-ghost text-base font-bold'
-              onClick={generator}
+              onClick={templatebtn}
             >
               짤 생성
             </button>

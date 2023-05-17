@@ -6,15 +6,17 @@ import Konva from 'konva';
 import useImage from 'use-image';
 import { SlPencil } from 'react-icons/sl';
 import { BsEraser } from 'react-icons/bs';
+import { useRecoilState } from 'recoil';
+import { PreviewDateState } from '@src/states/atom';
 
 const MemeGenerator = () => {
   const navigate = useNavigate();
   const [imageSrc, setImageSrc] = useState<File | undefined>();
-  const [previewimage, setPreviewimage] = useState<string>('');
+  const [previewimage, setPreviewimage] =
+    useRecoilState<string>(PreviewDateState);
   const [color, setColor] = useState('#000000');
   const [tool, setTool] = useState<string>('');
   const [lines, setLines] = useState<any>([]);
-  const [name, setName] = useState<string>('meme');
   const [text, setText] = useState<string>('');
   const [pensize, setPensize] = useState<number>(10);
   const [image] = useImage(previewimage);
@@ -67,23 +69,15 @@ const MemeGenerator = () => {
       setPreviewimage(URL.createObjectURL(files[0]));
     }
   };
-  const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+  const sharepage = () => {
+    navigate('/share');
+    const uri = stageRef.current?.toDataURL();
+    setPreviewimage(uri!);
   };
   const textChage = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
 
-  const savebtn = () => {
-    const uri = stageRef.current?.toDataURL();
-    const link = document.createElement('a');
-    link.download = name + '.png';
-    link.href = uri!;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    setName('');
-  };
   const clearbtn = () => {
     setLines([]);
   };
@@ -93,38 +87,33 @@ const MemeGenerator = () => {
 
   return (
     <div>
-      <button onClick={homebtn} className='btn btn-ghost text-2xl font-bold'>
-        ME:ME
-      </button>
-      <h1>MEME GENERATOR SECTION</h1>
       <div className='grid place-items-center'>
-        <input
-          type='file'
-          className='file-input file-input-ghost file-input-sm max-w-xs mb-2'
-          onChange={handleFileOnChange}
-          accept='image/jpg, image/jpeg,image/png'
-        />
+        <button onClick={homebtn} className='btn btn-ghost text-2xl font-bold'>
+          ME:ME
+        </button>
       </div>
-      <div className='mb-4 grid place-items-center'>
-        <div className='grid grid-cols-2'>
-          <div>
-            <input
-              type='text'
-              placeholder='저장 할 파일명'
-              className='input input-bordered max-w-xs'
-              maxLength={8}
-              onChange={nameChange}
-            />
-          </div>
-          <div>
-            <button
-              onClick={savebtn}
-              className='btn btn-ghost text-base font-bold'
-            >
-              저장
-            </button>
-          </div>
+      <div className='grid place-items-center'>
+        <ul className='steps'>
+          <li className='step step-primary'>Template</li>
+          <li className='step step-primary'>Meme-Generator</li>
+          <li className='step'>Save & Share</li>
+        </ul>
+      </div>
+      <div className='grid place-items-center'>
+        <div>
+          <input
+            type='file'
+            className='file-input file-input-bordered file-input-black w-full max-w-xs mb-2 rounded-md border-solid'
+            onChange={handleFileOnChange}
+            accept='image/jpg, image/jpeg,image/png'
+          />
         </div>
+      </div>
+      <div
+        className='btn btn-ghost font-bold text-2xl rounded-xl'
+        onClick={sharepage}
+      >
+        NEXT
       </div>
       <div className='grid place-items-center'>
         <div>

@@ -2,6 +2,7 @@ import Template from '@src/pages/Templete';
 import { Main } from '../pages';
 import Loginform from '../pages/Loginform';
 import MemeGenerator from '../pages/Memegenerator';
+import Share from '@src/pages/Share';
 const Router = [
   {
     title: 'Home',
@@ -22,6 +23,11 @@ const Router = [
     title: 'Meme Templalte',
     url: '/template',
     component: <Template />,
+  },
+  {
+    title: 'Share & Save',
+    url: '/share',
+    component: <Share />,
   },
 ];
 export default Router;

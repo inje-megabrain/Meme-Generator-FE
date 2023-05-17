@@ -4,6 +4,7 @@ import { Main } from './pages';
 import Loginform from './pages/Loginform';
 import MemeGenerator from './pages/Memegenerator';
 import Template from './pages/Templete';
+import Share from './pages/Share';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: '/template',
     element: <Template />,
+  },
+  {
+    path: '/share',
+    element: <Share />,
   },
 ]);
 
