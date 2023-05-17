@@ -16,12 +16,14 @@ const Template = () => {
       >
         ME:ME
       </div>
-      <div>
-        <ul className='steps'>
-          <li className='step step-primary'>Template</li>
-          <li className='step'>Meme-Generator</li>
-          <li className='step'>Save & Share</li>
-        </ul>
+      <div className='grid place-items-center'>
+        <div>
+          <ul className='steps'>
+            <li className='step step-primary'>Template</li>
+            <li className='step'>Meme-Generator</li>
+            <li className='step'>Save & Share</li>
+          </ul>
+        </div>
       </div>
       <div
         className='btn btn-ghost font-bold text-2xl rounded-xl'

@@ -49,15 +49,7 @@ const Main = () => {
             </div>
           )}
         </div>
-        <div className='grid grid-cols-2 gap-3'>
-          <div>
-            <button
-              className='btn btn-ghost text-base font-bold'
-              onClick={templatebtn}
-            >
-              템플릿
-            </button>
-          </div>
+        <div className='grid place-items-center'>
           <div>
             <button
               className='btn btn-ghost text-base font-bold'

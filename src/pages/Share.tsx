@@ -19,6 +19,8 @@ const Share = () => {
     link.click();
     document.body.removeChild(link);
     setName('');
+    setPreviewimage('');
+    navigate('/');
   };
   const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
