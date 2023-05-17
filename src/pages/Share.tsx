@@ -3,7 +3,7 @@ import { PreviewDateState } from '@src/states/atom';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Buffer } from 'buffer';
-import { getCookie, setCookie } from '@src/util/Cookie';
+import { getCookie, removeCookie, setCookie } from '@src/util/Cookie';
 import { toast } from 'react-toastify';
 
 const Share = () => {
@@ -23,10 +23,12 @@ const Share = () => {
     link.click();
     document.body.removeChild(link);
     setCookie('status', 'save success');
-    if (status === 'save success') {
-      toast.success('저장 성공');
-    }
+    setName('');
   };
+  if (status === 'save success') {
+    toast.success('저장 성공');
+    removeCookie('status', { path: '/' });
+  }
   const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
