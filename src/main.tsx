@@ -8,7 +8,12 @@ import Konva from 'konva';
 const { VITE_APP_KAKAO_KEY } = import.meta.env;
 const kakaokey = VITE_APP_KAKAO_KEY;
 
-window.Kakao.init(kakaokey);
+let counter = setInterval(() => {
+  if (window.Kakao) {
+    window.Kakao.init(kakaokey);
+    clearInterval(counter);
+  }
+}, 1000);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <RecoilRoot>
