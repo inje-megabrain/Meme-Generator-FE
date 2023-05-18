@@ -11,10 +11,14 @@ const headerConfig = {
   'Access-Control-Allow-Origin': '*',
 };
 
-export const imageUploadApi = async (image: File, name: string) => {
+export const imageUploadApi = async (
+  image: File,
+  name: string,
+  type: string
+) => {
   const formData = new FormData();
   formData.append('image', image); // {contentType: 'multipart/form-data'}
-  const obj = { name: name };
+  const obj = { name: name, type: type };
   formData.append(
     'dto',
     new Blob([JSON.stringify(obj)], { type: 'application/json' })

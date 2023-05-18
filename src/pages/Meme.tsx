@@ -32,11 +32,12 @@ const Meme = () => {
           {memeList.map((meme, index) => (
             <div key={index}>
               <div className='grid grid-cols-3'>
-                {getCookie('name') === meme.username ? (
+                {getCookie('name') === meme.username ||
+                getCookie('name') === 'admin' ? (
                   <div
                     className='btn btn-ghost font-bold'
                     onClick={() => {
-                      MemeDeleteAPI(meme.wantedId);
+                      MemeDeleteAPI(meme.memeId);
                     }}
                   >
                     X

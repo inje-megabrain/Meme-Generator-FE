@@ -7,13 +7,14 @@ import useImage from 'use-image';
 import { SlPencil } from 'react-icons/sl';
 import { BsEraser } from 'react-icons/bs';
 import { useRecoilState } from 'recoil';
-import { PreviewDateState } from '@src/states/atom';
+import { MemeTypeDataState, PreviewDateState } from '@src/states/atom';
 
 const MemeGenerator = () => {
   const navigate = useNavigate();
   const [imageSrc, setImageSrc] = useState<File | undefined>();
   const [previewimage, setPreviewimage] =
     useRecoilState<string>(PreviewDateState);
+  const [meemtype, setMemetype] = useRecoilState<string>(MemeTypeDataState);
   const [color, setColor] = useState('#000000');
   const [tool, setTool] = useState<string>('');
   const [lines, setLines] = useState<any>([]);
@@ -70,6 +71,7 @@ const MemeGenerator = () => {
     if (files) {
       setImageSrc(files[0]);
       setPreviewimage(URL.createObjectURL(files[0]));
+      setMemetype('MEME');
     }
   };
   const sharepage = () => {

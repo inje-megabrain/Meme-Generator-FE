@@ -2,10 +2,13 @@ import { useState } from 'react';
 import { imageUploadApi } from '@src/apis/server';
 import { useNavigate } from 'react-router-dom';
 import { getCookie } from '@src/util/Cookie';
+import { useRecoilState } from 'recoil';
+import { MemeTypeDataState } from '@src/states/atom';
 
 const Upload = () => {
   const naviage = useNavigate();
   const [imageSrc, setImageSrc] = useState<File | undefined>();
+  const [memetype, setMemetype] = useRecoilState<string>(MemeTypeDataState);
   const [name, setName] = useState<string>('meme');
 
   const handleFileOnChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,7 +21,7 @@ const Upload = () => {
     setName(e.target.value);
   };
   const uploadbtn = async () => {
-    await imageUploadApi(imageSrc as File, name);
+    await imageUploadApi(imageSrc as File, name, memetype);
   };
   const sharepage = () => {
     naviage('/share');

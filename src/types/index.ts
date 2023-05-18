@@ -1,5 +1,5 @@
 type MemeType = {
-  wantedId: number;
+  memeId: number;
   imageUrl: string;
   name: string;
   username: string;
