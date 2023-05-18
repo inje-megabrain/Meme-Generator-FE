@@ -8,4 +8,9 @@ type decodedjwtType = {
   sub: string;
   auth: string;
 };
-export type { MemeType, decodedjwtType };
+type ProfileType = {
+  name: string;
+  email: string;
+  username: string;
+};
+export type { MemeType, decodedjwtType, ProfileType };

@@ -32,8 +32,8 @@ const Meme = () => {
           {memeList.map((meme, index) => (
             <div key={index}>
               <div className='grid grid-cols-3'>
-                {getCookie('name') === meme.username ||
-                getCookie('name') === 'admin' ? (
+                {getCookie('username') === meme.username ||
+                getCookie('username') === 'admin' ? (
                   <div
                     className='btn btn-ghost font-bold'
                     onClick={() => {

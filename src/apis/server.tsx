@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_URL } from '../constants/Constants';
-import { MemeType } from '../types';
+import { MemeType, ProfileType } from '../types';
 import { SetterOrUpdater } from 'recoil';
 import { getCookie, setCookie } from '../util/Cookie';
 import jinInterceptor from './interceptor';
@@ -88,5 +88,22 @@ export const MemeDeleteAPI = async (memeid: number) => {
     .catch((error) => {
       console.log(error);
       toast.error('삭제 권한이없습니다.');
+    });
+};
+export const ProfileAPI = async (
+  username: string,
+  setProfile: SetterOrUpdater<ProfileType>
+) => {
+  await jinInterceptor
+    .get(API_URL + `/member/${username}`, {
+      headers: headerConfig,
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        setProfile(response.data);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
     });
 };

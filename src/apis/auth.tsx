@@ -22,7 +22,7 @@ const oauthLoginAPI = (code: string) => {
     .then((response) => {
       response.json().then((data) => {
         const decodeToken: decodedjwtType = jwtDecode(data.accessToken);
-        setCookie('name', decodeToken.sub, {
+        setCookie('username', decodeToken.sub, {
           path: '/',
         });
         setCookie('access_token', data.accessToken, {
@@ -56,7 +56,7 @@ const loginAPI = (id: string, password: string) => {
     )
     .then((response) => {
       const decodeToken: decodedjwtType = jwtDecode(response.data.accessToken);
-      setCookie('name', decodeToken.sub, {
+      setCookie('username', decodeToken.sub, {
         path: '/',
       });
       setCookie('access_token', response.data.accessToken, {

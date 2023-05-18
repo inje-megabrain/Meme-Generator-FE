@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { MemeType } from '../types';
+import { MemeType, ProfileType } from '../types';
 
 const MemeDataState = atom<MemeType>({
   key: 'MemeDataState',
@@ -28,6 +28,14 @@ const MemeTypeDataState = atom<string>({
   key: 'MemeTypeDataState',
   default: '',
 });
+const ProfileDataState = atom<ProfileType>({
+  key: 'ProfileDataState',
+  default: {
+    username: '',
+    email: '',
+    name: '',
+  },
+});
 
 export {
   MemeDataState,
@@ -35,4 +43,5 @@ export {
   imageUploadState,
   PreviewDateState,
   MemeTypeDataState,
+  ProfileDataState,
 };
