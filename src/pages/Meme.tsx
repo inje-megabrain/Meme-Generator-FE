@@ -20,10 +20,6 @@ const Meme = () => {
     setPage(page + 1);
   };
 
-  const deletebtn = () => {
-    MemeDeleteAPI(MemeId[0]);
-  };
-
   useEffect(() => {
     imageDownloadAPI(page, setMemeList, setTotalpage);
   }, [page]);
@@ -44,8 +40,7 @@ const Meme = () => {
                 <div
                   className='btn btn-ghost font-bold'
                   onClick={() => {
-                    setId(meme.wantedId);
-                    deletebtn();
+                    MemeDeleteAPI(meme.wantedId);
                   }}
                 >
                   X
