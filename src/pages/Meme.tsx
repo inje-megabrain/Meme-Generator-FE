@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MemeDeleteAPI, imageDownloadAPI } from '../apis/server';
 import { useRecoilState } from 'recoil';
-import { MemeDataState, MemeID, MemePage } from '../states/atom';
+import { MemeDataState, MemePage } from '../states/atom';
 import { MemeType } from '../types';
 
 const Meme = () => {
@@ -9,8 +9,7 @@ const Meme = () => {
   const [memeList, setMemeList] = useRecoilState<MemeType>(MemeDataState);
   const [page, setPage] = useState<number>(0);
   const [totalpage, setTotalpage] = useRecoilState<number>(MemePage);
-  const [id, setId] = useRecoilState<number>(MemeID);
-  const MemeId = useRecoilState<number>(MemeID);
+
   const prevpage = () => {
     if (page > 0) {
       setPage(page - 1);
@@ -51,9 +50,11 @@ const Meme = () => {
         </div>
         <div className='mt-2'>
           <div className='btn-group'>
-            <button className='btn btn-ghost' onClick={prevpage}>
-              {'<<'}
-            </button>
+            {page > 0 ? (
+              <button className='btn btn-ghost' onClick={prevpage}>
+                {'<<'}
+              </button>
+            ) : null}
             <button className='btn btn-ghost'>Page {page + 1}</button>
             {page < totalpage - 1 ? (
               <button className='btn btn-ghost' onClick={nextpage}>
