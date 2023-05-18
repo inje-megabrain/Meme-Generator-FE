@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SignUpAPI, loginAPI } from '../apis/auth';
+const { VITE_APP_GOOGLE_OAUTH } = import.meta.env;
 
 const Loginform = () => {
   const navigate = useNavigate();
@@ -14,6 +15,9 @@ const Loginform = () => {
   const [checkPassword, setCheckPassword] = useState(false);
   const homebtn = () => {
     navigate('/');
+  };
+  const googlelogin = () => {
+    location.href = VITE_APP_GOOGLE_OAUTH;
   };
   const LoginFunc = async (e: any) => {
     e.preventDefault();
@@ -70,8 +74,8 @@ const Loginform = () => {
   return (
     <>
       <div>
-        <div className='btn btn-ghost normal-case text-2xl' onClick={homebtn}>
-          Me:Me
+        <div className='btn btn-ghost normal-case text-3xl' onClick={homebtn}>
+          ME:ME
         </div>
         <div>
           <h1>User Login</h1>
@@ -131,6 +135,12 @@ const Loginform = () => {
         <div className='grid place-items-center mt-4'>
           <button
             className='btn btn-outline outline outline-black font-bold text-2xl rounded-xl w-full max-w-xs'
+            onClick={googlelogin}
+          >
+            Google
+          </button>
+          <button
+            className='btn btn-outline outline outline-black font-bold text-2xl rounded-xl w-full max-w-xs mt-4'
             onClick={LoginFunc}
           >
             Login

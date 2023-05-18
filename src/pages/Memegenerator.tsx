@@ -1,27 +1,49 @@
 import { useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { useNavigate } from 'react-router-dom';
-import { Stage, Layer, Line, Image } from 'react-konva';
+import { Stage, Layer, Line, Image, Text } from 'react-konva';
 import Konva from 'konva';
 import useImage from 'use-image';
+import { SlPencil } from 'react-icons/sl';
+import { BsEraser } from 'react-icons/bs';
+import { useRecoilState } from 'recoil';
+import { PreviewDateState } from '@src/states/atom';
 
 const MemeGenerator = () => {
   const navigate = useNavigate();
   const [imageSrc, setImageSrc] = useState<File | undefined>();
-  const [previewimage, setPreviewimage] = useState<string>('');
+  const [previewimage, setPreviewimage] =
+    useRecoilState<string>(PreviewDateState);
   const [color, setColor] = useState('#000000');
-  const [tool, setTool] = useState<string>('pen');
+  const [tool, setTool] = useState<string>('');
   const [lines, setLines] = useState<any>([]);
-  const [name, setName] = useState<string>('');
+  const [text, setText] = useState<string>('');
+  const [pensize, setPensize] = useState<number>(10);
   const [image] = useImage(previewimage);
   const isDrawing = useRef(false);
   const stageRef = useRef<Konva.Stage>(null);
+  const [boxbtn, setBoxbtn] = useState<string>('');
+  const [item, setItem] = useState<string>('');
+  const [textstate, setTextstate] = useState<any>({
+    isDragging: false,
+    x: 50,
+    y: 50,
+  });
+  const [textsize, setTextsize] = useState<number>(30);
 
   const handleMouseDown = (e: Konva.KonvaEventObject<MouseEvent>) => {
     isDrawing.current = true;
     const pos = e.target.getStage()?.getPointerPosition();
     if (pos) {
-      setLines([...lines, { tool, color, points: [pos.x, pos.y] }]);
+      let nlines = null;
+      if (tool == 'erase') {
+        nlines = lines.filter(
+          (line: any) => !(line.points[0] == pos.x && line.points[1] == pos.y)
+        );
+      } else {
+        nlines = [...lines, { tool, color, pensize, points: [pos.x, pos.y] }];
+      }
+      setLines(nlines);
     }
   };
 
@@ -50,83 +72,69 @@ const MemeGenerator = () => {
       setPreviewimage(URL.createObjectURL(files[0]));
     }
   };
-  const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+  const sharepage = () => {
+    navigate('/share');
+    const uri = stageRef.current?.toDataURL();
+    setPreviewimage(uri!);
   };
 
-  const savebtn = () => {
-    const uri = stageRef.current?.toDataURL();
-    const link = document.createElement('a');
-    link.download = name + '.png';
-    link.href = uri!;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    setName('');
+  const textChage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
   };
+
   const clearbtn = () => {
     setLines([]);
   };
   const homebtn = () => {
     navigate('/');
   };
+  const templatebtn = () => {
+    navigate('/template');
+  };
+
   return (
     <div>
-      <button onClick={homebtn} className='btn btn-ghost text-2xl font-bold'>
-        ME:ME
-      </button>
-      <h1>MEME GENERATOR SECTION</h1>
-      <input
-        type='file'
-        className='file-input file-input-ghost file-input-sm max-w-xs mb-2'
-        onChange={handleFileOnChange}
-        accept='image/jpg, image/jpeg,image/png'
-      />
-      <div className='grid grid-cols-3 mt-4'>
-        <div>
-          <HexColorPicker
-            color={color}
-            onChange={setColor}
-            style={{
-              height: '150px',
-              width: '150px',
-            }}
-          />
-        </div>
-        <div>
-          <button
-            onClick={savebtn}
-            className='btn btn-ghost text-base font-bold'
-          >
-            저장
-          </button>
-        </div>
-        <div>
-          <button
-            onClick={clearbtn}
-            className='btn btn-ghost text-base font-bold'
-          >
-            지우기
-          </button>
-        </div>
-      </div>
-      <div className='mb-4'>
-        <input
-          type='text'
-          placeholder='파일명'
-          className='input input-bordered max-w-xs'
-          maxLength={8}
-          onChange={nameChange}
-        />
-        <select
-          className='select select-bordered select-base max-w-xs'
-          onChange={(e) => setTool(e.target.value)}
-        >
-          <option value='pen'>펜</option>
-          <option value='eraser'>지우개</option>
-        </select>
+      <div className='grid place-items-center'>
+        <button onClick={homebtn} className='btn btn-ghost text-3xl font-bold'>
+          ME:ME
+        </button>
       </div>
       <div className='grid place-items-center'>
+        <ul className='steps'>
+          <li className='step step-primary'>Template</li>
+          <li className='step step-primary'>Meme-Generator</li>
+          <li className='step'>Save & Share</li>
+          <li className='step'>Upload</li>
+        </ul>
+      </div>
+      <div className='grid place-items-center'>
+        <div>
+          <input
+            type='file'
+            className='file-input file-input-bordered file-input-black w-full max-w-xs mb-2 rounded-md border-solid'
+            onChange={handleFileOnChange}
+            accept='image/jpg, image/jpeg,image/png'
+          />
+        </div>
+      </div>
+      <div className='grid place-items-center'>
+        <div className='grid grid-cols-2'>
+          <div
+            className='btn btn-ghost font-bold text-2xl rounded-xl'
+            onClick={templatebtn}
+          >
+            Previous
+          </div>
+          <div
+            className='btn btn-ghost font-bold text-2xl rounded-xl'
+            onClick={sharepage}
+          >
+            Next
+          </div>
+        </div>
+      </div>
+
+      <div className='grid place-items-center mt-4'>
         <Stage
           width={600}
           height={600}
@@ -138,21 +146,247 @@ const MemeGenerator = () => {
         >
           <Layer>
             <Image image={image} width={600} height={600} />
+          </Layer>
+          <Layer>
+            <Text
+              text={text}
+              fontSize={textsize}
+              x={textstate.x}
+              y={textstate.y}
+              draggable
+              fill='black'
+              onDragStart={() => {
+                setTextstate({
+                  isDragging: true,
+                });
+              }}
+              onDragEnd={(e) => {
+                setTextstate({
+                  x: e.target.x(),
+                  y: e.target.y(),
+                  isDragging: false,
+                });
+              }}
+            />
+          </Layer>
+          <Layer>
             {lines.map((line: any, i: number) => (
               <Line
                 key={i}
                 points={line.points}
-                stroke={color}
-                strokeWidth={10}
+                stroke={line.color}
+                strokeWidth={line.pensize}
                 tension={0.5}
                 lineCap='round'
                 globalCompositeOperation={
-                  line.tool === 'eraser' ? 'destination-out' : 'source-over'
+                  line.tool === 'pen' ? 'source-over' : 'destination-out'
                 }
               />
             ))}
           </Layer>
         </Stage>
+      </div>
+      <div className='grid place-items-center'>
+        <div className='grid grid-rows-2 place-items-center'>
+          <div className='grid grid-cols-3 gap-8'>
+            <div
+              className='btn btn-ghost text-base font-bold'
+              onClick={() => setBoxbtn('decorating')}
+            >
+              꾸미기
+            </div>
+            <div
+              className='btn btn-ghost text-base font-bold'
+              onClick={() => setBoxbtn('picture')}
+            >
+              사진
+            </div>
+            <div
+              className='btn btn-ghost text-base font-bold'
+              onClick={() => setBoxbtn('drawing')}
+            >
+              드로잉
+            </div>
+          </div>
+          <div>
+            {boxbtn === 'decorating' ? (
+              <div className='grid grid-cols-2'>
+                <div className='grid grid-rows-4'>
+                  <div
+                    className='btn btn-ghost text-font'
+                    onClick={() => setItem('top')}
+                  >
+                    상의
+                  </div>
+                  <div
+                    className='btn btn-ghost text-font'
+                    onClick={() => setItem('pants')}
+                  >
+                    하의
+                  </div>
+                  <div
+                    className='btn btn-ghost text-font'
+                    onClick={() => setItem('icon')}
+                  >
+                    이모티콘
+                  </div>
+                  <div
+                    className='btn btn-ghost text-font'
+                    onClick={() => setItem('text')}
+                  >
+                    말풍선
+                  </div>
+                </div>
+                <div className='grid place-items-center'>
+                  {item === 'top' ? (
+                    <div className='grid grid-cols-4'>
+                      <div className='btn btn-ghost text-font'>상의1</div>
+                      <div className='btn btn-ghost text-font'>상의2</div>
+                      <div className='btn btn-ghost text-font'>상의3</div>
+                      <div className='btn btn-ghost text-font'>상의4</div>
+                    </div>
+                  ) : item === 'pants' ? (
+                    <div className='grid grid-cols-4'>
+                      <div className='btn btn-ghost text-font'>하의1</div>
+                      <div className='btn btn-ghost text-font'>하의2</div>
+                      <div className='btn btn-ghost text-font'>하의3</div>
+                      <div className='btn btn-ghost text-font'>하의4</div>
+                    </div>
+                  ) : item === 'icon' ? (
+                    <div className='grid grid-cols-4'>
+                      <div className='btn btn-ghost text-font'>이모티콘1</div>
+                      <div className='btn btn-ghost text-font'>이모티콘2</div>
+                      <div className='btn btn-ghost text-font'>이모티콘3</div>
+                      <div className='btn btn-ghost text-font'>이모티콘4</div>
+                    </div>
+                  ) : item === 'text' ? (
+                    <div className='grid grid-cols-4'>
+                      <div className='btn btn-ghost text-font'>말풍선1</div>
+                      <div className='btn btn-ghost text-font'>말풍선2</div>
+                      <div className='btn btn-ghost text-font'>말풍선3</div>
+                      <div className='btn btn-ghost text-font'>말풍선4</div>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            ) : boxbtn === 'picture' ? (
+              <div>
+                <div className='grid place-items-center'>
+                  <div className='grid gird-cols-1 md:grid-cols-3'>
+                    <div className='grid place-items-center'>
+                      <input
+                        type='text'
+                        placeholder='TEXT'
+                        className='input input-bordered max-w-xs'
+                        onChange={textChage}
+                      />
+                    </div>
+                    <div className='grid place-items-center font-bold'>
+                      글씨 크기 : {textsize}px
+                    </div>
+                    <div className='grid place-items-start'>
+                      <div
+                        className='btn btn-ghost text-xs'
+                        onClick={() => {
+                          let size = textsize;
+                          if (textsize < 100) {
+                            setTextsize((size += 5));
+                          } else {
+                            setTextsize(100);
+                          }
+                        }}
+                      >
+                        ▲
+                      </div>
+                      <div
+                        className='btn btn-ghost text-xs'
+                        onClick={() => {
+                          let size = textsize;
+                          if (textsize > 1) {
+                            setTextsize((size -= 5));
+                          } else {
+                            setTextsize(0);
+                          }
+                        }}
+                      >
+                        ▼
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <div className='grid place-items-center mt-2'>
+                  <div>
+                    <HexColorPicker
+                      color={color}
+                      onChange={setColor}
+                      style={{
+                        height: '150px',
+                        width: '150px',
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className='grid place-items-center mb-4'>
+                  <div className='grid grid-cols-3'>
+                    <div className='grid grid-cols-2'>
+                      <div>
+                        <SlPencil
+                          className='btn btn-ghost text-lg'
+                          onClick={() => setTool('pen')}
+                        />
+                        <div>Pen</div>
+                      </div>
+                      <div>
+                        <BsEraser
+                          className='btn btn-ghost text-lg'
+                          onClick={() => setTool('eraser')}
+                        />
+                        <div>Eraser</div>
+                      </div>
+                    </div>
+                    <div className='grid grid-cols-4 place-items-center gap-3'>
+                      <button
+                        onClick={() => setPensize(5)}
+                        className='w-[40px] rounded-full bg-white font-bold text-base'
+                      >
+                        5
+                      </button>
+                      <button
+                        onClick={() => setPensize(10)}
+                        className='w-[40px] rounded-full bg-white font-bold text-base'
+                      >
+                        10
+                      </button>
+                      <button
+                        onClick={() => setPensize(15)}
+                        className='w-[40px] rounded-full bg-white font-bold text-base'
+                      >
+                        15
+                      </button>
+                      <button
+                        onClick={() => setPensize(20)}
+                        className='w-[40px] rounded-full bg-white font-bold text-base'
+                      >
+                        20
+                      </button>
+                    </div>
+                    <div>
+                      <button
+                        onClick={clearbtn}
+                        className='btn btn-ghost text-base font-bold'
+                      >
+                        지우기
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

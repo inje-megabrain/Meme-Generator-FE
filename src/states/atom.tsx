@@ -1,19 +1,31 @@
 import { atom } from 'recoil';
-import { WantedType } from '../types';
+import { MemeType } from '../types';
 
-const WantedDataState = atom<WantedType>({
-  key: 'WantedDataState',
+const MemeDataState = atom<MemeType>({
+  key: 'MemeDataState',
   default: [
     {
+      wantedId: 0,
       name: '',
-      prize: 0,
-      description: '',
       imageUrl: '',
+      username: '',
     },
   ],
 });
-const WantedPage = atom<number>({
-  key: 'WantedPage',
+const MemePage = atom<number>({
+  key: 'MemePage',
   default: 0,
 });
-export { WantedDataState, WantedPage };
+const imageUploadState = atom<File>({
+  key: 'imageUploadState',
+  default: new File([], ''),
+});
+const PreviewDateState = atom<string>({
+  key: 'PreviewDateState',
+  default: '',
+});
+const MemeID = atom<number>({
+  key: 'MemeID',
+  default: 0,
+});
+export { MemeDataState, MemePage, imageUploadState, PreviewDateState, MemeID };

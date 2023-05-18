@@ -1,11 +1,11 @@
-type WantedType = {
-  description: string;
+type MemeType = {
+  wantedId: number;
   imageUrl: string;
   name: string;
-  prize: number;
+  username: string;
 }[];
 type decodedjwtType = {
   sub: string;
   auth: string;
 };
-export type { WantedType, decodedjwtType };
+export type { MemeType, decodedjwtType };

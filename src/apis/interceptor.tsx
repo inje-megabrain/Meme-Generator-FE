@@ -23,7 +23,7 @@ jinInterceptor.interceptors.request.use(
   },
   function (error) {
     return Promise.reject(error);
-  },
+  }
 );
 jinInterceptor.interceptors.response.use(
   function (response) {
@@ -35,8 +35,9 @@ jinInterceptor.interceptors.response.use(
     if (error.response.status === 401) {
       toast.error('아이디 또는 비밀번호가 일치하지 않습니다.');
     }
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+    if (error.response.status === 401) {
+      // && !originalRequest._retry
+      //originalRequest._retry = true;
       const res = await fetch(API_URL + '/refresh', {
         method: 'POST',
         body: refreshToken,
@@ -55,6 +56,6 @@ jinInterceptor.interceptors.response.use(
         });
       }
     }
-  },
+  }
 );
 export default jinInterceptor;
