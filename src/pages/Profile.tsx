@@ -5,6 +5,7 @@ const Profile = () => {
   const homebtn = () => {
     navigate('/');
   };
+  
   return (
     <div>
       <div
