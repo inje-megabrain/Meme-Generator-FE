@@ -8,6 +8,7 @@ import { MemeTypeDataState } from '@src/states/atom';
 const Upload = () => {
   const naviage = useNavigate();
   const [imageSrc, setImageSrc] = useState<File | undefined>();
+  const [previewimage, setPreviewimage] = useState<string>('');
   const [memetype, setMemetype] = useRecoilState<string>(MemeTypeDataState);
   const [name, setName] = useState<string>('meme');
 
@@ -15,6 +16,7 @@ const Upload = () => {
     const files = e.target.files;
     if (files) {
       setImageSrc(files[0]);
+      setPreviewimage(URL.createObjectURL(files[0]));
     }
   };
   const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,9 +62,17 @@ const Upload = () => {
           onChange={nameChange}
         />
       </div>
-      <button onClick={uploadbtn} className='btn btn-ghost text-base font-bold'>
-        업로드
-      </button>
+      <div className='mt-4'>
+        <button
+          onClick={uploadbtn}
+          className='btn btn-ghost text-base font-bold'
+        >
+          업로드
+        </button>
+      </div>
+      <div>
+        <img src={previewimage} alt='' className='mt-4' />
+      </div>
     </div>
   );
 };
