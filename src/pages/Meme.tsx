@@ -3,6 +3,7 @@ import { MemeDeleteAPI, imageDownloadAPI } from '../apis/server';
 import { useRecoilState } from 'recoil';
 import { MemeDataState, MemePage } from '../states/atom';
 import { MemeType } from '../types';
+import { getCookie } from '@src/util/Cookie';
 
 const Meme = () => {
   const { VITE_APP_IMAGE_URL } = import.meta.env;
@@ -36,14 +37,16 @@ const Meme = () => {
                 <div className='font-bold text-xl text-start'>
                   <div>사진명 : {meme.name}</div>
                 </div>
-                <div
-                  className='btn btn-ghost font-bold'
-                  onClick={() => {
-                    MemeDeleteAPI(meme.wantedId);
-                  }}
-                >
-                  X
-                </div>
+                {getCookie('name') === meme.username ? (
+                  <div
+                    className='btn btn-ghost font-bold'
+                    onClick={() => {
+                      MemeDeleteAPI(meme.wantedId);
+                    }}
+                  >
+                    X
+                  </div>
+                ) : null}
               </div>
             </div>
           ))}

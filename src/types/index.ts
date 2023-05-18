@@ -2,6 +2,7 @@ type MemeType = {
   wantedId: number;
   imageUrl: string;
   name: string;
+  username: string;
 }[];
 type decodedjwtType = {
   sub: string;

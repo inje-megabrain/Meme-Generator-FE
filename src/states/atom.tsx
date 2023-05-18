@@ -8,6 +8,7 @@ const MemeDataState = atom<MemeType>({
       wantedId: 0,
       name: '',
       imageUrl: '',
+      username: '',
     },
   ],
 });
