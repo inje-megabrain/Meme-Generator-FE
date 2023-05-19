@@ -71,7 +71,13 @@ const Upload = () => {
         </button>
       </div>
       <div>
-        <img src={previewimage} alt='' className='mt-4' />
+        {previewimage ? (
+          <img
+            src={previewimage}
+            alt=''
+            className='mt-4 w-[600px] h-[600px] object-cover'
+          />
+        ) : null}
       </div>
     </div>
   );

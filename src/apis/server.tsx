@@ -107,3 +107,35 @@ export const ProfileAPI = async (
       console.log(error);
     });
 };
+export const MemberMemeAPI = async (username: string, page: number) => {
+  await jinInterceptor
+    .get(API_URL + `/meme/${username}`, {
+      params: {
+        page: page,
+        size: 6,
+        sort_direction: 'desc',
+      },
+      headers: headerConfig,
+    })
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+export const MemberSecessionAPI = async (username: string) => {
+  await jinInterceptor
+    .delete(API_URL + `/member/${username}`, {
+      params: {
+        username: username,
+      },
+      headers: headerConfig,
+    })
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};

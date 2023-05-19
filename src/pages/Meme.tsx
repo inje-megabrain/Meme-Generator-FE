@@ -88,7 +88,7 @@ const Meme = () => {
               </div>
               <img
                 src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
-                className='w-[355px] h-[267px] object-fit'
+                className='w-[400px] h-[400px] object-cover'
               />
               <div className='inline-block'>
                 <div className='font-bold text-xl text-start'>
