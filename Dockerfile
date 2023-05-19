@@ -4,9 +4,8 @@ RUN npm -g install serve
 RUN mkdir /app
 WORKDIR /app
 
-COPY .env package.json . yarn.lock ./
+COPY package.json yarn.lock ./
 
-RUN export $(cat .env | xargs)
 RUN yarn install
 
 COPY . /app/
