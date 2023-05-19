@@ -1,4 +1,8 @@
-import { MemberMemeAPI, ProfileAPI } from '@src/apis/server';
+import {
+  MemberMemeAPI,
+  MemberSecessionAPI,
+  ProfileAPI,
+} from '@src/apis/server';
 import { ProfileDataState, MemePage } from '@src/states/atom';
 import { ProfileType } from '@src/types';
 import { getCookie } from '@src/util/Cookie';
@@ -28,6 +32,9 @@ const Profile = () => {
   useEffect(() => {
     MemberMemeAPI(getCookie('username'), page);
   }, []);
+  const secession = () => {
+    MemberSecessionAPI(getCookie('username'));
+  };
 
   return (
     <div>
@@ -50,7 +57,12 @@ const Profile = () => {
             <pre data-prefix='>' className='text-success text-start'>
               <code className='text-xl'>Email : {profile.email}</code>
             </pre>
-            <div className='btn btn-ghost font-bold text-xl'>회원탈퇴</div>
+            <div
+              className='btn btn-ghost font-bold text-xl'
+              onClick={secession}
+            >
+              회원탈퇴
+            </div>
           </div>
           <div>
             <div></div>
