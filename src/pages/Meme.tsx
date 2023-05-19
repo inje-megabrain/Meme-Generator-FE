@@ -4,12 +4,14 @@ import { useRecoilState } from 'recoil';
 import { MemeDataState, MemePage } from '../states/atom';
 import { MemeType } from '../types';
 import { getCookie } from '@src/util/Cookie';
+import { toast } from 'react-toastify';
 
 const Meme = () => {
   const { VITE_APP_IMAGE_URL } = import.meta.env;
   const [memeList, setMemeList] = useRecoilState<MemeType>(MemeDataState);
   const [page, setPage] = useState<number>(0);
   const [totalpage, setTotalpage] = useRecoilState<number>(MemePage);
+  const [file, setFile] = useState<File>(new File([], ''));
 
   const prevpage = () => {
     if (page > 0) {
@@ -19,7 +21,7 @@ const Meme = () => {
   const nextpage = () => {
     setPage(page + 1);
   };
-  const myurl = 'https://localhost:5174'; // url 수정해야함
+  const myurl = 'http://localhost:5174'; // url 수정해야함
 
   useEffect(() => {
     imageDownloadAPI(page, setMemeList, setTotalpage);
@@ -37,7 +39,45 @@ const Meme = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    toast.success('짤 다운로드 성공');
     return data;
+  };
+  const shareurl = async (url: string) => {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const files = new File([blob], 'meme.png', { type: 'image/png' });
+    setFile(files);
+  };
+  const sharebtn = async () => {
+    setFile(new File([], ''));
+    const shareurl = (
+      await window.Kakao.Share.uploadImage({
+        file: [file],
+      })
+    ).infos.original.url;
+    window.Kakao.Share.createDefaultButton({
+      container: '#kakao-share-btn',
+      objectType: 'feed',
+      content: {
+        title: '짤 생성기',
+        description: '모든 짤들을 생성해보세요!',
+        imageUrl: shareurl,
+        link: {
+          mobileWebUrl: myurl,
+          webUrl: myurl,
+        },
+      },
+      buttons: [
+        {
+          title: '짤 생성기',
+          link: {
+            mobileWebUrl: myurl,
+            webUrl: myurl,
+          },
+        },
+      ],
+    });
+    (document.querySelector('#kakao-share-btn') as HTMLButtonElement).click();
   };
 
   return (
@@ -58,30 +98,21 @@ const Meme = () => {
                     X
                   </div>
                 ) : null}
+                <button
+                  id='kakao-share-btn'
+                  onClick={sharebtn}
+                  style={{
+                    display: 'none',
+                  }}
+                >
+                  카카오톡 이미지 업로드 버튼
+                </button>
                 <div
                   className='btn btn-ghost font-bold'
                   onClick={() => {
                     const image = VITE_APP_IMAGE_URL + meme.imageUrl.toString();
-                    window.Kakao.Share.createDefaultButton({
-                      container: '#kakao-share-btn',
-                      objectType: 'feed',
-                      content: {
-                        title: '짤 생성기',
-                        description: '모든 짤들을 생성해보세요!',
-                        imageUrl: image,
-                        link: {
-                          webUrl: myurl,
-                        },
-                      },
-                      buttons: [
-                        {
-                          title: '짤 생성기',
-                          link: {
-                            webUrl: myurl,
-                          },
-                        },
-                      ],
-                    });
+                    shareurl(image);
+                    sharebtn();
                   }}
                 >
                   공유

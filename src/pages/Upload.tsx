@@ -24,6 +24,7 @@ const Upload = () => {
   };
   const uploadbtn = async () => {
     await imageUploadApi(imageSrc as File, name, memetype);
+    naviage('/');
   };
   const sharepage = () => {
     naviage('/share');

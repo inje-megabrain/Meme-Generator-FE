@@ -130,7 +130,10 @@ export const MemberSecessionAPI = async (username: string) => {
       params: {
         username: username,
       },
-      headers: headerConfig,
+      headers: {
+        ...headerConfig,
+        Authorization: 'Bearer ' + getCookie('access_token'),
+      },
     })
     .then((response) => {
       console.log(response.data);

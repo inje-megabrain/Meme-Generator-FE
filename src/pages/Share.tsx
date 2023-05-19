@@ -44,7 +44,7 @@ const Share = () => {
     return new File([u8arr], filename, { type: mime });
   };
   const file = base64ToFile(previewimage, name);
-  const myurl = 'https://localhost:5174'; // url 수정해야함
+  const myurl = 'http://localhost:5174'; // url 수정해야함
   const sharebtn = async () => {
     const shareurl = (
       await window.Kakao.Share.uploadImage({
