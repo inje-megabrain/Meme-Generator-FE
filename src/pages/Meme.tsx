@@ -25,6 +25,21 @@ const Meme = () => {
     imageDownloadAPI(page, setMemeList, setTotalpage);
   }, [page]);
 
+  // image url => file => image download
+  const converURLtoFile = async (url: string, filename: string) => {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const file = new File([blob], filename, { type: 'image/png' });
+    const data = URL.createObjectURL(file);
+    const link = document.createElement('a');
+    link.href = data;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    return data;
+  };
+
   return (
     <div>
       <div className='mt-4'>
@@ -75,12 +90,7 @@ const Meme = () => {
                   className='btn btn-ghost font-bold'
                   onClick={() => {
                     const image = VITE_APP_IMAGE_URL + meme.imageUrl.toString();
-                    const link = document.createElement('a');
-                    link.download = meme.name + '.png';
-                    document.body.appendChild(link);
-                    link.href = image;
-                    link.click();
-                    document.body.removeChild(link);
+                    converURLtoFile(image, meme.name + '.png');
                   }}
                 >
                   다운
