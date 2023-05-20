@@ -51,9 +51,9 @@ export const imageDownloadAPI = async (
   setWantedList: SetterOrUpdater<MemeType>,
   setTotalpage: SetterOrUpdater<number>
 ) => {
-  //API_URL
+  console.log(API_URL);
   await axios
-    .get('test' + '/meme', {
+    .get(API_URL + '/meme', {
       params: {
         page: page,
         size: 6,
