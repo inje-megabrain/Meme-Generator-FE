@@ -16,6 +16,10 @@ const MemePage = atom<number>({
   key: 'MemePage',
   default: 0,
 });
+const MemberMemePage = atom<number>({
+  key: 'MemberMemePage',
+  default: 0,
+});
 const imageUploadState = atom<File>({
   key: 'imageUploadState',
   default: new File([], ''),
@@ -36,6 +40,17 @@ const ProfileDataState = atom<ProfileType>({
     name: '',
   },
 });
+const MemberMemeDataState = atom<MemeType>({
+  key: 'MemberMemeDataState',
+  default: [
+    {
+      memeId: 0,
+      name: '',
+      imageUrl: '',
+      username: '',
+    },
+  ],
+});
 
 export {
   MemeDataState,
@@ -44,4 +59,6 @@ export {
   PreviewDateState,
   MemeTypeDataState,
   ProfileDataState,
+  MemberMemeDataState,
+  MemberMemePage,
 };

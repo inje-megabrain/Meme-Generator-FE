@@ -19,6 +19,7 @@
     "browser-image-compression": "^2.0.2",
     "buffer": "^6.0.3",
     "daisyui": "^2.51.6",
+    "dotenv": "^16.0.3",
     "eslint": "^8.40.0",
     "eslint-plugin-prettier": "^4.2.1",
     "jwt-decode": "^3.1.2",

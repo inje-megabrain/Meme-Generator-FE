@@ -35,14 +35,12 @@ export const imageUploadApi = async (
       },
     })
     .then((response) => {
-      //console.log(response);
       if (response.status === 201) {
         setCookie('status', 'upload success');
         window.location.href = '/';
       }
     })
     .catch((error) => {
-      console.log(error);
       toast.error('업로드 실패');
     });
 };
@@ -51,7 +49,6 @@ export const imageDownloadAPI = async (
   setWantedList: SetterOrUpdater<MemeType>,
   setTotalpage: SetterOrUpdater<number>
 ) => {
-  console.log(API_URL);
   await axios
     .get(API_URL + '/meme', {
       params: {
@@ -62,7 +59,6 @@ export const imageDownloadAPI = async (
       headers: headerConfig,
     })
     .then((response) => {
-      console.log(response.data.dtos);
       setWantedList(response.data.dtos);
       setTotalpage(response.data.pageInfo.totalPages);
     })
@@ -80,7 +76,6 @@ export const MemeDeleteAPI = async (memeid: number) => {
       },
     })
     .then((response) => {
-      //console.log(response);
       if (response.status === 200) {
         window.location.href = '/';
         setCookie('status', 'delete success');
@@ -108,36 +103,24 @@ export const ProfileAPI = async (
       console.log(error);
     });
 };
-export const MemberMemeAPI = async (username: string, page: number) => {
+export const MemberMemeAPI = async (
+  username: string,
+  page: number,
+  setMeme: SetterOrUpdater<MemeType>,
+  setTotalpage: SetterOrUpdater<number>
+) => {
   await jinInterceptor
-    .get(API_URL + `/meme/${username}`, {
+    .get(API_URL + `/meme/member/${username}`, {
       params: {
-        page: 1,
+        page: 0,
         size: 6,
         sort_direction: 'desc',
       },
       headers: headerConfig,
     })
     .then((response) => {
-      console.log(response.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
-export const MemberSecessionAPI = async (username: string) => {
-  await jinInterceptor
-    .delete(API_URL + `/member/${username}`, {
-      params: {
-        username: username,
-      },
-      headers: {
-        ...headerConfig,
-        Authorization: 'Bearer ' + getCookie('access_token'),
-      },
-    })
-    .then((response) => {
-      console.log(response.data);
+      setMeme(response.data.dtos);
+      setTotalpage(response.data.pageInfo.totalPages);
     })
     .catch((error) => {
       console.log(error);

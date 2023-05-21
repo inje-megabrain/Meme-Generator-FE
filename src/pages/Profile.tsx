@@ -1,18 +1,22 @@
+import { MemberSecessionAPI } from '@src/apis/auth';
+import { MemberMemeAPI, ProfileAPI } from '@src/apis/server';
 import {
-  MemberMemeAPI,
-  MemberSecessionAPI,
-  ProfileAPI,
-} from '@src/apis/server';
-import { ProfileDataState, MemePage } from '@src/states/atom';
-import { ProfileType } from '@src/types';
+  ProfileDataState,
+  MemePage,
+  MemberMemeDataState,
+} from '@src/states/atom';
+import { MemeType, ProfileType } from '@src/types';
 import { getCookie } from '@src/util/Cookie';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
+const { VITE_APP_IMAGE_URL } = import.meta.env;
+
 const Profile = () => {
   const navigate = useNavigate();
   const [profile, setProfile] = useRecoilState<ProfileType>(ProfileDataState);
+  const [meme, setMeme] = useRecoilState<MemeType>(MemberMemeDataState);
   const [totalpage, setTotalpage] = useRecoilState<number>(MemePage);
   const [page, setPage] = useState<number>(0);
   const homebtn = () => {
@@ -30,7 +34,7 @@ const Profile = () => {
     ProfileAPI(getCookie('username'), setProfile);
   }, []);
   useEffect(() => {
-    MemberMemeAPI(getCookie('username'), page);
+    MemberMemeAPI(getCookie('username'), page, setMeme, setTotalpage);
   }, []);
   const secession = () => {
     MemberSecessionAPI(getCookie('username'));
@@ -46,8 +50,8 @@ const Profile = () => {
       </div>
       <div className='font-bold text-3xl mt-2'>Profile</div>
       <div className='mt-10'>
-        <div className='grid grid-cols-2'>
-          <div className='mockup-code'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
+          <div className='mockup-code h-[250px]'>
             <pre data-prefix='$' className='text-start'>
               <code className='text-xl'>Name : {profile.name}</code>
             </pre>
@@ -65,7 +69,27 @@ const Profile = () => {
             </div>
           </div>
           <div>
-            <div></div>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+              {meme.map((meme, index) => {
+                return (
+                  <div key={index}>
+                    <div>
+                      <div>
+                        <img
+                          src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
+                          className='w-[310px] h-[310px] object-cover'
+                        />
+                      </div>
+                      <div className='inline-block'>
+                        <div className='font-bold text-xl text-start'>
+                          <div>사진명 : {meme.name}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
             <div className='mt-2'>
               <div className='btn-group'>
                 {page > 0 ? (

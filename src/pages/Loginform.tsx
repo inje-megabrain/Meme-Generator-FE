@@ -133,18 +133,22 @@ const Loginform = () => {
           </div>
         ) : null}
         <div className='grid place-items-center mt-4'>
-          <button
-            className='btn btn-outline outline outline-black font-bold text-2xl rounded-xl w-full max-w-xs'
-            onClick={googlelogin}
-          >
-            Google
-          </button>
-          <button
-            className='btn btn-outline outline outline-black font-bold text-2xl rounded-xl w-full max-w-xs mt-4'
-            onClick={LoginFunc}
-          >
-            Login
-          </button>
+          {!signup ? (
+            <>
+              <button
+                className='btn btn-outline outline outline-black font-bold text-2xl rounded-xl w-full max-w-xs'
+                onClick={googlelogin}
+              >
+                Google
+              </button>
+              <button
+                className='btn btn-outline outline outline-black font-bold text-2xl rounded-xl w-full max-w-xs mt-4'
+                onClick={LoginFunc}
+              >
+                Login
+              </button>
+            </>
+          ) : null}
           {signup ? (
             <button
               className='btn btn-outline outline outline-black font-bold text-2xl rounded-xl w-full max-w-xs mt-4'

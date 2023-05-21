@@ -1,4 +1,7 @@
 .git
 node_modules
 .gitignore
-.env
+
+
+docker-compose*
+run.sh

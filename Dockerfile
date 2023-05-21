@@ -8,9 +8,9 @@ COPY package.json yarn.lock ./
 
 RUN yarn install
 
-COPY . /app/
+COPY . /app
 
-RUN yarn build
+RUN yarn build && rm .env
 
 EXPOSE 5000
 

@@ -32,8 +32,8 @@ jinInterceptor.interceptors.response.use(
   async function (error) {
     const originalRequest = error.config;
     console.log(error.response.status);
-    if (error.response.status === 401) {
-      toast.error('아이디 또는 비밀번호가 일치하지 않습니다.');
+    if (error.response.status === 400) {
+      throw error;
     }
     if (error.response.status === 401) {
       // && !originalRequest._retry

@@ -42,6 +42,10 @@ const Main = () => {
     toast.success('짤 삭제 성공');
     removeCookie('status', { path: '/' });
   }
+  if (status === 'secession success') {
+    toast.success('회원 탈퇴 성공');
+    removeCookie('status', { path: '/' });
+  }
 
   return (
     <>
