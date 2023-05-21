@@ -75,7 +75,7 @@ const Upload = () => {
           <img
             src={previewimage}
             alt=''
-            className='mt-4 w-[600px] h-[600px] object-cover'
+            className='mt-4 w-[600px] h-[600px] object-fit'
           />
         ) : null}
       </div>

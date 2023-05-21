@@ -8,7 +8,6 @@ import { SlPencil } from 'react-icons/sl';
 import { BsEraser } from 'react-icons/bs';
 import { useRecoilState } from 'recoil';
 import { MemeTypeDataState, PreviewDateState } from '@src/states/atom';
-import { toast } from 'react-toastify';
 
 const MemeGenerator = () => {
   const navigate = useNavigate();
@@ -192,7 +191,6 @@ const MemeGenerator = () => {
           <Layer>
             <Image image={image} width={500} height={500} />
           </Layer>
-
           <Layer>
             {lines.map((line: any, i: number) => (
               <Line
