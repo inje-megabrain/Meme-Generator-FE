@@ -8,6 +8,7 @@ import { SlPencil } from 'react-icons/sl';
 import { BsEraser } from 'react-icons/bs';
 import { useRecoilState } from 'recoil';
 import { MemeTypeDataState, PreviewDateState } from '@src/states/atom';
+import { toast } from 'react-toastify';
 
 const MemeGenerator = () => {
   const navigate = useNavigate();
@@ -129,7 +130,6 @@ const MemeGenerator = () => {
     setPreviewimage('');
     navigate('/template');
   };
-
   return (
     <div>
       <div className='grid place-items-center'>
@@ -165,12 +165,14 @@ const MemeGenerator = () => {
           >
             Previous
           </div>
-          <div
-            className='btn btn-ghost font-bold text-2xl rounded-xl'
-            onClick={sharepage}
-          >
-            Next
-          </div>
+          {previewimage ? (
+            <div
+              className='btn btn-ghost font-bold text-2xl rounded-xl'
+              onClick={sharepage}
+            >
+              Next
+            </div>
+          ) : null}
         </div>
       </div>
 
