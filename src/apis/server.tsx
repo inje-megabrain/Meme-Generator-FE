@@ -35,7 +35,7 @@ export const imageUploadApi = async (
       },
     })
     .then((response) => {
-      if (response.status === 201) {
+      if (type === 'MEME' && response.status === 201) {
         setCookie('status', 'upload success');
         window.location.href = '/';
       }

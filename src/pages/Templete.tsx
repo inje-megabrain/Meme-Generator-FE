@@ -1,4 +1,8 @@
-import { imageDownloadAPI, imageUploadApi } from '@src/apis/server';
+import {
+  MemeDeleteAPI,
+  imageDownloadAPI,
+  imageUploadApi,
+} from '@src/apis/server';
 import {
   PreviewDateState,
   TemplateDataState,
@@ -37,6 +41,7 @@ const Template = () => {
   };
   const uploadbtn = async () => {
     await imageUploadApi(imageSrc as File, name, 'TEMPLATE');
+    window.location.reload();
   };
   const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -108,10 +113,22 @@ const Template = () => {
         NEXT
       </div>
       <div>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+        <div className='grid grid-cols-1 md:grid-cols-3'>
           {templatelist.map((meme, index) => {
             return (
               <div key={index}>
+                <div>
+                  {getCookie('username') === 'admin' ? (
+                    <div
+                      className='btn btn-ghost font-bold'
+                      onClick={() => {
+                        MemeDeleteAPI(meme.memeId);
+                      }}
+                    >
+                      X
+                    </div>
+                  ) : null}
+                </div>
                 <div
                   className='btn btn-ghost w-[270px] h-[310px]'
                   onClick={() => {
@@ -137,7 +154,7 @@ const Template = () => {
             );
           })}
         </div>
-        <div className='mt-2'>
+        <div className='mt-8'>
           <div className='btn-group'>
             {page > 0 ? (
               <button className='btn btn-ghost' onClick={prevpage}>
