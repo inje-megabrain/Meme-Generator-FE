@@ -47,7 +47,6 @@ const MemeGenerator = () => {
       setLines(nlines);
     }
   };
-  console.log(previewimage);
   const handleMouseMove = (e: Konva.KonvaEventObject<MouseEvent>) => {
     if (!isDrawing.current) {
       return;
@@ -60,6 +59,37 @@ const MemeGenerator = () => {
     // replace last
     lines.splice(lines.length - 1, 1, lastLine);
     setLines(lines.concat());
+  };
+  const mobliehandleMouseDown = (e: Konva.KonvaEventObject<TouchEvent>) => {
+    isDrawing.current = true;
+    const pos = e.target.getStage()?.getPointerPosition();
+    if (pos) {
+      let nlines = null;
+      if (tool == 'erase') {
+        nlines = lines.filter(
+          (line: any) => !(line.points[0] == pos.x && line.points[1] == pos.y)
+        );
+      } else {
+        nlines = [...lines, { tool, color, pensize, points: [pos.x, pos.y] }];
+      }
+      setLines(nlines);
+    }
+  };
+  const mobilehandleMouseMove = (e: Konva.KonvaEventObject<TouchEvent>) => {
+    if (!isDrawing.current) {
+      return;
+    }
+    const stage = e.target.getStage();
+    const point = stage?.getPointerPosition();
+    let lastLine = lines[lines.length - 1];
+    // add point
+    lastLine.points = lastLine.points.concat([point?.x, point?.y]);
+    // replace last
+    lines.splice(lines.length - 1, 1, lastLine);
+    setLines(lines.concat());
+  };
+  const mobilehandleMouseUp = () => {
+    isDrawing.current = false;
   };
 
   const handleMouseUp = () => {
@@ -149,6 +179,9 @@ const MemeGenerator = () => {
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
+          onTouchStart={mobliehandleMouseDown}
+          onTouchMove={mobilehandleMouseMove}
+          onTouchEnd={mobilehandleMouseUp}
           ref={stageRef}
         >
           <Layer>
