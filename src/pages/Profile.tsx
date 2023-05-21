@@ -35,7 +35,7 @@ const Profile = () => {
   }, []);
   useEffect(() => {
     MemberMemeAPI(getCookie('username'), page, setMeme, setTotalpage);
-  }, []);
+  }, [page]);
   const secession = () => {
     MemberSecessionAPI(getCookie('username'));
   };

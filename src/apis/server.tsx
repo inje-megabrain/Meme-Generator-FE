@@ -115,7 +115,7 @@ export const MemberMemeAPI = async (
     .get(API_URL + `/meme/member/${username}`, {
       params: {
         page: page,
-        size: 6,
+        size: 4,
         sort_direction: 'desc',
       },
       headers: headerConfig,
