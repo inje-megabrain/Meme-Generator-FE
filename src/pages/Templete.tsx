@@ -4,6 +4,7 @@ import {
   imageUploadApi,
 } from '@src/apis/server';
 import {
+  MemeTypeDataState,
   PreviewDateState,
   TemplateDataState,
   templatePage,
@@ -26,7 +27,7 @@ const Template = () => {
   const [totalpage, setTotalpage] = useRecoilState<number>(templatePage);
   const [previewimage, setPreviewimage] =
     useRecoilState<string>(PreviewDateState);
-  const [shareimage, setShareimage] = useState<any>();
+  const [memetype, setMemetype] = useRecoilState<string>(MemeTypeDataState);
 
   const handleFileOnChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;

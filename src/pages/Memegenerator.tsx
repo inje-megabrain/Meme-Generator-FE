@@ -78,6 +78,7 @@ const MemeGenerator = () => {
     console.log(image);
     const uri = stageRef.current?.toDataURL();
     setPreviewimage(uri!);
+    setMemetype('MEME');
     navigate('/share');
   };
 
