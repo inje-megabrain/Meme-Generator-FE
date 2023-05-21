@@ -47,11 +47,13 @@ export const imageUploadApi = async (
 export const imageDownloadAPI = async (
   page: number,
   setWantedList: SetterOrUpdater<MemeType>,
-  setTotalpage: SetterOrUpdater<number>
+  setTotalpage: SetterOrUpdater<number>,
+  type: string
 ) => {
   await axios
     .get(API_URL + '/meme', {
       params: {
+        type: type,
         page: page,
         size: 6,
         sort_direction: 'desc',

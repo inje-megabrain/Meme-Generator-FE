@@ -17,6 +17,8 @@ const Main = () => {
   const logoutbtn = () => {
     removeCookie('access_token', { path: '/' });
     removeCookie('refresh_token', { path: '/' });
+    removeCookie('username', { path: '/' });
+    removeCookie('role', { path: '/' });
     setCookie('status', 'logout success');
     window.location.reload();
   };

@@ -91,6 +91,7 @@ const MemeGenerator = () => {
     navigate('/');
   };
   const templatebtn = () => {
+    setPreviewimage('');
     navigate('/template');
   };
 
@@ -109,16 +110,18 @@ const MemeGenerator = () => {
           <li className='step'>Upload</li>
         </ul>
       </div>
-      <div className='grid place-items-center'>
-        <div>
-          <input
-            type='file'
-            className='file-input file-input-bordered file-input-black w-full max-w-xs mb-2 rounded-md border-solid'
-            onChange={handleFileOnChange}
-            accept='image/jpg, image/jpeg,image/png'
-          />
+      {!previewimage ? (
+        <div className='grid place-items-center'>
+          <div>
+            <input
+              type='file'
+              className='file-input file-input-bordered file-input-black w-full max-w-xs mb-2 rounded-md border-solid'
+              onChange={handleFileOnChange}
+              accept='image/jpg, image/jpeg,image/png'
+            />
+          </div>
         </div>
-      </div>
+      ) : null}
       <div className='grid place-items-center'>
         <div className='grid grid-cols-2'>
           <div

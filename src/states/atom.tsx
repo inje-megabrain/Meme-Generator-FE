@@ -51,6 +51,21 @@ const MemberMemeDataState = atom<MemeType>({
     },
   ],
 });
+const TemplateDataState = atom<MemeType>({
+  key: 'TemplateDataState',
+  default: [
+    {
+      memeId: 0,
+      name: '',
+      imageUrl: '',
+      username: '',
+    },
+  ],
+});
+const templatePage = atom<number>({
+  key: 'templatePage',
+  default: 0,
+});
 
 export {
   MemeDataState,
@@ -61,4 +76,6 @@ export {
   ProfileDataState,
   MemberMemeDataState,
   MemberMemePage,
+  TemplateDataState,
+  templatePage,
 };

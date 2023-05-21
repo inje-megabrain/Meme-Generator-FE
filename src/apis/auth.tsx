@@ -119,6 +119,8 @@ const MemberSecessionAPI = async (username: string) => {
         setCookie('status', 'secession success');
         removeCookie('access_token', { path: '/' });
         removeCookie('refresh_token', { path: '/' });
+        removeCookie('username', { path: '/' });
+        removeCookie('role', { path: '/' });
         window.location.href = '/';
       }
     })

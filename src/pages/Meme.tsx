@@ -24,7 +24,7 @@ const Meme = () => {
   const myurl = 'http://localhost:5000'; // url 수정해야함
 
   useEffect(() => {
-    imageDownloadAPI(page, setMemeList, setTotalpage);
+    imageDownloadAPI(page, setMemeList, setTotalpage , 'MEME');
   }, [page]);
 
   // image url => file => image download
@@ -86,51 +86,57 @@ const Meme = () => {
         <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
           {memeList.map((meme, index) => (
             <div key={index}>
-              <div className='grid grid-cols-3'>
-                {getCookie('username') === meme.username ||
-                getCookie('username') === 'admin' ? (
+              {getCookie('access_token') ? (
+                <div className='grid grid-cols-3'>
+                  {getCookie('username') === meme.username ||
+                  getCookie('username') === 'admin' ? (
+                    <div
+                      className='btn btn-ghost font-bold'
+                      onClick={() => {
+                        MemeDeleteAPI(meme.memeId);
+                      }}
+                    >
+                      X
+                    </div>
+                  ) : null}
+                  <button
+                    id='kakao-share-btn'
+                    onClick={sharebtn}
+                    style={{
+                      display: 'none',
+                    }}
+                  >
+                    카카오톡 이미지 업로드 버튼
+                  </button>
                   <div
                     className='btn btn-ghost font-bold'
                     onClick={() => {
-                      MemeDeleteAPI(meme.memeId);
+                      const image =
+                        VITE_APP_IMAGE_URL + meme.imageUrl.toString();
+                      shareurl(image);
+                      sharebtn();
                     }}
                   >
-                    X
+                    공유
                   </div>
-                ) : null}
-                <button
-                  id='kakao-share-btn'
-                  onClick={sharebtn}
-                  style={{
-                    display: 'none',
-                  }}
-                >
-                  카카오톡 이미지 업로드 버튼
-                </button>
-                <div
-                  className='btn btn-ghost font-bold'
-                  onClick={() => {
-                    const image = VITE_APP_IMAGE_URL + meme.imageUrl.toString();
-                    shareurl(image);
-                    sharebtn();
-                  }}
-                >
-                  공유
+                  <div
+                    className='btn btn-ghost font-bold'
+                    onClick={() => {
+                      const image =
+                        VITE_APP_IMAGE_URL + meme.imageUrl.toString();
+                      converURLtoFile(image, meme.name + '.png');
+                    }}
+                  >
+                    다운
+                  </div>
                 </div>
-                <div
-                  className='btn btn-ghost font-bold'
-                  onClick={() => {
-                    const image = VITE_APP_IMAGE_URL + meme.imageUrl.toString();
-                    converURLtoFile(image, meme.name + '.png');
-                  }}
-                >
-                  다운
-                </div>
+              ) : null}
+              <div>
+                <img
+                  src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
+                  className='w-[400px] h-[400px] object-cover'
+                />
               </div>
-              <img
-                src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
-                className='w-[400px] h-[400px] object-cover'
-              />
               <div className='inline-block'>
                 <div className='font-bold text-xl text-start'>
                   <div>사진명 : {meme.name}</div>
