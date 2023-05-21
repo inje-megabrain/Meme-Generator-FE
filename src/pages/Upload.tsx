@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { imageUploadApi } from '@src/apis/server';
 import { useNavigate } from 'react-router-dom';
-import { getCookie } from '@src/util/Cookie';
 import { useRecoilState } from 'recoil';
 import { MemeTypeDataState } from '@src/states/atom';
 

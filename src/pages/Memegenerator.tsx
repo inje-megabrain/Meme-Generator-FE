@@ -23,14 +23,15 @@ const MemeGenerator = () => {
   const [image] = useImage(previewimage);
   const isDrawing = useRef(false);
   const stageRef = useRef<Konva.Stage>(null);
-  const [boxbtn, setBoxbtn] = useState<string>('');
-  const [item, setItem] = useState<string>('');
+  const [boxbtn, setBoxbtn] = useState<string>('drawing');
+  const [item, setItem] = useState<string>('top');
   const [textstate, setTextstate] = useState<any>({
     isDragging: false,
     x: 50,
     y: 50,
   });
   const [textsize, setTextsize] = useState<number>(30);
+  const [textstyle, setTextstyle] = useState<string>('normal');
 
   const handleMouseDown = (e: Konva.KonvaEventObject<MouseEvent>) => {
     isDrawing.current = true;
@@ -105,7 +106,6 @@ const MemeGenerator = () => {
     }
   };
   const sharepage = () => {
-    console.log(image);
     const uri = stageRef.current?.toDataURL();
     setPreviewimage(uri!);
     setMemetype('MEME');
@@ -114,6 +114,9 @@ const MemeGenerator = () => {
 
   const textChage = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
+  };
+  const textstyleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setTextstyle(e.target.value);
   };
 
   const clearbtn = () => {
@@ -173,8 +176,8 @@ const MemeGenerator = () => {
 
       <div className='grid place-items-center mt-4'>
         <Stage
-          width={600}
-          height={600}
+          width={500}
+          height={500}
           className='border-2 border-black border-solid'
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
@@ -185,12 +188,29 @@ const MemeGenerator = () => {
           ref={stageRef}
         >
           <Layer>
-            <Image image={image} width={600} height={600} />
+            <Image image={image} width={500} height={500} />
+          </Layer>
+
+          <Layer>
+            {lines.map((line: any, i: number) => (
+              <Line
+                key={i}
+                points={line.points}
+                stroke={line.color}
+                strokeWidth={line.pensize}
+                tension={0.5}
+                lineCap='round'
+                globalCompositeOperation={
+                  line.tool === 'pen' ? 'source-over' : 'destination-out'
+                }
+              />
+            ))}
           </Layer>
           <Layer>
             <Text
               text={text}
               fontSize={textsize}
+              fontStyle={textstyle}
               x={textstate.x}
               y={textstate.y}
               draggable
@@ -209,26 +229,11 @@ const MemeGenerator = () => {
               }}
             />
           </Layer>
-          <Layer>
-            {lines.map((line: any, i: number) => (
-              <Line
-                key={i}
-                points={line.points}
-                stroke={line.color}
-                strokeWidth={line.pensize}
-                tension={0.5}
-                lineCap='round'
-                globalCompositeOperation={
-                  line.tool === 'pen' ? 'source-over' : 'destination-out'
-                }
-              />
-            ))}
-          </Layer>
         </Stage>
       </div>
       <div className='grid place-items-center'>
-        <div className='grid grid-rows-2 place-items-center'>
-          <div className='grid grid-cols-3 gap-8'>
+        <div className='grid grid-rows-2 place-items-center h-[280px]'>
+          <div className='grid grid-cols-3 gap-8 h-[130px]'>
             <div
               className='btn btn-ghost text-base font-bold'
               onClick={() => setBoxbtn('decorating')}
@@ -248,7 +253,7 @@ const MemeGenerator = () => {
               드로잉
             </div>
           </div>
-          <div>
+          <div className='h-[240px]'>
             {boxbtn === 'decorating' ? (
               <div className='grid grid-cols-2'>
                 <div className='grid grid-rows-4'>
@@ -311,20 +316,18 @@ const MemeGenerator = () => {
               </div>
             ) : boxbtn === 'picture' ? (
               <div>
-                <div className='grid place-items-center'>
-                  <div className='grid gird-cols-1 md:grid-cols-3'>
-                    <div className='grid place-items-center'>
-                      <input
-                        type='text'
-                        placeholder='TEXT'
-                        className='input input-bordered max-w-xs'
-                        onChange={textChage}
-                      />
-                    </div>
-                    <div className='grid place-items-center font-bold'>
-                      글씨 크기 : {textsize}px
-                    </div>
-                    <div className='grid place-items-start'>
+                <div className='grid gird-rows-3 gap-4 place-items-center'>
+                  <div>
+                    <input
+                      type='text'
+                      placeholder='TEXT'
+                      className='input input-bordered max-w-xs'
+                      onChange={textChage}
+                    />
+                  </div>
+                  <div className='font-bold w-24'>{textsize}px</div>
+                  <div className='grid grid-cols-2'>
+                    <div className='w-12'>
                       <div
                         className='btn btn-ghost text-xs'
                         onClick={() => {
@@ -352,11 +355,19 @@ const MemeGenerator = () => {
                         ▼
                       </div>
                     </div>
+                    <div className='grid place-items-center'>
+                      <select onChange={textstyleChange}>
+                        <option value='Normal' disabled selected>
+                          Normal
+                        </option>
+                        <option value='Bold'>Bold</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
             ) : (
-              <div>
+              <div className='grid place-items-center'>
                 <div className='grid place-items-center mt-2'>
                   <div>
                     <HexColorPicker

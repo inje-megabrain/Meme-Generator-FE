@@ -114,7 +114,7 @@ export const MemberMemeAPI = async (
   await jinInterceptor
     .get(API_URL + `/meme/member/${username}`, {
       params: {
-        page: 0,
+        page: page,
         size: 6,
         sort_direction: 'desc',
       },

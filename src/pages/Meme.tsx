@@ -5,6 +5,11 @@ import { MemeDataState, MemePage } from '../states/atom';
 import { MemeType } from '../types';
 import { getCookie } from '@src/util/Cookie';
 import { toast } from 'react-toastify';
+import {
+  AiOutlineClose,
+  AiOutlineCloudDownload,
+  AiOutlineShareAlt,
+} from 'react-icons/ai';
 
 const Meme = () => {
   const { VITE_APP_IMAGE_URL } = import.meta.env;
@@ -90,13 +95,13 @@ const Meme = () => {
                 <div className='grid grid-cols-3'>
                   {getCookie('username') === meme.username ||
                   getCookie('username') === 'admin' ? (
-                    <div
-                      className='btn btn-ghost font-bold'
-                      onClick={() => {
-                        MemeDeleteAPI(meme.memeId);
-                      }}
-                    >
-                      X
+                    <div>
+                      <AiOutlineClose
+                        className='btn btn-ghost font-bold text-xl'
+                        onClick={() => {
+                          MemeDeleteAPI(meme.memeId);
+                        }}
+                      />
                     </div>
                   ) : null}
                   <button
@@ -108,26 +113,26 @@ const Meme = () => {
                   >
                     카카오톡 이미지 업로드 버튼
                   </button>
-                  <div
-                    className='btn btn-ghost font-bold'
-                    onClick={() => {
-                      const image =
-                        VITE_APP_IMAGE_URL + meme.imageUrl.toString();
-                      shareurl(image);
-                      sharebtn();
-                    }}
-                  >
-                    공유
+                  <div>
+                    <AiOutlineShareAlt
+                      className='btn btn-ghost font-bold text-xl'
+                      onClick={() => {
+                        const image =
+                          VITE_APP_IMAGE_URL + meme.imageUrl.toString();
+                        shareurl(image);
+                        sharebtn();
+                      }}
+                    />
                   </div>
-                  <div
-                    className='btn btn-ghost font-bold'
-                    onClick={() => {
-                      const image =
-                        VITE_APP_IMAGE_URL + meme.imageUrl.toString();
-                      converURLtoFile(image, meme.name + '.png');
-                    }}
-                  >
-                    다운
+                  <div>
+                    <AiOutlineCloudDownload
+                      className='btn btn-ghost font-bold text-xl'
+                      onClick={() => {
+                        const image =
+                          VITE_APP_IMAGE_URL + meme.imageUrl.toString();
+                        converURLtoFile(image, meme.name + '.png');
+                      }}
+                    />
                   </div>
                 </div>
               ) : null}
@@ -139,7 +144,7 @@ const Meme = () => {
               </div>
               <div className='inline-block'>
                 <div className='font-bold text-xl text-start'>
-                  <div>사진명 : {meme.name}</div>
+                  <div>{meme.name} 짤</div>
                 </div>
               </div>
             </div>

@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { getCookie, setCookie } from '../util/Cookie';
+import { getCookie, removeCookie, setCookie } from '../util/Cookie';
 import { API_URL } from '../constants/Constants';
 import { toast } from 'react-toastify';
 
@@ -35,15 +35,13 @@ jinInterceptor.interceptors.response.use(
     if (error.response.status === 400) {
       throw error;
     }
-    if (error.response.status === 401) {
-      // && !originalRequest._retry
-      //originalRequest._retry = true;
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
       const res = await fetch(API_URL + '/refresh', {
         method: 'POST',
         body: refreshToken,
       });
       if (res.status === 200) {
-        toast.success('로그인 성공');
         res.json().then((data) => {
           setCookie('access_token', data.accessToken, {
             path: '/',
@@ -52,8 +50,12 @@ jinInterceptor.interceptors.response.use(
             path: '/',
           });
           console.log('Access Token Refreshed!');
+          originalRequest.headers.Authorization = 'Bearer ' + accessToken;
           return jinInterceptor(originalRequest);
         });
+      } else {
+        removeCookie('access_token', { path: '/' });
+        removeCookie('refresh_token', { path: '/' });
       }
     }
   }

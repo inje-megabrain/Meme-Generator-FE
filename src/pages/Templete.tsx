@@ -127,7 +127,7 @@ const Template = () => {
         <div className='grid grid-cols-1 md:grid-cols-3'>
           {templatelist.map((meme, index) => {
             return (
-              <div key={index}>
+              <div key={index} className='mt-8'>
                 <div>
                   {getCookie('username') === 'admin' ? (
                     <div
