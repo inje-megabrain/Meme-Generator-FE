@@ -213,25 +213,25 @@ const MemeGenerator = () => {
               <div className='grid grid-cols-2'>
                 <div className='grid grid-rows-4'>
                   <div
-                    className='btn btn-ghost text-font'
+                    className='btn btn-ghost text-font btn-outline btn-primary'
                     onClick={() => setItem('top')}
                   >
                     상의
                   </div>
                   <div
-                    className='btn btn-ghost text-font'
+                    className='btn btn-ghost text-font btn-outline btn-primary'
                     onClick={() => setItem('pants')}
                   >
                     하의
                   </div>
                   <div
-                    className='btn btn-ghost text-font'
+                    className='btn btn-ghost text-font btn-outline btn-primary'
                     onClick={() => setItem('icon')}
                   >
                     이모티콘
                   </div>
                   <div
-                    className='btn btn-ghost text-font'
+                    className='btn btn-ghost text-font btn-outline btn-primary'
                     onClick={() => setItem('text')}
                   >
                     말풍선
@@ -240,6 +240,9 @@ const MemeGenerator = () => {
                 <div className='grid place-items-center'>
                   {item === 'top' ? (
                     <div className='grid grid-cols-4'>
+                      <div className='btn btn-error text-font btn-outline btn-error'>
+                        초기화하기
+                      </div>
                       <div className='btn btn-ghost text-font'>상의1</div>
                       <div className='btn btn-ghost text-font'>상의2</div>
                       <div className='btn btn-ghost text-font'>상의3</div>
@@ -247,6 +250,9 @@ const MemeGenerator = () => {
                     </div>
                   ) : item === 'pants' ? (
                     <div className='grid grid-cols-4'>
+                      <div className='btn btn-error text-font btn-outline btn-error'>
+                        초기화하기
+                      </div>
                       <div className='btn btn-ghost text-font'>하의1</div>
                       <div className='btn btn-ghost text-font'>하의2</div>
                       <div className='btn btn-ghost text-font'>하의3</div>
@@ -254,6 +260,9 @@ const MemeGenerator = () => {
                     </div>
                   ) : item === 'icon' ? (
                     <div className='grid grid-cols-4'>
+                      <div className='btn btn-error text-font btn-outline btn-error'>
+                        초기화하기
+                      </div>
                       <div className='btn btn-ghost text-font'>이모티콘1</div>
                       <div className='btn btn-ghost text-font'>이모티콘2</div>
                       <div className='btn btn-ghost text-font'>이모티콘3</div>
@@ -261,6 +270,9 @@ const MemeGenerator = () => {
                     </div>
                   ) : item === 'text' ? (
                     <div className='grid grid-cols-4'>
+                      <div className='btn btn-error text-font btn-outline btn-error'>
+                        초기화하기
+                      </div>
                       <div className='btn btn-ghost text-font'>말풍선1</div>
                       <div className='btn btn-ghost text-font'>말풍선2</div>
                       <div className='btn btn-ghost text-font'>말풍선3</div>
