@@ -21,10 +21,10 @@ const Meme = () => {
   const nextpage = () => {
     setPage(page + 1);
   };
-  const myurl = 'http://localhost:5000'; // url 수정해야함
+  const myurl = 'https://meme.megabrain.kr'; // url 수정해야함
 
   useEffect(() => {
-    imageDownloadAPI(page, setMemeList, setTotalpage , 'MEME');
+    imageDownloadAPI(page, setMemeList, setTotalpage, 'MEME');
   }, [page]);
 
   // image url => file => image download
