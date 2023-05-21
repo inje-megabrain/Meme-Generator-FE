@@ -151,7 +151,6 @@ const Share = () => {
           </div>
         </div>
       </div>
-
       <div className='grid place-items-center'>
         <div>
           <img src={previewimage} alt='' />

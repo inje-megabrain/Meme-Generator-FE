@@ -47,7 +47,7 @@ const MemeGenerator = () => {
       setLines(nlines);
     }
   };
-
+  console.log(previewimage);
   const handleMouseMove = (e: Konva.KonvaEventObject<MouseEvent>) => {
     if (!isDrawing.current) {
       return;
@@ -75,9 +75,10 @@ const MemeGenerator = () => {
     }
   };
   const sharepage = () => {
-    navigate('/share');
+    console.log(image);
     const uri = stageRef.current?.toDataURL();
     setPreviewimage(uri!);
+    navigate('/share');
   };
 
   const textChage = (e: React.ChangeEvent<HTMLInputElement>) => {

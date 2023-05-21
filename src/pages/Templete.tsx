@@ -26,6 +26,7 @@ const Template = () => {
   const [totalpage, setTotalpage] = useRecoilState<number>(templatePage);
   const [previewimage, setPreviewimage] =
     useRecoilState<string>(PreviewDateState);
+  const [shareimage, setShareimage] = useState<any>();
 
   const handleFileOnChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -57,6 +58,15 @@ const Template = () => {
   useEffect(() => {
     imageDownloadAPI(page, setTemplatelist, setTotalpage, 'TEMPLATE');
   }, [page]);
+
+  const converURLtoFile = async (url: string) => {
+    const response = await fetch(url);
+    const data = await response.blob();
+    const file = new File([data], 'meme.png', { type: 'image/png' });
+    setPreviewimage(URL.createObjectURL(file));
+    return URL.createObjectURL(file);
+  };
+
   return (
     <div>
       <div
@@ -132,7 +142,7 @@ const Template = () => {
                 <div
                   className='btn btn-ghost w-[270px] h-[310px]'
                   onClick={() => {
-                    setPreviewimage(
+                    converURLtoFile(
                       VITE_APP_IMAGE_URL + meme.imageUrl.toString()
                     );
                     navigate('/generator');
