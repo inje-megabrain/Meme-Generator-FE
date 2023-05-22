@@ -81,7 +81,7 @@ const Loginform = () => {
           <h1>User Login</h1>
         </div>
         <div className='grid grid-rows-2 gap-5 mt-4'>
-          <div>
+          <div className='grid place-items-center'>
             <input
               type='text'
               placeholder='ID'
@@ -90,7 +90,7 @@ const Loginform = () => {
               onChange={(e) => setId(e.target.value)}
             />
           </div>
-          <div>
+          <div className='grid place-items-center'>
             <input
               type='password'
               placeholder='Password'
@@ -102,7 +102,7 @@ const Loginform = () => {
         </div>
         {signup ? (
           <div className='grid grid-rows-2 gap-5 mt-4'>
-            <div>
+            <div className='grid place-items-center'>
               <input
                 type='text'
                 placeholder='Username'
@@ -111,7 +111,7 @@ const Loginform = () => {
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
-            <div>
+            <div className='grid place-items-center'>
               <input
                 type='text'
                 placeholder='Email'
