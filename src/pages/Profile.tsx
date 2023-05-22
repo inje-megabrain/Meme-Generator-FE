@@ -68,7 +68,7 @@ const Profile = () => {
               회원탈퇴
             </div>
           </div>
-          <div>
+          <div className='mt-4'>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
               {meme.map((meme, index) => {
                 return (
@@ -77,10 +77,10 @@ const Profile = () => {
                       <div>
                         <img
                           src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
-                          className='w-[310px] h-[310px] object-cover'
+                          className='w-[310px] h-[310px] object-cover skew-y-12 shadow-xl border-spacing-4 border-solid'
                         />
                       </div>
-                      <div className='inline-block'>
+                      <div className='inline-block mt-2'>
                         <div className='font-bold text-xl text-start'>
                           <div>{meme.name} 짤</div>
                         </div>
