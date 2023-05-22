@@ -74,14 +74,12 @@ const Template = () => {
         ME:ME
       </div>
       <div className='grid place-items-center'>
-        <div>
-          <ul className='steps'>
-            <li className='step step-primary'>Template</li>
-            <li className='step'>Meme-Generator</li>
-            <li className='step'>Save & Share</li>
-            <li className='step'>Upload</li>
-          </ul>
-        </div>
+        <ul className='steps'>
+          <li className='step step-primary'>Template</li>
+          <li className='step'>Meme-Generator</li>
+          <li className='step'>Save & Share</li>
+          <li className='step'>Upload</li>
+        </ul>
       </div>
       {getCookie('username') === 'admin' ? (
         <div className='mb-4 grid place-items-center'>

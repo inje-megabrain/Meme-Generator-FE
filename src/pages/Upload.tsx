@@ -84,7 +84,7 @@ const Upload = () => {
           <img
             src={previewimage}
             alt=''
-            className='mt-4 object-contain w-full h-full'
+            className='mt-4 object-contain w-[310px] h-[310px] md:w-[500px] md:h-[500px]'
           />
         ) : null}
       </div>

@@ -16,6 +16,7 @@ const MemeGenerator = () => {
     useRecoilState<string>(PreviewDateState);
   const setMemetype = useSetRecoilState<string>(MemeTypeDataState);
   const [color, setColor] = useState('#000000');
+  const [textcolor, setTextcolor] = useState<string>('#000000');
   const [tool, setTool] = useState<string>('');
   const [lines, setLines] = useState<any>([]);
   const [text, setText] = useState<string>('');
@@ -132,7 +133,6 @@ const MemeGenerator = () => {
   };
   useEffect(() => {
     if (screen.width < 400) {
-      console.log(screen.width);
       setScreenwidth(300);
     }
   }, []);
@@ -222,7 +222,7 @@ const MemeGenerator = () => {
               x={textstate.x}
               y={textstate.y}
               draggable
-              fill='black'
+              fill={textcolor}
               onDragStart={() => {
                 setTextstate({
                   isDragging: true,
@@ -325,6 +325,16 @@ const MemeGenerator = () => {
             ) : boxbtn === 'picture' ? (
               <div>
                 <div className='grid gird-rows-3 gap-4 place-items-center'>
+                  <div>
+                    <HexColorPicker
+                      color={textcolor}
+                      onChange={setTextcolor}
+                      style={{
+                        height: '150px',
+                        width: '150px',
+                      }}
+                    />
+                  </div>
                   <div>
                     <input
                       type='text'

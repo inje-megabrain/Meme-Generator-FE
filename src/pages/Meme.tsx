@@ -139,7 +139,7 @@ const Meme = () => {
               <div>
                 <img // 이미지 크기 체크
                   src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
-                  className='object-cover w-full h-full'
+                  className='w-full h-[300px] object-contain'
                 />
               </div>
               <div className='inline-block'>
