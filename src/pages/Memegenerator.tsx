@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { useNavigate } from 'react-router-dom';
-import { Stage, Layer, Line, Image, Text } from 'react-konva';
+import { Stage, Layer, Line, Image, Text, Transformer } from 'react-konva';
 import Konva from 'konva';
 import useImage from 'use-image';
 import { SlPencil } from 'react-icons/sl';
@@ -23,7 +23,10 @@ const MemeGenerator = () => {
   const [pensize, setPensize] = useState<number>(10);
   const [image] = useImage(previewimage);
   const isDrawing = useRef(false);
+  const isSelected = useRef(false);
   const stageRef = useRef<Konva.Stage>(null);
+  const textRef = useRef<Konva.Text>();
+  const trRef = useRef<Konva.Transformer>(null);
   const [boxbtn, setBoxbtn] = useState<string>('drawing');
   const [item, setItem] = useState<string>('top');
   const [textstate, setTextstate] = useState<any>({
@@ -32,6 +35,7 @@ const MemeGenerator = () => {
     y: 50,
   });
   const [textsize, setTextsize] = useState<number>(30);
+  const [textroate, setTextroate] = useState<number>(0);
   const [textstyle, setTextstyle] = useState<string>('normal');
   const [screenwidth, setScreenwidth] = useState<number>(400);
 
@@ -107,6 +111,9 @@ const MemeGenerator = () => {
       setMemetype('MEME');
     }
   };
+  const textroateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTextroate(Number(e.target.value));
+  };
   const sharepage = () => {
     const uri = stageRef.current?.toDataURL();
     setPreviewimage(uri!);
@@ -136,6 +143,12 @@ const MemeGenerator = () => {
       setScreenwidth(300);
     }
   }, []);
+  useEffect(() => {
+    if (isSelected) {
+      trRef.current?.nodes([textRef.current!]);
+      trRef.current?.getLayer()?.batchDraw();
+    }
+  }, [isSelected]);
 
   return (
     <div>
@@ -182,7 +195,6 @@ const MemeGenerator = () => {
           ) : null}
         </div>
       </div>
-
       <div className='grid place-items-center mt-4 object-contain'>
         <Stage
           width={screenwidth}
@@ -235,6 +247,7 @@ const MemeGenerator = () => {
                   isDragging: false,
                 });
               }}
+              rotation={textroate}
             />
           </Layer>
         </Stage>
@@ -344,7 +357,7 @@ const MemeGenerator = () => {
                     />
                   </div>
                   <div className='font-bold w-24'>{textsize}px</div>
-                  <div className='grid grid-cols-2'>
+                  <div className='grid grid-cols-3 gap-1'>
                     <div className='w-12'>
                       <div
                         className='btn btn-ghost text-xs'
@@ -375,12 +388,34 @@ const MemeGenerator = () => {
                     </div>
                     <div className='grid place-items-center'>
                       <select onChange={textstyleChange}>
-                        <option value='Normal' disabled selected>
-                          Normal
-                        </option>
+                        <option value='Normal'>Normal</option>
                         <option value='Bold'>Bold</option>
                       </select>
                     </div>
+                    {/* <div className='w-12'>
+                      <div
+                        className='btn btn-ghost text-xs'
+                        onClick={() => {
+                          setTextroate(textroate - 1);
+                        }}
+                      >
+                        ▲
+                      </div>
+                      <div
+                        className='btn btn-ghost text-xs'
+                        onClick={() => {
+                          setTextroate(textroate + 1);
+                        }}
+                      >
+                        ▼
+                      </div>
+                    </div> */}
+                    <input
+                      type='range'
+                      min={-180}
+                      max={180}
+                      onChange={textroateChange}
+                    />
                   </div>
                 </div>
               </div>

@@ -69,22 +69,18 @@ const Profile = () => {
             </div>
           </div>
           <div className='mt-4'>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-20'>
               {meme.map((meme, index) => {
                 return (
-                  <div key={index}>
+                  <div key={index} className='h-[400px]'>
                     <div>
-                      <div>
-                        <img
-                          src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
-                          className='w-[310px] h-[310px] object-cover skew-y-12 shadow-xl border-spacing-4 border-solid'
-                        />
-                      </div>
-                      <div className='inline-block mt-2'>
-                        <div className='font-bold text-xl text-start'>
-                          <div>{meme.name} 짤</div>
-                        </div>
-                      </div>
+                      <div className='w-[310px] h-[310px] object-cover skew-y-12 shadow-xl bg-gray-400 blur-sm' />
+                    </div>
+                    <div className='-translate-y-60 -translate-x-3 '>
+                      <img
+                        src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
+                        className='w-[310px] h-[310px] object-cover skew-y-12 shadow-xl border-spacing-4 border-solid'
+                      />
                     </div>
                   </div>
                 );

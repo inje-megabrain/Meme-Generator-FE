@@ -46,7 +46,7 @@ export const imageUploadApi = async (
 };
 export const imageDownloadAPI = async (
   page: number,
-  setWantedList: SetterOrUpdater<MemeType>,
+  setMemeList: SetterOrUpdater<MemeType>,
   setTotalpage: SetterOrUpdater<number>,
   type: string
 ) => {
@@ -61,7 +61,7 @@ export const imageDownloadAPI = async (
       headers: headerConfig,
     })
     .then((response) => {
-      setWantedList(response.data.dtos);
+      setMemeList(response.data.dtos);
       setTotalpage(response.data.pageInfo.totalPages);
     })
     .catch((error) => {

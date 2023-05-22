@@ -1,7 +1,7 @@
 import Template from '@src/pages/Templete';
 import { Main } from '../pages';
 import Loginform from '../pages/Loginform';
-import MemeGenerator from '../pages/Memegenerator';
+import MemeGenerator from '@src/pages/Memegenerator';
 import GoogleLogin from '@src/components/GoogleLogin';
 import Share from '@src/pages/Share';
 import Upload from '@src/pages/Upload';
