@@ -392,24 +392,6 @@ const MemeGenerator = () => {
                         <option value='Bold'>Bold</option>
                       </select>
                     </div>
-                    {/* <div className='w-12'>
-                      <div
-                        className='btn btn-ghost text-xs'
-                        onClick={() => {
-                          setTextroate(textroate - 1);
-                        }}
-                      >
-                        ▲
-                      </div>
-                      <div
-                        className='btn btn-ghost text-xs'
-                        onClick={() => {
-                          setTextroate(textroate + 1);
-                        }}
-                      >
-                        ▼
-                      </div>
-                    </div> */}
                     <input
                       type='range'
                       min={-180}

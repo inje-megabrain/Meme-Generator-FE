@@ -1,11 +1,10 @@
-import React, { Suspense, useEffect } from 'react';
+import React, {  useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCookie, removeCookie, setCookie } from '../../util/Cookie';
 import Meme from '../Meme';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { API_URL } from '@src/constants/Constants';
-import RenewalMeme from '../RenewalMeme';
 
 const Main = () => {
   const navigate = useNavigate();
@@ -106,7 +105,6 @@ const Main = () => {
         ) : null}
       </div>
       <Meme />
-      {/* <RenewalMeme /> */}
     </>
   );
 };

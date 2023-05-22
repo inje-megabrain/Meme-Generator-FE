@@ -3,6 +3,7 @@ import { imageUploadApi } from '@src/apis/server';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { MemeTypeDataState } from '@src/states/atom';
+import { toast } from 'react-toastify';
 
 const Upload = () => {
   const naviage = useNavigate();
@@ -22,8 +23,12 @@ const Upload = () => {
     setName(e.target.value);
   };
   const uploadbtn = async () => {
-    await imageUploadApi(imageSrc as File, name, memetype);
-    naviage('/');
+    if (!imageSrc) {
+      toast.error('이미지를 선택해주세요');
+    } else {
+      await imageUploadApi(imageSrc as File, name, memetype);
+      naviage('/');
+    }
   };
   const sharepage = () => {
     naviage('/share');
