@@ -65,7 +65,7 @@ export const imageDownloadAPI = async (
       setTotalpage(response.data.pageInfo.totalPages);
     })
     .catch((error) => {
-      console.log(error);
+      //console.log(error);
     });
 };
 export const MemeDeleteAPI = async (memeid: number) => {
@@ -126,5 +126,18 @@ export const MemberMemeAPI = async (
     })
     .catch((error) => {
       console.log(error);
+    });
+};
+export const ServerCheckAPI = async () => {
+  await axios
+    .get(API_URL + '/test/ping')
+    .then((response) => {
+      if (response.status === 200) {
+        console.log('서버 연결 성공');
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error('서버 연결 실패');
     });
 };

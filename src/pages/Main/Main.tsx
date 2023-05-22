@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { getCookie, removeCookie, setCookie } from '../../util/Cookie';
 import Meme from '../Meme';
 import { toast } from 'react-toastify';
+import { ServerCheckAPI } from '@src/apis/server';
+import axios from 'axios';
+import { API_URL } from '@src/constants/Constants';
 
 const Main = () => {
   const navigate = useNavigate();
@@ -48,6 +51,13 @@ const Main = () => {
     toast.success('회원 탈퇴 성공');
     removeCookie('status', { path: '/' });
   }
+  useEffect(() => {
+    axios.get(API_URL + '/test/ping').then((response) => {
+      if (response.status !== 200) {
+        toast.error('서버가 꺼져있습니다.');
+      }
+    });
+  }, []);
 
   return (
     <>
