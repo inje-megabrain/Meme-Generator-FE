@@ -82,7 +82,7 @@ const Profile = () => {
                       </div>
                       <div className='inline-block'>
                         <div className='font-bold text-xl text-start'>
-                          <div>사진명 : {meme.name}</div>
+                          <div>{meme.name} 짤</div>
                         </div>
                       </div>
                     </div>
