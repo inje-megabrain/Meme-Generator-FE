@@ -177,8 +177,8 @@ const MemeGenerator = () => {
 
       <div className='grid place-items-center mt-4'>
         <Stage
-          width={500}
-          height={500}
+          width={420}
+          height={420}
           className='border-2 border-black border-solid'
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
@@ -189,7 +189,7 @@ const MemeGenerator = () => {
           ref={stageRef}
         >
           <Layer>
-            <Image image={image} width={500} height={500} />
+            <Image image={image} width={420} height={420} />
           </Layer>
           <Layer>
             {lines.map((line: any, i: number) => (

@@ -114,7 +114,7 @@ const Share = () => {
         </div>
       </div>
       <div className='mb-4 grid place-items-center'>
-        <div className='grid grid-cols-3'>
+        <div className='grid grid-cols-1 md:grid-cols-2'>
           <div>
             <input
               type='text'
@@ -124,30 +124,32 @@ const Share = () => {
               onChange={nameChange}
             />
           </div>
-          <div>
-            <button
-              onClick={savebtn}
-              className='btn btn-ghost text-base font-bold'
-            >
-              저장
-            </button>
-          </div>
-          <div>
-            <button
-              id='kakao-share-btn'
-              onClick={sharebtn}
-              style={{
-                display: 'none',
-              }}
-            >
-              카카오톡 이미지 업로드 버튼
-            </button>
-            <button
-              onClick={sharebtn}
-              className='btn btn-ghost text-base font-bold'
-            >
-              공유
-            </button>
+          <div className='grid grid-cols-2'>
+            <div>
+              <button
+                onClick={savebtn}
+                className='btn btn-ghost text-base font-bold'
+              >
+                저장
+              </button>
+            </div>
+            <div>
+              <button
+                id='kakao-share-btn'
+                onClick={sharebtn}
+                style={{
+                  display: 'none',
+                }}
+              >
+                카카오톡 이미지 업로드 버튼
+              </button>
+              <button
+                onClick={sharebtn}
+                className='btn btn-ghost text-base font-bold'
+              >
+                공유
+              </button>
+            </div>
           </div>
         </div>
       </div>
