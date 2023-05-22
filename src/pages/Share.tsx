@@ -154,7 +154,11 @@ const Share = () => {
       </div>
       <div className='grid place-items-center'>
         <div>
-          <img src={previewimage} alt='' />
+          <img
+            src={previewimage}
+            alt=''
+            className='w-full h-full object-contain'
+          />
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { useNavigate } from 'react-router-dom';
 import { Stage, Layer, Line, Image, Text } from 'react-konva';
@@ -32,6 +32,7 @@ const MemeGenerator = () => {
   });
   const [textsize, setTextsize] = useState<number>(30);
   const [textstyle, setTextstyle] = useState<string>('normal');
+  const [screenwidth, setScreenwidth] = useState<number>(400);
 
   const handleMouseDown = (e: Konva.KonvaEventObject<MouseEvent>) => {
     isDrawing.current = true;
@@ -129,6 +130,13 @@ const MemeGenerator = () => {
     setPreviewimage('');
     navigate('/template');
   };
+  useEffect(() => {
+    if (screen.width < 400) {
+      console.log(screen.width);
+      setScreenwidth(300);
+    }
+  }, []);
+
   return (
     <div>
       <div className='grid place-items-center'>
@@ -175,10 +183,10 @@ const MemeGenerator = () => {
         </div>
       </div>
 
-      <div className='grid place-items-center mt-4'>
+      <div className='grid place-items-center mt-4 object-contain'>
         <Stage
-          width={420}
-          height={420}
+          width={screenwidth}
+          height={screenwidth}
           className='border-2 border-black border-solid'
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
@@ -189,7 +197,7 @@ const MemeGenerator = () => {
           ref={stageRef}
         >
           <Layer>
-            <Image image={image} width={420} height={420} />
+            <Image image={image} width={screenwidth} height={screenwidth} />
           </Layer>
           <Layer>
             {lines.map((line: any, i: number) => (
@@ -381,7 +389,7 @@ const MemeGenerator = () => {
                   </div>
                 </div>
                 <div className='grid place-items-center mb-4'>
-                  <div className='grid grid-cols-3'>
+                  <div className='grid grid-cols-1 md:grid-cols-3 gap-2'>
                     <div className='grid grid-cols-2'>
                       <div>
                         <SlPencil
