@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { imageUploadApi } from '@src/apis/server';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { MemeTypeDataState } from '@src/states/atom';
 
 const Upload = () => {
   const naviage = useNavigate();
   const [imageSrc, setImageSrc] = useState<File | undefined>();
   const [previewimage, setPreviewimage] = useState<string>('');
-  const [memetype, setMemetype] = useRecoilState<string>(MemeTypeDataState);
+  const memetype = useRecoilValue<string>(MemeTypeDataState);
   const [name, setName] = useState<string>('meme');
 
   const handleFileOnChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,9 +28,18 @@ const Upload = () => {
   const sharepage = () => {
     naviage('/share');
   };
+  const homebtn = () => {
+    naviage('/');
+  };
 
   return (
     <div>
+      <div
+        className='btn btn-ghost normal-case text-3xl font-bold place-items-center'
+        onClick={homebtn}
+      >
+        ME:ME
+      </div>
       <div className='grid place-items-center'>
         <ul className='steps'>
           <li className='step step-primary'>Template</li>

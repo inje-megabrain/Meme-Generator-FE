@@ -6,7 +6,7 @@ import Konva from 'konva';
 import useImage from 'use-image';
 import { SlPencil } from 'react-icons/sl';
 import { BsEraser } from 'react-icons/bs';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { MemeTypeDataState, PreviewDateState } from '@src/states/atom';
 
 const MemeGenerator = () => {
@@ -14,7 +14,7 @@ const MemeGenerator = () => {
   const [imageSrc, setImageSrc] = useState<File | undefined>();
   const [previewimage, setPreviewimage] =
     useRecoilState<string>(PreviewDateState);
-  const [meemtype, setMemetype] = useRecoilState<string>(MemeTypeDataState);
+  const setMemetype = useSetRecoilState<string>(MemeTypeDataState);
   const [color, setColor] = useState('#000000');
   const [tool, setTool] = useState<string>('');
   const [lines, setLines] = useState<any>([]);

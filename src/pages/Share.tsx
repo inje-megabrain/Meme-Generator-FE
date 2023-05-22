@@ -1,4 +1,4 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { PreviewDateState } from '@src/states/atom';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -9,8 +9,7 @@ import { toast } from 'react-toastify';
 const Share = () => {
   const navigate = useNavigate();
   const status = getCookie('status');
-  const [previewimage, setPreviewimage] =
-    useRecoilState<string>(PreviewDateState);
+  const previewimage = useRecoilValue<string>(PreviewDateState);
   const [name, setName] = useState<string>('meme');
   const homebtn = () => {
     navigate('/');

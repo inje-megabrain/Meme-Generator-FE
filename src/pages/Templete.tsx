@@ -4,7 +4,6 @@ import {
   imageUploadApi,
 } from '@src/apis/server';
 import {
-  MemeTypeDataState,
   PreviewDateState,
   TemplateDataState,
   templatePage,
@@ -13,7 +12,7 @@ import { MemeType } from '@src/types';
 import { getCookie } from '@src/util/Cookie';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 const { VITE_APP_IMAGE_URL } = import.meta.env;
 
@@ -25,9 +24,7 @@ const Template = () => {
     useRecoilState<MemeType>(TemplateDataState);
   const [page, setPage] = useState<number>(0);
   const [totalpage, setTotalpage] = useRecoilState<number>(templatePage);
-  const [previewimage, setPreviewimage] =
-    useRecoilState<string>(PreviewDateState);
-  const [memetype, setMemetype] = useRecoilState<string>(MemeTypeDataState);
+  const setPreviewimage = useSetRecoilState<string>(PreviewDateState);
 
   const handleFileOnChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -88,7 +85,7 @@ const Template = () => {
       </div>
       {getCookie('username') === 'admin' ? (
         <div className='mb-4 grid place-items-center'>
-          <div className='grid grid-cols-3'>
+          <div className='grid grid-cols-1 md:grid-cols-3'>
             <div>
               <input
                 type='file'
