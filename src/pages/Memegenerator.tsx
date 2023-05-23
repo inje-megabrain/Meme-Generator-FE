@@ -37,7 +37,6 @@ const MemeGenerator = () => {
   const [textsize, setTextsize] = useState<number>(30);
   const [textroate, setTextroate] = useState<number>(0);
   const [textstyle, setTextstyle] = useState<string>('normal');
-  const [screenwidth, setScreenwidth] = useState<number>(400);
 
   const handleMouseDown = (e: Konva.KonvaEventObject<MouseEvent>) => {
     isDrawing.current = true;
@@ -138,11 +137,7 @@ const MemeGenerator = () => {
     setPreviewimage('');
     navigate('/template');
   };
-  useEffect(() => {
-    if (screen.width < 400) {
-      setScreenwidth(300);
-    }
-  }, []);
+
   useEffect(() => {
     if (isSelected) {
       trRef.current?.nodes([textRef.current!]);
@@ -197,8 +192,8 @@ const MemeGenerator = () => {
       </div>
       <div className='grid place-items-center mt-4 object-contain'>
         <Stage
-          width={screenwidth}
-          height={screenwidth}
+          width={300}
+          height={300}
           className='border-2 border-black border-solid'
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
@@ -208,8 +203,9 @@ const MemeGenerator = () => {
           onTouchEnd={mobilehandleMouseUp}
           ref={stageRef}
         >
+          w-full h-full object-contain
           <Layer>
-            <Image image={image} width={screenwidth} height={screenwidth} />
+            <Image image={image} width={300} height={300} />
           </Layer>
           <Layer>
             {lines.map((line: any, i: number) => (
