@@ -8,13 +8,13 @@ import Share from './pages/Share';
 import GoogleLogin from './components/GoogleLogin';
 import Upload from './pages/Upload';
 import Profile from './pages/Profile';
+import Errorpage from './pages/Errorpage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Main />,
   },
-
   {
     path: '/login',
     element: <Loginform />,
@@ -42,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: '/profile',
     element: <Profile />,
+  },
+  {
+    path: '*',
+    element: <Errorpage />,
   },
 ]);
 

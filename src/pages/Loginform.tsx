@@ -81,7 +81,7 @@ const Loginform = () => {
           <h1>User Login</h1>
         </div>
         <div className='grid grid-rows-2 gap-5 mt-4'>
-          <div>
+          <div className='grid place-items-center'>
             <input
               type='text'
               placeholder='ID'
@@ -90,7 +90,7 @@ const Loginform = () => {
               onChange={(e) => setId(e.target.value)}
             />
           </div>
-          <div>
+          <div className='grid place-items-center'>
             <input
               type='password'
               placeholder='Password'
@@ -102,7 +102,7 @@ const Loginform = () => {
         </div>
         {signup ? (
           <div className='grid grid-rows-2 gap-5 mt-4'>
-            <div>
+            <div className='grid place-items-center'>
               <input
                 type='text'
                 placeholder='Username'
@@ -111,7 +111,7 @@ const Loginform = () => {
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
-            <div>
+            <div className='grid place-items-center'>
               <input
                 type='text'
                 placeholder='Email'
@@ -133,18 +133,22 @@ const Loginform = () => {
           </div>
         ) : null}
         <div className='grid place-items-center mt-4'>
-          <button
-            className='btn btn-outline outline outline-black font-bold text-2xl rounded-xl w-full max-w-xs'
-            onClick={googlelogin}
-          >
-            Google
-          </button>
-          <button
-            className='btn btn-outline outline outline-black font-bold text-2xl rounded-xl w-full max-w-xs mt-4'
-            onClick={LoginFunc}
-          >
-            Login
-          </button>
+          {!signup ? (
+            <>
+              <button
+                className='btn btn-outline outline outline-black font-bold text-2xl rounded-xl w-full max-w-xs'
+                onClick={googlelogin}
+              >
+                Google
+              </button>
+              <button
+                className='btn btn-outline outline outline-black font-bold text-2xl rounded-xl w-full max-w-xs mt-4'
+                onClick={LoginFunc}
+              >
+                Login
+              </button>
+            </>
+          ) : null}
           {signup ? (
             <button
               className='btn btn-outline outline outline-black font-bold text-2xl rounded-xl w-full max-w-xs mt-4'

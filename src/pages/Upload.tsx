@@ -1,31 +1,50 @@
 import { useState } from 'react';
 import { imageUploadApi } from '@src/apis/server';
 import { useNavigate } from 'react-router-dom';
-import { getCookie } from '@src/util/Cookie';
+import { useRecoilValue } from 'recoil';
+import { MemeTypeDataState } from '@src/states/atom';
+import { toast } from 'react-toastify';
 
 const Upload = () => {
   const naviage = useNavigate();
   const [imageSrc, setImageSrc] = useState<File | undefined>();
+  const [previewimage, setPreviewimage] = useState<string>('');
+  const memetype = useRecoilValue<string>(MemeTypeDataState);
   const [name, setName] = useState<string>('meme');
 
   const handleFileOnChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
       setImageSrc(files[0]);
+      setPreviewimage(URL.createObjectURL(files[0]));
     }
   };
   const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
   const uploadbtn = async () => {
-    await imageUploadApi(imageSrc as File, name);
+    if (!imageSrc) {
+      toast.error('이미지를 선택해주세요');
+    } else {
+      await imageUploadApi(imageSrc as File, name, memetype);
+      naviage('/');
+    }
   };
   const sharepage = () => {
     naviage('/share');
   };
+  const homebtn = () => {
+    naviage('/');
+  };
 
   return (
     <div>
+      <div
+        className='btn btn-ghost normal-case text-3xl font-bold place-items-center'
+        onClick={homebtn}
+      >
+        ME:ME
+      </div>
       <div className='grid place-items-center'>
         <ul className='steps'>
           <li className='step step-primary'>Template</li>
@@ -57,9 +76,23 @@ const Upload = () => {
           onChange={nameChange}
         />
       </div>
-      <button onClick={uploadbtn} className='btn btn-ghost text-base font-bold'>
-        업로드
-      </button>
+      <div className='mt-4'>
+        <button
+          onClick={uploadbtn}
+          className='btn btn-ghost text-base font-bold'
+        >
+          업로드
+        </button>
+      </div>
+      <div>
+        {previewimage ? (
+          <img
+            src={previewimage}
+            alt=''
+            className='mt-4 object-contain w-[310px] h-[310px] md:w-[500px] md:h-[500px]'
+          />
+        ) : null}
+      </div>
     </div>
   );
 };

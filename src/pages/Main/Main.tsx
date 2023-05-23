@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, {  useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCookie, removeCookie, setCookie } from '../../util/Cookie';
 import Meme from '../Meme';
 import { toast } from 'react-toastify';
+import axios from 'axios';
+import { API_URL } from '@src/constants/Constants';
 
 const Main = () => {
   const navigate = useNavigate();
@@ -19,6 +21,8 @@ const Main = () => {
   const logoutbtn = () => {
     removeCookie('access_token', { path: '/' });
     removeCookie('refresh_token', { path: '/' });
+    removeCookie('username', { path: '/' });
+    removeCookie('role', { path: '/' });
     setCookie('status', 'logout success');
     window.location.reload();
   };
@@ -44,6 +48,17 @@ const Main = () => {
     toast.success('짤 삭제 성공');
     removeCookie('status', { path: '/' });
   }
+  if (status === 'secession success') {
+    toast.success('회원 탈퇴 성공');
+    removeCookie('status', { path: '/' });
+  }
+  useEffect(() => {
+    axios.get(API_URL + '/test/ping').then((response) => {
+      if (response.status !== 200) {
+        toast.error('서버가 꺼져있습니다.');
+      }
+    });
+  }, []);
 
   return (
     <>
