@@ -133,7 +133,6 @@ const MemeGenerator = () => {
           </div>
         </div>
       </div>
-
       <div className='grid place-items-center mt-4'>
         <Stage
           width={600}
@@ -210,7 +209,7 @@ const MemeGenerator = () => {
           </div>
           <div>
             {boxbtn === 'decorating' ? (
-              <div className='grid grid-cols-2'>
+              <div className='grid grid-cols-2 border-2 border-black border-solid rounded-x1'>
                 <div className='grid grid-rows-4'>
                   <div
                     className='btn btn-ghost text-font btn-outline btn-primary'

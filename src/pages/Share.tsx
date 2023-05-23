@@ -2,7 +2,7 @@ import { useRecoilState } from 'recoil';
 import { PreviewDateState } from '@src/states/atom';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-//import { Buffer } from 'buffer';
+import { Buffer } from 'buffer';
 import { getCookie, removeCookie, setCookie } from '@src/util/Cookie';
 import { toast } from 'react-toastify';
 
@@ -142,12 +142,12 @@ const Share = () => {
             >
               카카오톡 이미지 업로드 버튼
             </button>
-            {/* <button
+            <button
               onClick={sharebtn}
               className='btn btn-ghost text-base font-bold'
             >
               공유
-            </button> */}
+            </button>
           </div>
         </div>
       </div>
