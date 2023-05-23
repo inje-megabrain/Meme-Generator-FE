@@ -1,0 +1,7 @@
+.git
+node_modules
+.gitignore
+
+
+docker-compose*
+run.sh

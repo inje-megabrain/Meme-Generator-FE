@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_URL } from '../constants/Constants';
-import { MemeType } from '../types';
+import { MemeType, ProfileType } from '../types';
 import { SetterOrUpdater } from 'recoil';
 import { getCookie, setCookie } from '../util/Cookie';
 import jinInterceptor from './interceptor';
@@ -11,10 +11,14 @@ const headerConfig = {
   'Access-Control-Allow-Origin': '*',
 };
 
-export const imageUploadApi = async (image: File, name: string) => {
+export const imageUploadApi = async (
+  image: File,
+  name: string,
+  type: string
+) => {
   const formData = new FormData();
   formData.append('image', image); // {contentType: 'multipart/form-data'}
-  const obj = { name: name };
+  const obj = { name: name, type: type };
   formData.append(
     'dto',
     new Blob([JSON.stringify(obj)], { type: 'application/json' })
@@ -31,25 +35,25 @@ export const imageUploadApi = async (image: File, name: string) => {
       },
     })
     .then((response) => {
-      //console.log(response);
-      if (response.status === 201) {
+      if (type === 'MEME' && response.status === 201) {
         setCookie('status', 'upload success');
         window.location.href = '/';
       }
     })
     .catch((error) => {
-      console.log(error);
       toast.error('업로드 실패');
     });
 };
 export const imageDownloadAPI = async (
   page: number,
-  setWantedList: SetterOrUpdater<MemeType>,
-  setTotalpage: SetterOrUpdater<number>
+  setMemeList: SetterOrUpdater<MemeType>,
+  setTotalpage: SetterOrUpdater<number>,
+  type: string
 ) => {
   await axios
     .get(API_URL + '/meme', {
       params: {
+        type: type,
         page: page,
         size: 6,
         sort_direction: 'desc',
@@ -57,12 +61,11 @@ export const imageDownloadAPI = async (
       headers: headerConfig,
     })
     .then((response) => {
-      console.log(response.data.dtos);
-      setWantedList(response.data.dtos);
+      setMemeList(response.data.dtos);
       setTotalpage(response.data.pageInfo.totalPages);
     })
     .catch((error) => {
-      console.log(error);
+      //console.log(error);
     });
 };
 export const MemeDeleteAPI = async (memeid: number) => {
@@ -75,7 +78,6 @@ export const MemeDeleteAPI = async (memeid: number) => {
       },
     })
     .then((response) => {
-      //console.log(response);
       if (response.status === 200) {
         window.location.href = '/';
         setCookie('status', 'delete success');
@@ -84,5 +86,58 @@ export const MemeDeleteAPI = async (memeid: number) => {
     .catch((error) => {
       console.log(error);
       toast.error('삭제 권한이없습니다.');
+    });
+};
+export const ProfileAPI = async (
+  username: string,
+  setProfile: SetterOrUpdater<ProfileType>
+) => {
+  await jinInterceptor
+    .get(API_URL + `/member/${username}`, {
+      headers: headerConfig,
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        setProfile(response.data);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+export const MemberMemeAPI = async (
+  username: string,
+  page: number,
+  setMeme: SetterOrUpdater<MemeType>,
+  setTotalpage: SetterOrUpdater<number>
+) => {
+  await jinInterceptor
+    .get(API_URL + `/meme/member/${username}`, {
+      params: {
+        page: page,
+        size: 4,
+        sort_direction: 'desc',
+      },
+      headers: headerConfig,
+    })
+    .then((response) => {
+      setMeme(response.data.dtos);
+      setTotalpage(response.data.pageInfo.totalPages);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+export const ServerCheckAPI = async () => {
+  await axios
+    .get(API_URL + '/test/ping')
+    .then((response) => {
+      if (response.status === 200) {
+        console.log('서버 연결 성공');
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error('서버 연결 실패');
     });
 };

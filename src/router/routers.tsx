@@ -1,11 +1,12 @@
 import Template from '@src/pages/Templete';
 import { Main } from '../pages';
 import Loginform from '../pages/Loginform';
-import MemeGenerator from '../pages/Memegenerator';
+import MemeGenerator from '@src/pages/Memegenerator';
 import GoogleLogin from '@src/components/GoogleLogin';
 import Share from '@src/pages/Share';
 import Upload from '@src/pages/Upload';
 import Profile from '@src/pages/Profile';
+import Errorpage from '@src/pages/Errorpage';
 const Router = [
   {
     title: 'Home',
@@ -46,6 +47,11 @@ const Router = [
     title: 'Profile',
     url: '/profile',
     component: <Profile />,
+  },
+  {
+    title: 'Errorpage',
+    url: '/errorpage',
+    component: <Errorpage />,
   },
 ];
 export default Router;

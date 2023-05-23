@@ -1,35 +1,42 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { useNavigate } from 'react-router-dom';
-import { Stage, Layer, Line, Image, Text } from 'react-konva';
+import { Stage, Layer, Line, Image, Text, Transformer } from 'react-konva';
 import Konva from 'konva';
 import useImage from 'use-image';
 import { SlPencil } from 'react-icons/sl';
 import { BsEraser } from 'react-icons/bs';
-import { useRecoilState } from 'recoil';
-import { PreviewDateState } from '@src/states/atom';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { MemeTypeDataState, PreviewDateState } from '@src/states/atom';
 
 const MemeGenerator = () => {
   const navigate = useNavigate();
   const [imageSrc, setImageSrc] = useState<File | undefined>();
   const [previewimage, setPreviewimage] =
     useRecoilState<string>(PreviewDateState);
+  const setMemetype = useSetRecoilState<string>(MemeTypeDataState);
   const [color, setColor] = useState('#000000');
+  const [textcolor, setTextcolor] = useState<string>('#000000');
   const [tool, setTool] = useState<string>('');
   const [lines, setLines] = useState<any>([]);
   const [text, setText] = useState<string>('');
   const [pensize, setPensize] = useState<number>(10);
   const [image] = useImage(previewimage);
   const isDrawing = useRef(false);
+  const isSelected = useRef(false);
   const stageRef = useRef<Konva.Stage>(null);
-  const [boxbtn, setBoxbtn] = useState<string>('');
-  const [item, setItem] = useState<string>('');
+  const textRef = useRef<Konva.Text>();
+  const trRef = useRef<Konva.Transformer>(null);
+  const [boxbtn, setBoxbtn] = useState<string>('drawing');
+  const [item, setItem] = useState<string>('top');
   const [textstate, setTextstate] = useState<any>({
     isDragging: false,
     x: 50,
     y: 50,
   });
   const [textsize, setTextsize] = useState<number>(30);
+  const [textroate, setTextroate] = useState<number>(0);
+  const [textstyle, setTextstyle] = useState<string>('normal');
 
   const handleMouseDown = (e: Konva.KonvaEventObject<MouseEvent>) => {
     isDrawing.current = true;
@@ -46,7 +53,6 @@ const MemeGenerator = () => {
       setLines(nlines);
     }
   };
-
   const handleMouseMove = (e: Konva.KonvaEventObject<MouseEvent>) => {
     if (!isDrawing.current) {
       return;
@@ -60,6 +66,37 @@ const MemeGenerator = () => {
     lines.splice(lines.length - 1, 1, lastLine);
     setLines(lines.concat());
   };
+  const mobliehandleMouseDown = (e: Konva.KonvaEventObject<TouchEvent>) => {
+    isDrawing.current = true;
+    const pos = e.target.getStage()?.getPointerPosition();
+    if (pos) {
+      let nlines = null;
+      if (tool == 'erase') {
+        nlines = lines.filter(
+          (line: any) => !(line.points[0] == pos.x && line.points[1] == pos.y)
+        );
+      } else {
+        nlines = [...lines, { tool, color, pensize, points: [pos.x, pos.y] }];
+      }
+      setLines(nlines);
+    }
+  };
+  const mobilehandleMouseMove = (e: Konva.KonvaEventObject<TouchEvent>) => {
+    if (!isDrawing.current) {
+      return;
+    }
+    const stage = e.target.getStage();
+    const point = stage?.getPointerPosition();
+    let lastLine = lines[lines.length - 1];
+    // add point
+    lastLine.points = lastLine.points.concat([point?.x, point?.y]);
+    // replace last
+    lines.splice(lines.length - 1, 1, lastLine);
+    setLines(lines.concat());
+  };
+  const mobilehandleMouseUp = () => {
+    isDrawing.current = false;
+  };
 
   const handleMouseUp = () => {
     isDrawing.current = false;
@@ -70,16 +107,24 @@ const MemeGenerator = () => {
     if (files) {
       setImageSrc(files[0]);
       setPreviewimage(URL.createObjectURL(files[0]));
+      setMemetype('MEME');
     }
   };
+  const textroateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTextroate(Number(e.target.value));
+  };
   const sharepage = () => {
-    navigate('/share');
     const uri = stageRef.current?.toDataURL();
     setPreviewimage(uri!);
+    setMemetype('MEME');
+    navigate('/share');
   };
 
   const textChage = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
+  };
+  const textstyleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setTextstyle(e.target.value);
   };
 
   const clearbtn = () => {
@@ -89,8 +134,16 @@ const MemeGenerator = () => {
     navigate('/');
   };
   const templatebtn = () => {
+    setPreviewimage('');
     navigate('/template');
   };
+
+  useEffect(() => {
+    if (isSelected) {
+      trRef.current?.nodes([textRef.current!]);
+      trRef.current?.getLayer()?.batchDraw();
+    }
+  }, [isSelected]);
 
   return (
     <div>
@@ -107,16 +160,18 @@ const MemeGenerator = () => {
           <li className='step'>Upload</li>
         </ul>
       </div>
-      <div className='grid place-items-center'>
-        <div>
-          <input
-            type='file'
-            className='file-input file-input-bordered file-input-black w-full max-w-xs mb-2 rounded-md border-solid'
-            onChange={handleFileOnChange}
-            accept='image/jpg, image/jpeg,image/png'
-          />
+      {!previewimage ? (
+        <div className='grid place-items-center'>
+          <div>
+            <input
+              type='file'
+              className='file-input file-input-bordered file-input-black w-full max-w-xs mb-2 rounded-md border-solid'
+              onChange={handleFileOnChange}
+              accept='image/jpg, image/jpeg,image/png'
+            />
+          </div>
         </div>
-      </div>
+      ) : null}
       <div className='grid place-items-center'>
         <div className='grid grid-cols-2'>
           <div
@@ -125,49 +180,32 @@ const MemeGenerator = () => {
           >
             Previous
           </div>
-          <div
-            className='btn btn-ghost font-bold text-2xl rounded-xl'
-            onClick={sharepage}
-          >
-            Next
-          </div>
+          {previewimage ? (
+            <div
+              className='btn btn-ghost font-bold text-2xl rounded-xl'
+              onClick={sharepage}
+            >
+              Next
+            </div>
+          ) : null}
         </div>
       </div>
-
-      <div className='grid place-items-center mt-4'>
+      <div className='grid place-items-center mt-4 object-contain'>
         <Stage
-          width={600}
-          height={600}
+          width={300}
+          height={300}
           className='border-2 border-black border-solid'
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
+          onTouchStart={mobliehandleMouseDown}
+          onTouchMove={mobilehandleMouseMove}
+          onTouchEnd={mobilehandleMouseUp}
           ref={stageRef}
         >
+          w-full h-full object-contain
           <Layer>
-            <Image image={image} width={600} height={600} />
-          </Layer>
-          <Layer>
-            <Text
-              text={text}
-              fontSize={textsize}
-              x={textstate.x}
-              y={textstate.y}
-              draggable
-              fill='black'
-              onDragStart={() => {
-                setTextstate({
-                  isDragging: true,
-                });
-              }}
-              onDragEnd={(e) => {
-                setTextstate({
-                  x: e.target.x(),
-                  y: e.target.y(),
-                  isDragging: false,
-                });
-              }}
-            />
+            <Image image={image} width={300} height={300} />
           </Layer>
           <Layer>
             {lines.map((line: any, i: number) => (
@@ -184,11 +222,35 @@ const MemeGenerator = () => {
               />
             ))}
           </Layer>
+          <Layer>
+            <Text
+              text={text}
+              fontSize={textsize}
+              fontStyle={textstyle}
+              x={textstate.x}
+              y={textstate.y}
+              draggable
+              fill={textcolor}
+              onDragStart={() => {
+                setTextstate({
+                  isDragging: true,
+                });
+              }}
+              onDragEnd={(e) => {
+                setTextstate({
+                  x: e.target.x(),
+                  y: e.target.y(),
+                  isDragging: false,
+                });
+              }}
+              rotation={textroate}
+            />
+          </Layer>
         </Stage>
       </div>
       <div className='grid place-items-center'>
-        <div className='grid grid-rows-2 place-items-center'>
-          <div className='grid grid-cols-3 gap-8'>
+        <div className='grid grid-rows-2 place-items-center h-[280px]'>
+          <div className='grid grid-cols-3 gap-8 h-[130px]'>
             <div
               className='btn btn-ghost text-base font-bold'
               onClick={() => setBoxbtn('decorating')}
@@ -208,7 +270,7 @@ const MemeGenerator = () => {
               드로잉
             </div>
           </div>
-          <div>
+          <div className='h-[240px]'>
             {boxbtn === 'decorating' ? (
               <div className='grid grid-cols-2'>
                 <div className='grid grid-rows-4'>
@@ -271,20 +333,28 @@ const MemeGenerator = () => {
               </div>
             ) : boxbtn === 'picture' ? (
               <div>
-                <div className='grid place-items-center'>
-                  <div className='grid gird-cols-1 md:grid-cols-3'>
-                    <div className='grid place-items-center'>
-                      <input
-                        type='text'
-                        placeholder='TEXT'
-                        className='input input-bordered max-w-xs'
-                        onChange={textChage}
-                      />
-                    </div>
-                    <div className='grid place-items-center font-bold'>
-                      글씨 크기 : {textsize}px
-                    </div>
-                    <div className='grid place-items-start'>
+                <div className='grid gird-rows-3 gap-4 place-items-center'>
+                  <div>
+                    <HexColorPicker
+                      color={textcolor}
+                      onChange={setTextcolor}
+                      style={{
+                        height: '150px',
+                        width: '150px',
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type='text'
+                      placeholder='TEXT'
+                      className='input input-bordered max-w-xs'
+                      onChange={textChage}
+                    />
+                  </div>
+                  <div className='font-bold w-24'>{textsize}px</div>
+                  <div className='grid grid-cols-3 gap-1'>
+                    <div className='w-12'>
                       <div
                         className='btn btn-ghost text-xs'
                         onClick={() => {
@@ -312,11 +382,23 @@ const MemeGenerator = () => {
                         ▼
                       </div>
                     </div>
+                    <div className='grid place-items-center'>
+                      <select onChange={textstyleChange}>
+                        <option value='Normal'>Normal</option>
+                        <option value='Bold'>Bold</option>
+                      </select>
+                    </div>
+                    <input
+                      type='range'
+                      min={-180}
+                      max={180}
+                      onChange={textroateChange}
+                    />
                   </div>
                 </div>
               </div>
             ) : (
-              <div>
+              <div className='grid place-items-center'>
                 <div className='grid place-items-center mt-2'>
                   <div>
                     <HexColorPicker
@@ -330,7 +412,7 @@ const MemeGenerator = () => {
                   </div>
                 </div>
                 <div className='grid place-items-center mb-4'>
-                  <div className='grid grid-cols-3'>
+                  <div className='grid grid-cols-1 md:grid-cols-3 gap-2'>
                     <div className='grid grid-cols-2'>
                       <div>
                         <SlPencil
