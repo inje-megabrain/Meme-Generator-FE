@@ -16,7 +16,7 @@ const Share = () => {
   };
   const savebtn = () => {
     const link = document.createElement('a');
-    link.download = name + '.png';
+    link.download = name + '.jpg';
     link.href = previewimage;
     document.body.appendChild(link);
     link.click();

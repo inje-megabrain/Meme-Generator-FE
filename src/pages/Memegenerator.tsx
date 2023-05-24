@@ -23,10 +23,7 @@ const MemeGenerator = () => {
   const [pensize, setPensize] = useState<number>(10);
   const [image] = useImage(previewimage);
   const isDrawing = useRef(false);
-  const isSelected = useRef(false);
   const stageRef = useRef<Konva.Stage>(null);
-  const textRef = useRef<Konva.Text>();
-  const trRef = useRef<Konva.Transformer>(null);
   const [boxbtn, setBoxbtn] = useState<string>('drawing');
   const [item, setItem] = useState<string>('top');
   const [textstate, setTextstate] = useState<any>({
@@ -34,9 +31,15 @@ const MemeGenerator = () => {
     x: 50,
     y: 50,
   });
+  const [emoticonstate, setEmoticonstate] = useState<any>({
+    isDragging: false,
+    x: 50,
+    y: 70,
+  });
   const [textsize, setTextsize] = useState<number>(30);
   const [textroate, setTextroate] = useState<number>(0);
   const [textstyle, setTextstyle] = useState<string>('normal');
+  const [emoticon, setEmoticon] = useState<string>('');
 
   const handleMouseDown = (e: Konva.KonvaEventObject<MouseEvent>) => {
     isDrawing.current = true;
@@ -138,13 +141,6 @@ const MemeGenerator = () => {
     navigate('/template');
   };
 
-  useEffect(() => {
-    if (isSelected) {
-      trRef.current?.nodes([textRef.current!]);
-      trRef.current?.getLayer()?.batchDraw();
-    }
-  }, [isSelected]);
-
   return (
     <div>
       <div className='grid place-items-center'>
@@ -192,8 +188,8 @@ const MemeGenerator = () => {
       </div>
       <div className='grid place-items-center mt-4 object-contain'>
         <Stage
-          width={300}
-          height={300}
+          width={320}
+          height={320}
           className='border-2 border-black border-solid'
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
@@ -203,9 +199,8 @@ const MemeGenerator = () => {
           onTouchEnd={mobilehandleMouseUp}
           ref={stageRef}
         >
-          w-full h-full object-contain
           <Layer>
-            <Image image={image} width={300} height={300} />
+            <Image image={image} width={320} height={320} />
           </Layer>
           <Layer>
             {lines.map((line: any, i: number) => (
@@ -244,6 +239,27 @@ const MemeGenerator = () => {
                 });
               }}
               rotation={textroate}
+            />
+          </Layer>
+          <Layer>
+            <Text
+              text={emoticon}
+              fontSize={40}
+              x={emoticonstate.x}
+              y={emoticonstate.y}
+              draggable
+              onDragStart={() => {
+                setEmoticonstate({
+                  isDragging: true,
+                });
+              }}
+              onDragEnd={(e) => {
+                setEmoticonstate({
+                  x: e.target.x(),
+                  y: e.target.y(),
+                  isDragging: false,
+                });
+              }}
             />
           </Layer>
         </Stage>
@@ -316,10 +332,30 @@ const MemeGenerator = () => {
                     </div>
                   ) : item === 'icon' ? (
                     <div className='grid grid-cols-4'>
-                      <div className='btn btn-ghost text-font'>이모티콘1</div>
-                      <div className='btn btn-ghost text-font'>이모티콘2</div>
-                      <div className='btn btn-ghost text-font'>이모티콘3</div>
-                      <div className='btn btn-ghost text-font'>이모티콘4</div>
+                      <div
+                        className='btn btn-ghost text-font'
+                        onClick={() => setEmoticon('👍')}
+                      >
+                        이모티콘1
+                      </div>
+                      <div
+                        className='btn btn-ghost text-font'
+                        onClick={() => setEmoticon('✌️')}
+                      >
+                        이모티콘2
+                      </div>
+                      <div
+                        className='btn btn-ghost text-font'
+                        onClick={() => setEmoticon('😝')}
+                      >
+                        이모티콘3
+                      </div>
+                      <div
+                        className='btn btn-ghost text-font'
+                        onClick={() => setEmoticon('✨')}
+                      >
+                        이모티콘4
+                      </div>
                     </div>
                   ) : item === 'text' ? (
                     <div className='grid grid-cols-4'>
