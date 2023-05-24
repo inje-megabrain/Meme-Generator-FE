@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MemeDeleteAPI, imageDownloadAPI } from '../apis/server';
 import { useRecoilState } from 'recoil';
-import { MemeDataState, MemePage } from '../states/atom';
+import { MemeDataState, MemeId, MemePage } from '../states/atom';
 import { MemeType } from '../types';
 import { getCookie } from '@src/util/Cookie';
 import { toast } from 'react-toastify';
@@ -10,6 +10,7 @@ import {
   AiOutlineCloudDownload,
   AiOutlineShareAlt,
 } from 'react-icons/ai';
+import Mememodal from '@src/components/Mememodal';
 
 const Meme = () => {
   const { VITE_APP_IMAGE_URL } = import.meta.env;
@@ -17,6 +18,7 @@ const Meme = () => {
   const [page, setPage] = useState<number>(0);
   const [totalpage, setTotalpage] = useRecoilState<number>(MemePage);
   const [file, setFile] = useState<File>(new File([], ''));
+  const [id, setId] = useRecoilState<number>(MemeId);
 
   const prevpage = () => {
     if (page > 0) {
@@ -87,85 +89,105 @@ const Meme = () => {
 
   return (
     <div>
-      <div className='mt-4'>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
-          {memeList.map((meme, index) => (
-            <div key={index}>
-              {getCookie('access_token') ? (
-                <div className='grid grid-cols-3'>
-                  {getCookie('username') === meme.username ||
-                  getCookie('username') === 'admin' ? (
-                    <div>
-                      <AiOutlineClose
-                        className='btn btn-ghost font-bold text-xl'
-                        onClick={() => {
-                          MemeDeleteAPI(meme.memeId);
+      {memeList.length === 0 ? (
+        <div className='grid place-items-center'>
+          <h1>공사중입니다...</h1>
+        </div>
+      ) : (
+        <>
+          <div className='mt-4'>
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
+              {memeList.map((meme, index) => (
+                <div key={index}>
+                  {getCookie('access_token') ? (
+                    <div className='grid grid-cols-3'>
+                      {getCookie('username') === meme.username ||
+                      getCookie('username') === 'admin' ? (
+                        <div>
+                          <AiOutlineClose
+                            className='btn btn-ghost font-bold text-xl'
+                            onClick={() => {
+                              MemeDeleteAPI(meme.memeId);
+                            }}
+                          />
+                        </div>
+                      ) : null}
+                      <button
+                        id='kakao-share-btn'
+                        onClick={sharebtn}
+                        style={{
+                          display: 'none',
                         }}
-                      />
+                      >
+                        카카오톡 이미지 업로드 버튼
+                      </button>
+                      <div>
+                        <AiOutlineShareAlt
+                          className='btn btn-ghost font-bold text-xl'
+                          onClick={() => {
+                            const image =
+                              VITE_APP_IMAGE_URL + meme.imageUrl.toString();
+                            shareurl(image);
+                            sharebtn();
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <AiOutlineCloudDownload
+                          className='btn btn-ghost font-bold text-xl'
+                          onClick={() => {
+                            const image =
+                              VITE_APP_IMAGE_URL + meme.imageUrl.toString();
+                            converURLtoFile(image, meme.name + '.png');
+                          }}
+                        />
+                      </div>
                     </div>
                   ) : null}
-                  <button
-                    id='kakao-share-btn'
-                    onClick={sharebtn}
-                    style={{
-                      display: 'none',
+                  <div
+                    onClick={() => {
+                      setId(meme.memeId);
+                      console.log(id);
+                      (
+                        document.querySelector(
+                          '#my-modal-1'
+                        ) as HTMLButtonElement
+                      ).click();
                     }}
                   >
-                    카카오톡 이미지 업로드 버튼
+                    <img // 이미지 크기 체크
+                      src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
+                      className='w-full h-[300px] object-contain'
+                    />
+                  </div>
+                  <div className='inline-block'>
+                    <div className='font-bold text-xl text-start'>
+                      <div>{meme.name} 짤</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <label htmlFor='my-modal-1' style={{ display: 'none' }} />
+            <div className='mt-2'>
+              <div className='btn-group'>
+                {page > 0 ? (
+                  <button className='btn btn-ghost' onClick={prevpage}>
+                    {'<<'}
                   </button>
-                  <div>
-                    <AiOutlineShareAlt
-                      className='btn btn-ghost font-bold text-xl'
-                      onClick={() => {
-                        const image =
-                          VITE_APP_IMAGE_URL + meme.imageUrl.toString();
-                        shareurl(image);
-                        sharebtn();
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <AiOutlineCloudDownload
-                      className='btn btn-ghost font-bold text-xl'
-                      onClick={() => {
-                        const image =
-                          VITE_APP_IMAGE_URL + meme.imageUrl.toString();
-                        converURLtoFile(image, meme.name + '.png');
-                      }}
-                    />
-                  </div>
-                </div>
-              ) : null}
-              <div>
-                <img // 이미지 크기 체크
-                  src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
-                  className='w-full h-[300px] object-contain'
-                />
-              </div>
-              <div className='inline-block'>
-                <div className='font-bold text-xl text-start'>
-                  <div>{meme.name} 짤</div>
-                </div>
+                ) : null}
+                <button className='btn btn-ghost'>Page {page + 1}</button>
+                {page < totalpage - 1 ? (
+                  <button className='btn btn-ghost' onClick={nextpage}>
+                    {'>>'}
+                  </button>
+                ) : null}
               </div>
             </div>
-          ))}
-        </div>
-        <div className='mt-2'>
-          <div className='btn-group'>
-            {page > 0 ? (
-              <button className='btn btn-ghost' onClick={prevpage}>
-                {'<<'}
-              </button>
-            ) : null}
-            <button className='btn btn-ghost'>Page {page + 1}</button>
-            {page < totalpage - 1 ? (
-              <button className='btn btn-ghost' onClick={nextpage}>
-                {'>>'}
-              </button>
-            ) : null}
           </div>
-        </div>
-      </div>
+          <Mememodal modalnumber='my-modal-1' />
+        </>
+      )}
     </div>
   );
 };

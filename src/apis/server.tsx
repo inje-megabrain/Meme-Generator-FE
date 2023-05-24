@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { API_URL } from '../constants/Constants';
-import { MemeType, ProfileType } from '../types';
+import { MemeOneType, MemeType, ProfileType } from '../types';
 import { SetterOrUpdater } from 'recoil';
 import { getCookie, setCookie } from '../util/Cookie';
 import jinInterceptor from './interceptor';
 import { toast } from 'react-toastify';
+import exp from 'constants';
 
 const headerConfig = {
   'Content-Type': 'application/json',
@@ -14,11 +15,12 @@ const headerConfig = {
 export const imageUploadApi = async (
   image: File,
   name: string,
-  type: string
+  type: string,
+  publicFlag: boolean
 ) => {
   const formData = new FormData();
   formData.append('image', image); // {contentType: 'multipart/form-data'}
-  const obj = { name: name, type: type };
+  const obj = { name: name, type: type, publicFlag: publicFlag };
   formData.append(
     'dto',
     new Blob([JSON.stringify(obj)], { type: 'application/json' })
@@ -65,7 +67,7 @@ export const imageDownloadAPI = async (
       setTotalpage(response.data.pageInfo.totalPages);
     })
     .catch((error) => {
-      //console.log(error);
+      console.log(error);
     });
 };
 export const MemeDeleteAPI = async (memeid: number) => {
@@ -135,9 +137,25 @@ export const ServerCheckAPI = async () => {
       if (response.status === 200) {
         console.log('서버 연결 성공');
       }
+      console.log(response);
     })
     .catch((error) => {
       console.log(error);
       toast.error('서버 연결 실패');
+    });
+};
+export const MemeIdAPI = async (
+  memeid: number,
+  setMeme: SetterOrUpdater<MemeOneType>
+) => {
+  await jinInterceptor
+    .get(API_URL + `/meme/${memeid}`, {
+      headers: headerConfig,
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        console.log(response.data);
+        setMeme(response.data);
+      }
     });
 };

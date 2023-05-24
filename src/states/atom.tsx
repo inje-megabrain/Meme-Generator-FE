@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { MemeType, ProfileType } from '../types';
+import { MemeOneType, MemeType, ProfileType } from '../types';
 
 const MemeDataState = atom<MemeType>({
   key: 'MemeDataState',
@@ -9,6 +9,7 @@ const MemeDataState = atom<MemeType>({
       name: '',
       imageUrl: '',
       username: '',
+      publicFlag: false,
     },
   ],
 });
@@ -48,6 +49,7 @@ const MemberMemeDataState = atom<MemeType>({
       name: '',
       imageUrl: '',
       username: '',
+      publicFlag: false,
     },
   ],
 });
@@ -59,11 +61,25 @@ const TemplateDataState = atom<MemeType>({
       name: '',
       imageUrl: '',
       username: '',
+      publicFlag: false,
     },
   ],
 });
 const templatePage = atom<number>({
   key: 'templatePage',
+  default: 0,
+});
+const MemeIdDataState = atom<MemeOneType>({
+  key: 'MemeIdDataState',
+  default: {
+    memeId: 0,
+    name: '',
+    imageUrl: '',
+    username: '',
+  },
+});
+const MemeId = atom<number>({
+  key: 'MemeId',
   default: 0,
 });
 
@@ -78,4 +94,6 @@ export {
   MemberMemePage,
   TemplateDataState,
   templatePage,
+  MemeIdDataState,
+  MemeId,
 };

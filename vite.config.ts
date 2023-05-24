@@ -12,7 +12,7 @@ export default defineConfig({
       '/api': {
         target: 'https://meme.be.megabrain.kr', //"http://localhost:8080",
         changeOrigin: true,
-        secure: false,
+        secure: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },

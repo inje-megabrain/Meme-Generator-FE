@@ -11,6 +11,7 @@ const Upload = () => {
   const [previewimage, setPreviewimage] = useState<string>('');
   const memetype = useRecoilValue<string>(MemeTypeDataState);
   const [name, setName] = useState<string>('meme');
+  const [publicFlag, setPublicFlag] = useState<boolean>(false);
 
   const handleFileOnChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -26,7 +27,7 @@ const Upload = () => {
     if (!imageSrc) {
       toast.error('이미지를 선택해주세요');
     } else {
-      await imageUploadApi(imageSrc as File, name, memetype);
+      await imageUploadApi(imageSrc as File, name, memetype, publicFlag);
       naviage('/');
     }
   };
@@ -75,6 +76,18 @@ const Upload = () => {
           maxLength={8}
           onChange={nameChange}
         />
+      </div>
+      <div>
+        <input
+          type='checkbox'
+          className='toggle toggle-primary border border-solid'
+          onChange={(e) => {
+            setPublicFlag(e.target.checked);
+          }}
+        />
+        <div className='font-bold text-xl'>
+          {publicFlag === false ? <div>private</div> : <div>public</div>}
+        </div>
       </div>
       <div className='mt-4'>
         <button

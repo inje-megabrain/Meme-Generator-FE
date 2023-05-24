@@ -31,7 +31,7 @@ jinInterceptor.interceptors.response.use(
   },
   async function (error) {
     const originalRequest = error.config;
-    console.log(error.response.status);
+    //console.log(error.response.status);
     if (error.response.status === 400) {
       throw error;
     }

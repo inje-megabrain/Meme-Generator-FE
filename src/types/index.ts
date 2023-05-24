@@ -3,6 +3,7 @@ type MemeType = {
   imageUrl: string;
   name: string;
   username: string;
+  publicFlag: boolean;
 }[];
 type decodedjwtType = {
   sub: string;
@@ -13,4 +14,10 @@ type ProfileType = {
   email: string;
   username: string;
 };
-export type { MemeType, decodedjwtType, ProfileType };
+type MemeOneType = {
+  memeId: number;
+  imageUrl: string;
+  name: string;
+  username: string;
+};
+export type { MemeType, decodedjwtType, ProfileType, MemeOneType };
