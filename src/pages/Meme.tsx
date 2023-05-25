@@ -145,9 +145,9 @@ const Meme = () => {
                     </div>
                   ) : null}
                   <div
-                    onClick={() => {
-                      setId(meme.memeId);
-                      (
+                    onClick={async () => {
+                      await setId(meme.memeId);
+                      await (
                         document.querySelector(
                           '#my-modal-1'
                         ) as HTMLButtonElement

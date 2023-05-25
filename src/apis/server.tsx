@@ -146,7 +146,8 @@ export const ServerCheckAPI = async () => {
 };
 export const MemeIdAPI = async (
   memeid: number,
-  setMeme: SetterOrUpdater<MemeOneType>
+  setMeme: SetterOrUpdater<MemeOneType>,
+  setLoading?: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   await jinInterceptor
     .get(API_URL + `/meme/${memeid}`, {
@@ -154,7 +155,11 @@ export const MemeIdAPI = async (
     })
     .then((response) => {
       if (response.status === 200) {
+        setLoading && setLoading(false);
         setMeme(response.data);
       }
+    })
+    .finally(() => {
+      setLoading && setLoading(false);
     });
 };
