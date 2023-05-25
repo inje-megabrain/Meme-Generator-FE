@@ -50,7 +50,8 @@ export const imageDownloadAPI = async (
   page: number,
   setMemeList: SetterOrUpdater<MemeType>,
   setTotalpage: SetterOrUpdater<number>,
-  type: string
+  type: string,
+  setLoading?: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   await axios
     .get(API_URL + '/meme', {
@@ -63,6 +64,7 @@ export const imageDownloadAPI = async (
       headers: headerConfig,
     })
     .then((response) => {
+      setLoading && setLoading(false);
       setMemeList(response.data.dtos);
       setTotalpage(response.data.pageInfo.totalPages);
     })

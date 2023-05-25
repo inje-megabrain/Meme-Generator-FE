@@ -11,6 +11,7 @@ import {
   AiOutlineShareAlt,
 } from 'react-icons/ai';
 import Mememodal from '@src/components/Mememodal';
+import Loading from '@src/components/Loading';
 
 const Meme = () => {
   const { VITE_APP_IMAGE_URL } = import.meta.env;
@@ -20,6 +21,7 @@ const Meme = () => {
   const [file, setFile] = useState<File>(new File([], ''));
   const [id, setId] = useState<number>(0);
   const [modal, setModal] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const prevpage = () => {
     if (page > 0) {
@@ -32,7 +34,7 @@ const Meme = () => {
   const myurl = 'https://meme.megabrain.kr'; // url 수정해야함
 
   useEffect(() => {
-    imageDownloadAPI(page, setMemeList, setTotalpage, 'MEME');
+    imageDownloadAPI(page, setMemeList, setTotalpage, 'MEME', setLoading);
   }, [page]);
 
   // image url => file => image download
@@ -152,10 +154,14 @@ const Meme = () => {
                       setModal('my-modal-1');
                     }}
                   >
-                    <img // 이미지 크기 체크
-                      src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
-                      className='w-full h-[300px] object-contain'
-                    />
+                    {!loading && meme.imageUrl !== '' ? (
+                      <img // 이미지 크기 체크 console 범인
+                        src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
+                        className='w-full h-[300px] object-contain'
+                      />
+                    ) : (
+                      <Loading />
+                    )}
                   </label>
                   <div className='inline-block'>
                     <div className='font-bold text-xl text-start'>

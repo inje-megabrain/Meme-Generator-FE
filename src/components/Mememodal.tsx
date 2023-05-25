@@ -42,7 +42,7 @@ const Mememodal = (props: props) => {
           </label>
           <div className='grid place-content-center'>
             <div>
-              {!loading ? (
+              {!loading && memeList.imageUrl !== '' ? (
                 <img
                   src={VITE_APP_IMAGE_URL + memeList.imageUrl.toString()}
                   className='w-full h-full object-cover'
@@ -51,12 +51,15 @@ const Mememodal = (props: props) => {
                 <Loading />
               )}
             </div>
+            <div className='font-bold text-xl mt-2'>
+              {memeList.username} 제작자의 {'"'}
+              {memeList.name}
+              {'"'} 짤
+            </div>
           </div>
         </div>
       </div>
     </div>
-  ) : (
-    <Loading />
-  );
+  ) : null;
 };
 export default Mememodal;
