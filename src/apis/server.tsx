@@ -113,7 +113,8 @@ export const MemberMemeAPI = async (
   username: string,
   page: number,
   setMeme: SetterOrUpdater<MemeType>,
-  setTotalpage: SetterOrUpdater<number>
+  setTotalpage: SetterOrUpdater<number>,
+  setLoading?: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   await jinInterceptor
     .get(API_URL + `/meme/member/${username}`, {
@@ -125,6 +126,7 @@ export const MemberMemeAPI = async (
       headers: headerConfig,
     })
     .then((response) => {
+      setLoading && setLoading(false);
       setMeme(response.data.dtos);
       setTotalpage(response.data.pageInfo.totalPages);
     })

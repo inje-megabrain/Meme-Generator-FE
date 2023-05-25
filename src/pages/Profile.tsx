@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { AiOutlineClose } from 'react-icons/ai';
+import Loading from '@src/components/Loading';
 
 const { VITE_APP_IMAGE_URL } = import.meta.env;
 
@@ -20,6 +21,7 @@ const Profile = () => {
   const [meme, setMeme] = useRecoilState<MemeType>(MemberMemeDataState);
   const [totalpage, setTotalpage] = useRecoilState<number>(MemePage);
   const [page, setPage] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
   const homebtn = () => {
     navigate('/');
   };
@@ -35,7 +37,13 @@ const Profile = () => {
     ProfileAPI(getCookie('username'), setProfile);
   }, []);
   useEffect(() => {
-    MemberMemeAPI(getCookie('username'), page, setMeme, setTotalpage);
+    MemberMemeAPI(
+      getCookie('username'),
+      page,
+      setMeme,
+      setTotalpage,
+      setLoading
+    );
   }, [page]);
   const secession = () => {
     MemberSecessionAPI(getCookie('username'));
@@ -86,10 +94,14 @@ const Profile = () => {
                       <div className='w-[310px] h-[310px] object-cover skew-y-12 shadow-xl bg-gray-400 blur-sm' />
                     </div>
                     <div className='-translate-y-[300px] -translate-x-[15px] sm:-translate-y-[300px] sm:-translate-x-[20px]'>
-                      <img
-                        src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
-                        className='w-[310px] h-[310px] object-cover skew-y-12 shadow-xl border-spacing-4 border-solid'
-                      />
+                      {!loading && meme.imageUrl !== '' ? (
+                        <img
+                          src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
+                          className='w-[310px] h-[310px] object-cover skew-y-12 shadow-xl border-spacing-4 border-solid'
+                        />
+                      ) : (
+                        <Loading />
+                      )}
                     </div>
                   </div>
                 );
