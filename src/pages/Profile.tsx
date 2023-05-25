@@ -1,5 +1,5 @@
 import { MemberSecessionAPI } from '@src/apis/auth';
-import { MemberMemeAPI, ProfileAPI } from '@src/apis/server';
+import { MemberMemeAPI, MemeDeleteAPI, ProfileAPI } from '@src/apis/server';
 import {
   ProfileDataState,
   MemePage,
@@ -10,6 +10,7 @@ import { getCookie } from '@src/util/Cookie';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import { AiOutlineClose } from 'react-icons/ai';
 
 const { VITE_APP_IMAGE_URL } = import.meta.env;
 
@@ -73,6 +74,14 @@ const Profile = () => {
               {meme.map((meme, index) => {
                 return (
                   <div key={index} className='h-[400px]'>
+                    <div>
+                      <AiOutlineClose
+                        className='btn btn-ghost font-bold text-xl'
+                        onClick={() => {
+                          MemeDeleteAPI(meme.memeId);
+                        }}
+                      />
+                    </div>
                     <div>
                       <div className='w-[310px] h-[310px] object-cover skew-y-12 shadow-xl bg-gray-400 blur-sm' />
                     </div>
