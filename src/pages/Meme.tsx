@@ -147,7 +147,6 @@ const Meme = () => {
                   <div
                     onClick={() => {
                       setId(meme.memeId);
-                      console.log(id);
                       (
                         document.querySelector(
                           '#my-modal-1'

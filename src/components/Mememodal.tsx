@@ -16,7 +16,7 @@ const Mememodal = (props: props) => {
 
   useEffect(() => {
     MemeIdAPI(id, setMemeList);
-  }, []);
+  }, [id]);
 
   return (
     <div>
@@ -36,7 +36,6 @@ const Mememodal = (props: props) => {
                 className='w-full h-full object-cover'
               />
             </div>
-            {/* <div className='font-bold text-2xl'>{memeList.name} 짤</div> */}
           </div>
         </div>
       </div>
