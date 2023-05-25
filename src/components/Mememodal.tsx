@@ -1,5 +1,5 @@
 import { MemeIdAPI } from '@src/apis/server';
-import { MemeId, MemeIdDataState } from '@src/states/atom';
+import { MemeIdDataState } from '@src/states/atom';
 import { MemeOneType } from '@src/types';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
@@ -7,16 +7,17 @@ import Loading from './Loading';
 
 interface props {
   modalnumber: string;
+  id: number;
 }
 const { VITE_APP_IMAGE_URL } = import.meta.env;
 
 const Mememodal = (props: props) => {
-  const { modalnumber } = props;
+  const { modalnumber, id } = props;
   const [memeList, setMemeList] = useRecoilState<MemeOneType>(MemeIdDataState);
-  const [id, setId] = useRecoilState<number>(MemeId);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (id === 0) return;
     MemeIdAPI(id, setMemeList, setLoading);
   }, [id]);
 

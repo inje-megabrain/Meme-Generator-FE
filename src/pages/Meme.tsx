@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MemeDeleteAPI, imageDownloadAPI } from '../apis/server';
 import { useRecoilState } from 'recoil';
-import { MemeDataState, MemeId, MemePage } from '../states/atom';
+import { MemeDataState, MemePage } from '../states/atom';
 import { MemeType } from '../types';
 import { getCookie } from '@src/util/Cookie';
 import { toast } from 'react-toastify';
@@ -18,7 +18,8 @@ const Meme = () => {
   const [page, setPage] = useState<number>(0);
   const [totalpage, setTotalpage] = useRecoilState<number>(MemePage);
   const [file, setFile] = useState<File>(new File([], ''));
-  const [id, setId] = useRecoilState<number>(MemeId);
+  const [id, setId] = useState<number>(0);
+  const [modal, setModal] = useState<string>('');
 
   const prevpage = () => {
     if (page > 0) {
@@ -144,21 +145,18 @@ const Meme = () => {
                       </div>
                     </div>
                   ) : null}
-                  <div
-                    onClick={async () => {
-                      await setId(meme.memeId);
-                      await (
-                        document.querySelector(
-                          '#my-modal-1'
-                        ) as HTMLButtonElement
-                      ).click();
+                  <label
+                    htmlFor={modal}
+                    onClick={() => {
+                      setId(meme.memeId);
+                      setModal('my-modal-1');
                     }}
                   >
                     <img // 이미지 크기 체크
                       src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
                       className='w-full h-[300px] object-contain'
                     />
-                  </div>
+                  </label>
                   <div className='inline-block'>
                     <div className='font-bold text-xl text-start'>
                       <div>{meme.name} 짤</div>
@@ -167,7 +165,6 @@ const Meme = () => {
                 </div>
               ))}
             </div>
-            <label htmlFor='my-modal-1' style={{ display: 'none' }} />
             <div className='mt-2'>
               <div className='btn-group'>
                 {page > 0 ? (
@@ -184,7 +181,7 @@ const Meme = () => {
               </div>
             </div>
           </div>
-          <Mememodal modalnumber='my-modal-1' />
+          <Mememodal modalnumber='my-modal-1' id={id} />
         </>
       )}
     </div>

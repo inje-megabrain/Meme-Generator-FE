@@ -78,10 +78,6 @@ const MemeIdDataState = atom<MemeOneType>({
     username: '',
   },
 });
-const MemeId = atom<number>({
-  key: 'MemeId',
-  default: 0,
-});
 
 export {
   MemeDataState,
@@ -95,5 +91,4 @@ export {
   TemplateDataState,
   templatePage,
   MemeIdDataState,
-  MemeId,
 };
