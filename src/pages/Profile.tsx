@@ -50,8 +50,8 @@ const Profile = () => {
       </div>
       <div className='font-bold text-3xl mt-2'>Profile</div>
       <div className='mt-10'>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
-          <div className='mockup-code h-[250px]'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-10 mr-2'>
+          <div className='mockup-code h-[260px]'>
             <pre data-prefix='$' className='text-start'>
               <code className='text-xl'>Name : {profile.name}</code>
             </pre>
