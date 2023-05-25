@@ -95,7 +95,7 @@ const Profile = () => {
                 );
               })}
             </div>
-            <div className='mt-2'>
+            <div className='mt-8'>
               <div className='btn-group'>
                 {page > 0 ? (
                   <button className='btn btn-ghost' onClick={prevpage}>
