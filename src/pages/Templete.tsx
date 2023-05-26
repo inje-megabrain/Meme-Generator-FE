@@ -147,7 +147,7 @@ const Template = () => {
                   <div>
                     <img
                       src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
-                      className='w-[310px] h-[310px] object-contain'
+                      className='w-[310px] h-[310px] object-cover'
                     />
                   </div>
                   <div className='inline-block'>

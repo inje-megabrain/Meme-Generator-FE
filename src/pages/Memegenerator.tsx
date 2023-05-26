@@ -317,52 +317,75 @@ const MemeGenerator = () => {
                 </div>
                 <div className='grid place-items-center'>
                   {item === 'top' ? (
-                    <div className='grid grid-cols-4'>
-                      <div className='btn btn-ghost text-font'>상의1</div>
-                      <div className='btn btn-ghost text-font'>상의2</div>
-                      <div className='btn btn-ghost text-font'>상의3</div>
-                      <div className='btn btn-ghost text-font'>상의4</div>
+                    <div>
+                      <div className='btn btn-ghost text-red-600 font-bold'>
+                        초기화
+                      </div>
+                      <div className='grid grid-cols-4'>
+                        <div className='btn btn-ghost font-bold'>상의1</div>
+                        <div className='btn btn-ghost font-bold'>상의2</div>
+                        <div className='btn btn-ghost font-bold'>상의3</div>
+                        <div className='btn btn-ghost font-bold'>상의4</div>
+                      </div>
                     </div>
                   ) : item === 'pants' ? (
-                    <div className='grid grid-cols-4'>
-                      <div className='btn btn-ghost text-font'>하의1</div>
-                      <div className='btn btn-ghost text-font'>하의2</div>
-                      <div className='btn btn-ghost text-font'>하의3</div>
-                      <div className='btn btn-ghost text-font'>하의4</div>
+                    <div>
+                      <div className='btn btn-ghost text-red-600 font-bold'>
+                        초기화
+                      </div>
+                      <div className='grid grid-cols-4'>
+                        <div className='btn btn-ghost font-bold'>하의1</div>
+                        <div className='btn btn-ghost font-bold'>하의2</div>
+                        <div className='btn btn-ghost font-bold'>하의3</div>
+                        <div className='btn btn-ghost font-bold'>하의4</div>
+                      </div>
                     </div>
                   ) : item === 'icon' ? (
-                    <div className='grid grid-cols-4'>
+                    <div>
                       <div
-                        className='btn btn-ghost text-font'
-                        onClick={() => setEmoticon('👍')}
+                        className='btn btn-ghost text-red-600 font-bold'
+                        onClick={() => setEmoticon('')}
                       >
-                        이모티콘1
+                        초기화
                       </div>
-                      <div
-                        className='btn btn-ghost text-font'
-                        onClick={() => setEmoticon('✌️')}
-                      >
-                        이모티콘2
-                      </div>
-                      <div
-                        className='btn btn-ghost text-font'
-                        onClick={() => setEmoticon('😝')}
-                      >
-                        이모티콘3
-                      </div>
-                      <div
-                        className='btn btn-ghost text-font'
-                        onClick={() => setEmoticon('✨')}
-                      >
-                        이모티콘4
+                      <div className='grid grid-cols-4'>
+                        <div
+                          className='btn btn-ghost font-bold'
+                          onClick={() => setEmoticon('👍')}
+                        >
+                          이모티콘1
+                        </div>
+                        <div
+                          className='btn btn-ghost font-bold'
+                          onClick={() => setEmoticon('✌️')}
+                        >
+                          이모티콘2
+                        </div>
+                        <div
+                          className='btn btn-ghost font-bold'
+                          onClick={() => setEmoticon('😝')}
+                        >
+                          이모티콘3
+                        </div>
+                        <div
+                          className='btn btn-ghost font-bold'
+                          onClick={() => setEmoticon('✨')}
+                        >
+                          이모티콘4
+                        </div>
                       </div>
                     </div>
                   ) : item === 'text' ? (
-                    <div className='grid grid-cols-4'>
-                      <div className='btn btn-ghost text-font'>말풍선1</div>
-                      <div className='btn btn-ghost text-font'>말풍선2</div>
-                      <div className='btn btn-ghost text-font'>말풍선3</div>
-                      <div className='btn btn-ghost text-font'>말풍선4</div>
+                    <div>
+                      <div className='btn btn-ghost text-red-600 font-bold'>
+                        초기화
+                      </div>
+                      <div className='grid grid-cols-4'>
+                        <div className='btn btn-ghost font-bold'>말풍선1</div>
+                        <div className='btn btn-ghost font-bold'>말풍선2</div>
+                        <div className='btn btn-ghost font-bold'>말풍선3</div>
+                        <div className='btn btn-ghost font-bold'>말풍선4</div>
+                      </div>
                     </div>
                   ) : null}
                 </div>

@@ -59,9 +59,9 @@ const Profile = () => {
       </div>
       <div className='font-bold text-3xl mt-2'>Profile</div>
       <div className='mt-10'>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-20'>
           <div className='gird place-items-center'>
-            <div className='text-xl font-bold'>{profile.name}</div>
+            <div className='text-2xl font-bold'>{profile.name}</div>
             <hr />
             <div className='grid grid-cols-3 mt-2'>
               <div>
@@ -78,14 +78,14 @@ const Profile = () => {
               </div>
             </div>
             <div
-              className='btn btn-ghost font-bold text-xl'
+              className='btn btn-ghost font-bold text-xl mt-4'
               onClick={secession}
             >
               회원탈퇴
             </div>
           </div>
           <div className='mt-4'>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-16'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-20'>
               {meme.map((meme, index) => {
                 return (
                   <div key={index} className='h-[400px]'>
