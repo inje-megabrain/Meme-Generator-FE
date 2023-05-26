@@ -158,7 +158,7 @@ const Share = () => {
         <div>
           <img
             src={previewimage}
-            alt=''
+            alt={name}
             className='w-full h-full object-contain'
           />
         </div>

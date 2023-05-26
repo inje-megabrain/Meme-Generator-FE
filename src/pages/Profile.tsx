@@ -105,6 +105,7 @@ const Profile = () => {
                         <img
                           src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
                           className='w-[310px] h-[310px] object-cover skew-y-12 shadow-xl border-spacing-4 border-solid'
+                          alt={meme.name}
                         />
                       ) : (
                         <Loading />
