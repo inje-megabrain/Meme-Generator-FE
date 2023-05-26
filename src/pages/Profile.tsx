@@ -60,16 +60,23 @@ const Profile = () => {
       <div className='font-bold text-3xl mt-2'>Profile</div>
       <div className='mt-10'>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
-          <div className='mockup-code h-[260px]'>
-            <pre data-prefix='$' className='text-start'>
-              <code className='text-xl'>Name : {profile.name}</code>
-            </pre>
-            <pre data-prefix='>' className='text-warning text-start'>
-              <code className='text-xl'>ID : {profile.username}</code>
-            </pre>
-            <pre data-prefix='>' className='text-success text-start'>
-              <code className='text-xl'>Email : {profile.email}</code>
-            </pre>
+          <div className='gird place-items-center'>
+            <div className='text-xl font-bold'>{profile.name}</div>
+            <hr />
+            <div className='grid grid-cols-3 mt-2'>
+              <div>
+                <div className='text-base'>내가 올린 짤</div>
+                <div className='font-bold text-lg'>{meme.length}</div>
+              </div>
+              <div>
+                <div className='text-base'>좋아요</div>
+                <div className='font-bold text-lg'>?</div>
+              </div>
+              <div>
+                <div className='text-base'>짤 조회수</div>
+                <div className='font-bold text-lg'>?</div>
+              </div>
+            </div>
             <div
               className='btn btn-ghost font-bold text-xl'
               onClick={secession}
