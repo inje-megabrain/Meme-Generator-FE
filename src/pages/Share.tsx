@@ -98,21 +98,23 @@ const Share = () => {
           <li className='step'>Upload</li>
         </ul>
       </div>
-      <div className='grid grid-cols-2'>
-        <div
-          className='btn btn-ghost font-bold text-2xl rounded-xl'
-          onClick={memebtn}
-        >
-          Previous
-        </div>
-        <div
-          className='btn btn-ghost font-bold text-2xl rounded-xl'
-          onClick={uploadpage}
-        >
-          Next
+      <div className='grid place-items-center'>
+        <div className='grid grid-cols-2 '>
+          <div
+            className='btn btn-ghost font-bold text-2xl rounded-xl max-w-sm'
+            onClick={memebtn}
+          >
+            Previous
+          </div>
+          <div
+            className='btn btn-ghost font-bold text-2xl rounded-xl max-w-sm'
+            onClick={uploadpage}
+          >
+            Next
+          </div>
         </div>
       </div>
-      <div className='mb-4 grid place-items-center'>
+      <div className='mb-4 grid place-items-center mt-4'>
         <div className='grid grid-cols-1 md:grid-cols-2'>
           <div>
             <input
