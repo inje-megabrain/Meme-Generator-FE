@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SignUpAPI, loginAPI } from '../apis/auth';
+import { toast } from 'react-toastify';
 const { VITE_APP_GOOGLE_OAUTH } = import.meta.env;
 
 const Loginform = () => {
@@ -13,6 +14,8 @@ const Loginform = () => {
   const [username, setUsername] = useState('');
   const [checkEmail, setCheckEmail] = useState(false);
   const [checkPassword, setCheckPassword] = useState(false);
+  const [checkId, setCheckId] = useState(false);
+  const [checkUsername, setCheckUsername] = useState(false);
   const homebtn = () => {
     navigate('/');
   };
@@ -22,31 +25,34 @@ const Loginform = () => {
   const LoginFunc = async (e: any) => {
     e.preventDefault();
     if (!id) {
-      return alert('아이디를 입력해주세요');
+      return toast.error('아이디를 입력해주세요');
     } else if (!password) {
-      return alert('비밀번호를 입력해주세요');
+      return toast.error('비밀번호를 입력해주세요');
     }
     await loginAPI(id, password);
   };
   const SignupFunc = async (e: any) => {
     e.preventDefault();
-    if (!id) {
-      return alert('아이디를 입력해주세요');
+    if (!id || !checkId) {
+      return toast.error(
+        '아이디는 4자 이상 20자 이하의 영어 또는 숫자로 입력해주세요'
+      );
     } else if (!password || !checkPassword) {
-      return alert(
-        '비밀번호는 영문, 숫자, 특수문자를 포함하여 8자 이상 25자 이하로 입력해주세요.'
+      return toast.error(
+        '비밀번호는 영문, 숫자 조합으로 8~25자리로 입력해주세요.'
       );
     } else if (!email || !checkEmail) {
-      return alert('이메일 형식이 틀렸습니다.');
-    } else if (!username) {
-      return alert('이름을 입력해주세요');
+      return toast.error('이메일 형식이 틀렸습니다.');
+    } else if (!username || !checkUsername) {
+      return toast.error(
+        '이름은 2자 이상 10자 이하의 한글 또는 영어로 입력해주세요'
+      );
     }
     await SignUpAPI(id, password, username, email);
   };
   const onChangePassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const passwordRegex =
-        /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+      const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
       const passwordCurrent = e.target.value;
       setPassword(passwordCurrent);
       if (!passwordRegex.test(passwordCurrent)) {
@@ -71,6 +77,30 @@ const Loginform = () => {
     },
     []
   );
+  const onChangeId = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const idRegex = /^[a-zA-Z0-9]{4,20}$/;
+    const idCurrent = e.target.value;
+    setId(idCurrent);
+    if (!idRegex.test(idCurrent)) {
+      setCheckId(false);
+    } else {
+      setCheckId(true);
+    }
+  }, []);
+
+  const onChangeUsername = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const usernameRegex = /^[가-힣a-zA-Z]{2,10}$/;
+      const usernameCurrent = e.target.value;
+      setUsername(usernameCurrent);
+      if (!usernameRegex.test(usernameCurrent)) {
+        setCheckUsername(false);
+      } else {
+        setCheckUsername(true);
+      }
+    },
+    []
+  );
   return (
     <>
       <div>
@@ -87,7 +117,7 @@ const Loginform = () => {
               placeholder='ID'
               className='input w-full max-w-xs outline'
               value={id}
-              onChange={(e) => setId(e.target.value)}
+              onChange={onChangeId}
             />
           </div>
           <div className='grid place-items-center'>
@@ -108,7 +138,7 @@ const Loginform = () => {
                 placeholder='Username'
                 className='input w-full max-w-xs outline'
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={onChangeUsername}
               />
             </div>
             <div className='grid place-items-center'>
