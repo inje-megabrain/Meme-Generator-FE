@@ -98,7 +98,8 @@ const SignUpAPI = (
       window.location.href = '/login';
     })
     .catch((error) => {
-      if (error.response.data === '이미 존재하는 회원입니다.') {
+      console.log(error.response.data.status);
+      if (error.response.data.status !== 200) {
         toast.error('이미 존재하는 회원입니다.');
       }
     });
@@ -124,9 +125,7 @@ const MemberSecessionAPI = async (username: string) => {
         window.location.href = '/';
       }
     })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch((error) => {});
 };
 
 export { loginAPI, SignUpAPI, oauthLoginAPI, MemberSecessionAPI };

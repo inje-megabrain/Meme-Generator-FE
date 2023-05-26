@@ -58,7 +58,7 @@ export const imageDownloadAPI = async (
       params: {
         type: type,
         page: page,
-        size: 6,
+        size: 9,
         sort_direction: 'desc',
       },
       headers: headerConfig,

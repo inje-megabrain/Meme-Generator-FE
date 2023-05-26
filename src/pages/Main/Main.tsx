@@ -1,10 +1,11 @@
-import React, {  useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { getCookie, removeCookie, setCookie } from '../../util/Cookie';
 import Meme from '../Meme';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { API_URL } from '@src/constants/Constants';
+import { url } from 'inspector';
 
 const Main = () => {
   const navigate = useNavigate();
@@ -93,13 +94,25 @@ const Main = () => {
         </div>
         {cookie ? (
           <div className='grid place-items-center'>
-            <div>
-              <button
-                className='btn btn-ghost text-base font-bold'
-                onClick={templatebtn}
-              >
-                짤 생성
-              </button>
+            <div className='grid grid-cols-2 gap-2'>
+              <div>
+                <button
+                  className='btn btn-ghost text-lg font-bold bg-[url("../public/monoon.jpeg")] text-black'
+                  onClick={templatebtn}
+                >
+                  짤 생성
+                </button>
+              </div>
+              <div className='text-left'>
+                <div
+                  className='btn normal-case text-lg font-bold text-yellow-200 bg-[url("../public/ghost.jpeg")]'
+                  onClick={() => {
+                    window.open('https://83fh02wrhoh.typeform.com/to/TsXOKfsj');
+                  }}
+                >
+                  피드백
+                </div>
+              </div>
             </div>
           </div>
         ) : null}
