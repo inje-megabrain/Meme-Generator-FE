@@ -8,6 +8,7 @@ import { SlPencil } from 'react-icons/sl';
 import { BsEraser } from 'react-icons/bs';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { MemeTypeDataState, PreviewDateState } from '@src/states/atom';
+import { toast } from 'react-toastify';
 
 const MemeGenerator = () => {
   const navigate = useNavigate();
@@ -403,13 +404,34 @@ const MemeGenerator = () => {
                       }}
                     />
                   </div>
-                  <div>
-                    <input
-                      type='text'
-                      placeholder='TEXT'
-                      className='input input-bordered max-w-xs'
-                      onChange={textChage}
-                    />
+                  <div className='grid grid-cols-2 place-items-center'>
+                    <div>
+                      <input
+                        type='text'
+                        placeholder='TEXT'
+                        className='input input-bordered max-w-xs w-28'
+                        onChange={textChage}
+                      />
+                    </div>
+                    <div className='w-20'>
+                      <div
+                        className='btn'
+                        onClick={() => {
+                          const uri = stageRef.current?.toDataURL();
+                          setPreviewimage(uri!);
+                          setTextstate({
+                            isDrawing: false,
+                            x: 10,
+                            y: 10,
+                          });
+                          toast.success(
+                            '저장되었습니다! 또 다른 텍스트를 더 입력할 수 있습니다.'
+                          );
+                        }}
+                      >
+                        저장
+                      </div>
+                    </div>
                   </div>
                   <div className='font-bold w-24'>{textsize}px</div>
                   <div className='grid grid-cols-3 gap-1'>
