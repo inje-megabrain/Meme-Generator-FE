@@ -45,7 +45,7 @@ const Upload = () => {
         className='btn btn-ghost normal-case text-3xl font-bold place-items-center'
         onClick={homebtn}
       >
-        ME:ME
+        MEME
       </div>
       <div className='grid place-items-center'>
         <ul className='steps'>

@@ -55,7 +55,7 @@ const Profile = () => {
         className='btn btn-ghost normal-case text-3xl font-bold'
         onClick={homebtn}
       >
-        ME:ME
+        MEME
       </div>
       <div className='font-bold text-3xl mt-2'>Profile</div>
       <div className='mt-10'>

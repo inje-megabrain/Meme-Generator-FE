@@ -105,7 +105,7 @@ const Loginform = () => {
     <>
       <div>
         <div className='btn btn-ghost normal-case text-3xl' onClick={homebtn}>
-          ME:ME
+          MEME
         </div>
         <div>
           <h1>User Login</h1>

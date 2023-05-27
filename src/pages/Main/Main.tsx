@@ -78,7 +78,7 @@ const Main = () => {
               className='btn btn-ghost normal-case text-3xl'
               onClick={homebtn}
             >
-              ME:ME
+              MEME
             </div>
             <div className='grid place-items-start'>
               <div className='grid grid-cols-2'>

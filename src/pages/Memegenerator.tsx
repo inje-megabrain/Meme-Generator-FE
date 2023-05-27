@@ -146,7 +146,7 @@ const MemeGenerator = () => {
     <div>
       <div className='grid place-items-center'>
         <button onClick={homebtn} className='btn btn-ghost text-3xl font-bold'>
-          ME:ME
+          MEME
         </button>
       </div>
       <div className='grid place-items-center'>
