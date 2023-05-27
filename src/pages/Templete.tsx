@@ -13,6 +13,7 @@ import { getCookie } from '@src/util/Cookie';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import Loading from '@src/components/Loading';
 
 const { VITE_APP_IMAGE_URL } = import.meta.env;
 
@@ -25,6 +26,7 @@ const Template = () => {
   const [page, setPage] = useState<number>(0);
   const [totalpage, setTotalpage] = useRecoilState<number>(templatePage);
   const setPreviewimage = useSetRecoilState<string>(PreviewDateState);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleFileOnChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -54,7 +56,13 @@ const Template = () => {
     setPage(page + 1);
   };
   useEffect(() => {
-    imageDownloadAPI(page, setTemplatelist, setTotalpage, 'TEMPLATE');
+    imageDownloadAPI(
+      page,
+      setTemplatelist,
+      setTotalpage,
+      'TEMPLATE',
+      setLoading
+    );
   }, [page]);
 
   const converURLtoFile = async (url: string) => {
@@ -135,28 +143,33 @@ const Template = () => {
                     </div>
                   ) : null}
                 </div>
-                <div
-                  className='btn btn-ghost w-[270px] h-[310px]'
-                  onClick={() => {
-                    converURLtoFile(
-                      VITE_APP_IMAGE_URL + meme.imageUrl.toString()
-                    );
-                    navigate('/generator');
-                  }}
-                >
-                  <div>
-                    <img
-                      src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
-                      className='w-[310px] h-[310px] object-cover'
-                      alt={meme.name}
-                    />
-                  </div>
-                  <div className='inline-block'>
-                    <div className='font-bold text-xl text-start'>
-                      <div>템플릿 : {meme.name}</div>
+                {!loading && meme.imageUrl !== '' ? (
+                  <div
+                    className='btn btn-ghost w-[270px] h-[310px]'
+                    onClick={() => {
+                      converURLtoFile(
+                        VITE_APP_IMAGE_URL + meme.imageUrl.toString()
+                      );
+                      navigate('/generator');
+                    }}
+                  >
+                    <div>
+                      <img
+                        src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
+                        className='w-[310px] h-[310px] object-cover'
+                        alt={meme.name}
+                      />
+                    </div>
+
+                    <div className='inline-block'>
+                      <div className='font-bold text-xl text-start'>
+                        <div>템플릿 : {meme.name}</div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  <Loading />
+                )}
               </div>
             );
           })}
