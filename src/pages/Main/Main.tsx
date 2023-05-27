@@ -5,10 +5,12 @@ import Meme from '../Meme';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { API_URL } from '@src/constants/Constants';
+import Errorpage from '../Errorpage';
 
 const Main = () => {
   const navigate = useNavigate();
   const [theme, setTheme] = useState<string>('light');
+  const [servercheck, setServercheck] = useState<boolean>(true);
   const status = getCookie('status');
   const cookie = getCookie('access_token');
   const homebtn = () => {
@@ -52,89 +54,104 @@ const Main = () => {
     removeCookie('status', { path: '/' });
   }
   useEffect(() => {
-    axios.get(API_URL + '/test/ping').then((response) => {
-      if (response.status !== 200) {
+    axios
+      .get(API_URL + '/test/ping')
+      .then((response) => {
+        if (response.status !== 200) {
+          toast.error('서버가 꺼져있습니다.');
+        }
+      })
+      .catch((error) => {
+        setServercheck(false);
         toast.error('서버가 꺼져있습니다.');
-      }
-    });
+      });
   }, []);
   useEffect(() => {
     document.querySelector('html')?.setAttribute('data-theme', theme);
   }, [theme]);
   return (
     <>
-      <div>
+      {servercheck ? (
         <div>
-          <div className='btn btn-ghost normal-case text-3xl' onClick={homebtn}>
-            ME:ME
-          </div>
-          <div className='grid place-items-start'>
-            <div className='grid grid-cols-2'>
-              <div>
-                <input
-                  type='checkbox'
-                  className='toggle border border-solid'
-                  checked={theme === 'dark'}
-                  onChange={(e) => {
-                    setTheme(e.target.checked ? 'dark' : 'light');
-                  }}
-                />
-              </div>
-              {theme === 'dark' ? <div className='text-xl'>🌙</div> : null}
+          <div>
+            <div
+              className='btn btn-ghost normal-case text-3xl'
+              onClick={homebtn}
+            >
+              ME:ME
             </div>
-          </div>
-          {!cookie ? (
-            <div className='text-right'>
-              <div
-                className='btn btn-ghost normal-case text-base'
-                onClick={signbtn}
-              >
-                로그인
+            <div className='grid place-items-start'>
+              <div className='grid grid-cols-2'>
+                <div>
+                  <input
+                    type='checkbox'
+                    className='toggle border border-solid'
+                    checked={theme === 'dark'}
+                    onChange={(e) => {
+                      setTheme(e.target.checked ? 'dark' : 'light');
+                    }}
+                  />
+                </div>
+                {theme === 'dark' ? <div className='text-xl'>🌙</div> : null}
               </div>
             </div>
-          ) : (
-            <div className='text-right'>
-              <div
-                className='btn btn-ghost normal-case text-base'
-                onClick={profilebtn}
-              >
-                내 정보
-              </div>
-              <div
-                className='btn btn-ghost normal-case text-base'
-                onClick={logoutbtn}
-              >
-                로그아웃
-              </div>
-            </div>
-          )}
-        </div>
-        {cookie ? (
-          <div className='grid place-items-center'>
-            <div className='grid grid-cols-2 gap-2'>
-              <div>
-                <button
-                  className='btn btn-ghost text-lg font-bold bg-[url("../public/monoon.jpeg")] text-black'
-                  onClick={templatebtn}
-                >
-                  짤 생성
-                </button>
-              </div>
-              <div className='text-left'>
+            {!cookie ? (
+              <div className='text-right'>
                 <div
-                  className='btn normal-case text-lg font-bold text-yellow-200 bg-[url("../public/ghost.jpeg")]'
-                  onClick={() => {
-                    window.open('https://83fh02wrhoh.typeform.com/to/TsXOKfsj');
-                  }}
+                  className='btn btn-ghost normal-case text-base'
+                  onClick={signbtn}
                 >
-                  피드백
+                  로그인
+                </div>
+              </div>
+            ) : (
+              <div className='text-right'>
+                <div
+                  className='btn btn-ghost normal-case text-base'
+                  onClick={profilebtn}
+                >
+                  내 정보
+                </div>
+                <div
+                  className='btn btn-ghost normal-case text-base'
+                  onClick={logoutbtn}
+                >
+                  로그아웃
+                </div>
+              </div>
+            )}
+          </div>
+          {cookie ? (
+            <div className='grid place-items-center'>
+              <div className='grid grid-cols-2 gap-2'>
+                <div>
+                  <button
+                    className='btn btn-ghost text-lg font-bold bg-[url("../public/monoon.jpeg")] text-black'
+                    onClick={templatebtn}
+                  >
+                    짤 생성
+                  </button>
+                </div>
+                <div className='text-left'>
+                  <div
+                    className='btn normal-case text-lg font-bold text-yellow-200 bg-[url("../public/ghost.jpeg")]'
+                    onClick={() => {
+                      window.open(
+                        'https://83fh02wrhoh.typeform.com/to/TsXOKfsj'
+                      );
+                    }}
+                  >
+                    피드백
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ) : null}
-      </div>
-      <Meme />
+          ) : null}
+        </div>
+      ) : (
+        <Errorpage />
+      )}
+      {servercheck ? <Meme /> : null}
     </>
   );
 };
