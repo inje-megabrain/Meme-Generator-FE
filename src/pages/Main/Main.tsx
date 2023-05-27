@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getCookie, removeCookie, setCookie } from '../../util/Cookie';
 import Meme from '../Meme';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { API_URL } from '@src/constants/Constants';
-import { url } from 'inspector';
 
 const Main = () => {
   const navigate = useNavigate();
+  const [theme, setTheme] = useState<string>('light');
   const status = getCookie('status');
   const cookie = getCookie('access_token');
   const homebtn = () => {
@@ -58,13 +58,30 @@ const Main = () => {
       }
     });
   }, []);
-
+  useEffect(() => {
+    document.querySelector('html')?.setAttribute('data-theme', theme);
+  }, [theme]);
   return (
     <>
       <div>
         <div>
           <div className='btn btn-ghost normal-case text-3xl' onClick={homebtn}>
             ME:ME
+          </div>
+          <div className='grid place-items-start'>
+            <div className='grid grid-cols-2'>
+              <div>
+                <input
+                  type='checkbox'
+                  className='toggle border border-solid'
+                  checked={theme === 'dark'}
+                  onChange={(e) => {
+                    setTheme(e.target.checked ? 'dark' : 'light');
+                  }}
+                />
+              </div>
+              {theme === 'dark' ? <div className='text-xl'>🌙</div> : null}
+            </div>
           </div>
           {!cookie ? (
             <div className='text-right'>

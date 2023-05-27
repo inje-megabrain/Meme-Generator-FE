@@ -86,7 +86,7 @@ const Upload = () => {
           }}
         />
         <div className='font-bold text-xl'>
-          {publicFlag === false ? <div>private</div> : <div>public</div>}
+          {publicFlag === false ? <div>비공개</div> : <div>공개</div>}
         </div>
       </div>
       <div className='mt-4'>
