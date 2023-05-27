@@ -126,7 +126,7 @@ const Main = () => {
               <div className='grid grid-cols-2 gap-2'>
                 <div>
                   <button
-                    className='btn btn-ghost text-lg font-bold bg-[url("../public/monoon.jpeg")] text-black'
+                    className='btn btn-ghost text-lg font-bold text-white bg-gradient-to-r from-cyan-500 to-blue-500'
                     onClick={templatebtn}
                   >
                     짤 생성
@@ -134,7 +134,7 @@ const Main = () => {
                 </div>
                 <div className='text-left'>
                   <div
-                    className='btn normal-case text-lg font-bold text-yellow-200 bg-[url("../public/ghost.jpeg")]'
+                    className='btn normal-case text-lg font-bold text-white bg-gradient-to-r from-violet-500 to-fuchsia-500'
                     onClick={() => {
                       window.open(
                         'https://83fh02wrhoh.typeform.com/to/TsXOKfsj'

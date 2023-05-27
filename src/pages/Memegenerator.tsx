@@ -277,7 +277,7 @@ const MemeGenerator = () => {
               className='btn btn-ghost text-base font-bold'
               onClick={() => setBoxbtn('picture')}
             >
-              사진
+              텍스트
             </div>
             <div
               className='btn btn-ghost text-base font-bold'
