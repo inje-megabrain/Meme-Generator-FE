@@ -157,7 +157,7 @@ const Meme = () => {
                     {!loading && meme.imageUrl !== '' ? (
                       <img // 이미지 크기 체크 console 범인
                         src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
-                        className='w-full h-[300px] object-contain'
+                        className='w-full h-[300px] object-contain -webkit-user-drag-none user-drag-none -khtml-user-drag: none -khtml-user-select: none -moz-user-select: none -ms-user-select: none user-select: none'
                         alt={meme.name}
                       />
                     ) : (
