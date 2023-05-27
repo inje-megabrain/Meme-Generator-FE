@@ -41,11 +41,12 @@ const Upload = () => {
 
   return (
     <div>
-      <div
-        className='btn btn-ghost normal-case text-3xl font-bold place-items-center'
-        onClick={homebtn}
-      >
-        MEME
+      <div>
+        <img
+          src='src/assets/memelogo.png'
+          className='w-12 h-12 inline-block object-cover'
+          onClick={homebtn}
+        />
       </div>
       <div className='grid place-items-center'>
         <ul className='steps'>

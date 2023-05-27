@@ -144,10 +144,12 @@ const MemeGenerator = () => {
 
   return (
     <div>
-      <div className='grid place-items-center'>
-        <button onClick={homebtn} className='btn btn-ghost text-3xl font-bold'>
-          MEME
-        </button>
+      <div>
+        <img
+          src='src/assets/memelogo.png'
+          className='w-12 h-12 inline-block object-cover'
+          onClick={homebtn}
+        />
       </div>
       <div className='grid place-items-center'>
         <ul className='steps'>
