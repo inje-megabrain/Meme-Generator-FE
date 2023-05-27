@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { imageUploadApi } from '@src/apis/server';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { MemeTypeDataState } from '@src/states/atom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { MemeTypeDataState, PreviewDateState } from '@src/states/atom';
 import { toast } from 'react-toastify';
 
 const Upload = () => {
   const naviage = useNavigate();
   const [imageSrc, setImageSrc] = useState<File | undefined>();
-  const [previewimage, setPreviewimage] = useState<string>('');
+  const [previewimage, setPreviewimage] =
+    useRecoilState<string>(PreviewDateState);
   const memetype = useRecoilValue<string>(MemeTypeDataState);
   const [name, setName] = useState<string>('meme');
   const [publicFlag, setPublicFlag] = useState<boolean>(false);
@@ -77,7 +78,7 @@ const Upload = () => {
           onChange={nameChange}
         />
       </div>
-      <div>
+      <div className='mt-2'>
         <input
           type='checkbox'
           className='toggle toggle-primary border border-solid'
