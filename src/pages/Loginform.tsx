@@ -16,6 +16,7 @@ const Loginform = () => {
   const [checkPassword, setCheckPassword] = useState(false);
   const [checkId, setCheckId] = useState(false);
   const [checkUsername, setCheckUsername] = useState(false);
+  const [login, setLogin] = useState(false);
   const homebtn = () => {
     navigate('/');
   };
@@ -103,94 +104,110 @@ const Loginform = () => {
   );
   return (
     <>
-      <div>
-      <div>
-        <img
-          src='src/assets/memelogo.png'
-          className='w-12 h-12 inline-block object-cover'
-          onClick={homebtn}
-        />
-      </div>
+      <div className='grid place-items-center'>
         <div>
-          <h1>User Login</h1>
-        </div>
-        <div className='grid grid-rows-2 gap-5 mt-4'>
-          <div className='grid place-items-center'>
-            <input
-              type='text'
-              placeholder='ID'
-              className='input w-full max-w-xs outline'
-              value={id}
-              onChange={onChangeId}
-            />
-          </div>
-          <div className='grid place-items-center'>
-            <input
-              type='password'
-              placeholder='Password'
-              className='input w-full max-w-xs outline'
-              value={password}
-              onChange={onChangePassword}
-            />
-          </div>
-        </div>
-        {signup ? (
-          <div className='grid grid-rows-2 gap-5 mt-4'>
-            <div className='grid place-items-center'>
-              <input
-                type='text'
-                placeholder='Username'
-                className='input w-full max-w-xs outline'
-                value={username}
-                onChange={onChangeUsername}
-              />
-            </div>
-            <div className='grid place-items-center'>
-              <input
-                type='text'
-                placeholder='Email'
-                className='input w-full max-w-xs outline'
-                value={email}
-                onChange={onChangeEmail}
-              />
+          <img
+            src='src/assets/memelogo.png'
+            className='w-12 h-12 inline-block object-cover'
+            onClick={homebtn}
+          />
+          <div>
+            <div className='font-bold text-xl mt-4 animate-pulse text-blue-500'>
+              여러 짤들을 지금 만들어보세요!
             </div>
           </div>
-        ) : null}
-        {!signup ? (
-          <div className='mt-4'>
-            <button
-              className='btn btn-outline btn-sm outline outline-black font-bold text-sm'
-              onClick={() => setSignup(true)}
-            >
-              회원가입
-            </button>
-          </div>
-        ) : null}
-        <div className='grid place-items-center mt-4'>
-          {!signup ? (
-            <>
-              <button
-                className='btn btn-outline outline outline-black font-bold text-2xl rounded-xl w-full max-w-xs'
-                onClick={googlelogin}
-              >
-                Google
-              </button>
-              <button
-                className='btn btn-outline outline outline-black font-bold text-2xl rounded-xl w-full max-w-xs mt-4'
-                onClick={LoginFunc}
-              >
-                Login
-              </button>
-            </>
+          {login ? (
+            <div className='grid grid-rows-3 gap-3 mt-4'>
+              <div className='grid place-items-center'>
+                <input
+                  type='text'
+                  placeholder='ID'
+                  className='input w-full max-w-sm outline'
+                  value={id}
+                  onChange={onChangeId}
+                />
+              </div>
+              <div className='grid place-items-center'>
+                <input
+                  type='password'
+                  placeholder='Password'
+                  className='input w-full max-w-sm outline'
+                  value={password}
+                  onChange={onChangePassword}
+                />
+              </div>
+              <div className='grid place-items-center'>
+                <div
+                  className='btn btn-outline outline outline-black font-bold text-xl rounded-xl w-full max-w-sm mt-4'
+                  onClick={LoginFunc}
+                >
+                  Login
+                </div>
+              </div>
+            </div>
           ) : null}
           {signup ? (
-            <button
-              className='btn btn-outline outline outline-black font-bold text-2xl rounded-xl w-full max-w-xs mt-4'
-              onClick={SignupFunc}
-            >
-              Sign Up
-            </button>
+            <div className='grid grid-rows-2 gap-5 mt-4'>
+              <div className='grid place-items-center'>
+                <input
+                  type='text'
+                  placeholder='Username'
+                  className='input w-full max-w-sm outline'
+                  value={username}
+                  onChange={onChangeUsername}
+                />
+              </div>
+              <div className='grid place-items-center'>
+                <input
+                  type='text'
+                  placeholder='Email'
+                  className='input w-full max-w-sm outline'
+                  value={email}
+                  onChange={onChangeEmail}
+                />
+              </div>
+            </div>
           ) : null}
+          {login === false ? (
+            <div className='mt-4 grid place-items-center'>
+              <div
+                className='btn btn-outline outline outline-black font-bold text-xl rounded-xl w-full max-w-sm mt-4'
+                onClick={() => setLogin(true)}
+              >
+                Login
+              </div>
+            </div>
+          ) : null}
+          <div className='w-full divider content-center'>OR</div>
+          <div className='grid place-items-center mt-4'>
+            {!signup ? (
+              <>
+                <div
+                  className='btn btn-outline outline outline-black font-bold text-xl rounded-xl w-full max-w-sm'
+                  onClick={googlelogin}
+                >
+                  <img
+                    src='src/assets/googlelogo.svg'
+                    className='w-full h-6 inline-block object-contain'
+                  />
+                </div>
+                <div
+                  className='btn btn-outline outline outline-black font-bold text-xl w-full rounded-xl max-w-sm mt-4'
+                  onClick={() => setSignup(true)}
+                >
+                  Sign Up
+                </div>
+              </>
+            ) : null}
+            {signup ? (
+              <button
+                className='btn btn-outline outline outline-black font-bold text-xl rounded-xl w-full max-w-sm mt-4'
+                onClick={SignupFunc}
+              >
+                Sign Up
+              </button>
+            ) : null}
+          </div>
         </div>
       </div>
     </>
