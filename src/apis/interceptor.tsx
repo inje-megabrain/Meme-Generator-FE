@@ -55,6 +55,9 @@ jinInterceptor.interceptors.response.use(
       } else {
         removeCookie('access_token', { path: '/' });
         removeCookie('refresh_token', { path: '/' });
+        removeCookie('username', { path: '/' });
+        removeCookie('role', { path: '/' });
+        window.location.href = '/login';
       }
     }
   }

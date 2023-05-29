@@ -149,9 +149,9 @@ const MemeGenerator = () => {
 
   const sharepage = () => {
     const uri = stageRef.current?.toDataURL();
-    console.log(uri);
     setPreviewimage(uri!);
     setMemetype('MEME');
+    setPreviewimage('');
     navigate('/share');
   };
 
@@ -602,6 +602,7 @@ const MemeGenerator = () => {
                         placeholder='TEXT'
                         className='input input-bordered max-w-xs w-28 font-sans'
                         onChange={textChage}
+                        value={text}
                       />
                     </div>
                     <div className='w-20'>
@@ -618,6 +619,7 @@ const MemeGenerator = () => {
                           toast.success(
                             '저장되었습니다! 또 다른 텍스트를 더 입력할 수 있습니다.'
                           );
+                          setText('새로운 텍스트');
                         }}
                       >
                         저장
