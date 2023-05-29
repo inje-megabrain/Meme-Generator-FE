@@ -15,14 +15,6 @@ const Upload = () => {
   const [name, setName] = useState<string>('meme');
   const [publicFlag, setPublicFlag] = useState<boolean>(false);
 
-  const handleFileOnChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files) {
-      setImageSrc(files[0]);
-      setPreviewimage(URL.createObjectURL(files[0]));
-    }
-  };
-
   useEffect(() => {
     if (previewimage !== '') {
       const base64ToFile = (dataurl: string) => {
@@ -84,12 +76,6 @@ const Upload = () => {
         </div>
       </div>
       <div>
-        <input
-          type='file'
-          className='file-input file-input-ghost file-input-sm max-w-xs mb-2 font-sans'
-          onChange={handleFileOnChange}
-          accept='image/jpg, image/jpeg,image/png'
-        />
         <input
           type='text'
           placeholder='업로드 할 이름'

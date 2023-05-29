@@ -1,20 +1,29 @@
 import { useEffect, useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { useNavigate } from 'react-router-dom';
-import { Stage, Layer, Line, Image, Text, Transformer } from 'react-konva';
+import { Stage, Layer, Line, Image, Text } from 'react-konva';
 import Konva from 'konva';
 import useImage from 'use-image';
 import { SlPencil } from 'react-icons/sl';
 import { BsEraser } from 'react-icons/bs';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { MemeTypeDataState, PreviewDateState } from '@src/states/atom';
+import {
+  ItemDataState,
+  MemeTypeDataState,
+  PreviewDateState,
+} from '@src/states/atom';
 import { toast } from 'react-toastify';
+import { ItemsUploadAPI, ItemsDownloadAPI } from '@src/apis/server';
+import { ItemType } from '@src/types';
+const { VITE_APP_IMAGE_URL } = import.meta.env;
 
 const MemeGenerator = () => {
   const navigate = useNavigate();
   const [imageSrc, setImageSrc] = useState<File | undefined>();
+  const [decorateSrc, setDecorateSrc] = useState<File | undefined>();
   const [previewimage, setPreviewimage] =
     useRecoilState<string>(PreviewDateState);
+  const [decorateimage, setDecorateimage] = useState<string>('');
   const setMemetype = useSetRecoilState<string>(MemeTypeDataState);
   const [color, setColor] = useState('#000000');
   const [textcolor, setTextcolor] = useState<string>('#000000');
@@ -23,6 +32,7 @@ const MemeGenerator = () => {
   const [text, setText] = useState<string>('');
   const [pensize, setPensize] = useState<number>(10);
   const [image] = useImage(previewimage);
+  const [decoimage] = useImage(decorateimage);
   const isDrawing = useRef(false);
   const stageRef = useRef<Konva.Stage>(null);
   const [boxbtn, setBoxbtn] = useState<string>('drawing');
@@ -37,10 +47,18 @@ const MemeGenerator = () => {
     x: 50,
     y: 70,
   });
+  const [imgstate, setImgstate] = useState<any>({
+    isDragging: false,
+    x: 50,
+    y: 50,
+  });
   const [textsize, setTextsize] = useState<number>(30);
   const [textroate, setTextroate] = useState<number>(0);
   const [textstyle, setTextstyle] = useState<string>('normal');
   const [emoticon, setEmoticon] = useState<string>('');
+  const [category, setCategory] = useState<string>('');
+  const [decorate, setDecorate] = useState<string>('');
+  const [items, setItems] = useRecoilState<ItemType>(ItemDataState);
 
   const handleMouseDown = (e: Konva.KonvaEventObject<MouseEvent>) => {
     isDrawing.current = true;
@@ -114,6 +132,14 @@ const MemeGenerator = () => {
       setMemetype('MEME');
     }
   };
+  const DecorateFileOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      setDecorateSrc(files[0]);
+      setDecorateimage(URL.createObjectURL(files[0]));
+    }
+  };
+
   const textroateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTextroate(Number(e.target.value));
   };
@@ -130,6 +156,12 @@ const MemeGenerator = () => {
   const textstyleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setTextstyle(e.target.value);
   };
+  const categoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategory(e.target.value);
+  };
+  const decorateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDecorate(e.target.value);
+  };
 
   const clearbtn = () => {
     setLines([]);
@@ -141,6 +173,12 @@ const MemeGenerator = () => {
     setPreviewimage('');
     navigate('/template');
   };
+  const savebtn = async () => {
+    await ItemsUploadAPI(decorateSrc as File, category, decorate);
+  };
+  useEffect(() => {
+    ItemsDownloadAPI(category, setItems);
+  }, [category]);
 
   return (
     <div>
@@ -166,8 +204,40 @@ const MemeGenerator = () => {
               type='file'
               className='file-input file-input-bordered file-input-black w-full max-w-xs mb-2 rounded-md border-solid font-sans'
               onChange={handleFileOnChange}
-              accept='image/jpg, image/jpeg,image/png'
+              accept='image/jpg,image/jpeg,image/png'
             />
+          </div>
+          <div className='grid grid-cols-1 md:grid-cols-4 place-items-center'>
+            <input
+              type='file'
+              className='file-input file-input-bordered file-input-black w-full max-w-xs mb-2 rounded-md border-solid font-sans'
+              onChange={DecorateFileOnChange}
+              accept='image/jpg,image/jpeg,image/png'
+            />
+            <div>
+              <select
+                className='select select-bordered w-full max-w-xs'
+                onChange={categoryChange}
+              >
+                <option value='도구'>도구</option>
+                <option value='악세서리'>악세서리</option>
+                <option value='이모티콘'>이모티콘</option>
+                <option value='말풍선'>말풍선</option>
+              </select>
+            </div>
+            <div>
+              <input
+                type='text'
+                placeholder='이름'
+                className='input input-bordered w-full max-w-xs'
+                onChange={decorateChange}
+              />
+            </div>
+            <div>
+              <div className='btn' onClick={savebtn}>
+                저장
+              </div>
+            </div>
           </div>
         </div>
       ) : null}
@@ -219,6 +289,28 @@ const MemeGenerator = () => {
                 }
               />
             ))}
+          </Layer>
+          <Layer>
+            <Image
+              image={decoimage}
+              width={50}
+              height={50}
+              x={imgstate.x}
+              y={imgstate.y}
+              draggable
+              onDragStart={() => {
+                setImgstate({
+                  isDragging: true,
+                });
+              }}
+              onDragEnd={(e) => {
+                setImgstate({
+                  x: e.target.x(),
+                  y: e.target.y(),
+                  isDragging: false,
+                });
+              }}
+            />
           </Layer>
           <Layer>
             <Text
@@ -292,29 +384,29 @@ const MemeGenerator = () => {
           </div>
           <div className='h-[240px]'>
             {boxbtn === 'decorating' ? (
-              <div className='grid grid-cols-2'>
+              <div className='grid grid-cols-2 place-items-center'>
                 <div className='grid grid-rows-4 w-24'>
                   <div
                     className='btn btn-ghost text-base font-sans'
-                    onClick={() => setItem('top')}
+                    onClick={() => setCategory('도구')}
                   >
-                    상의
+                    도구
                   </div>
                   <div
                     className='btn btn-ghost text-base font-sans'
-                    onClick={() => setItem('pants')}
+                    onClick={() => setCategory('악세서리')}
                   >
-                    하의
+                    악세서리
                   </div>
                   <div
                     className='btn btn-ghost text-base font-sans'
-                    onClick={() => setItem('icon')}
+                    onClick={() => setCategory('이모티콘')}
                   >
                     이모티콘
                   </div>
                   <div
                     className='btn btn-ghost text-base font-sans'
-                    onClick={() => setItem('text')}
+                    onClick={() => setCategory('말풍선')}
                   >
                     말풍선
                   </div>
@@ -322,41 +414,50 @@ const MemeGenerator = () => {
                 <div className='grid place-items-center'>
                   {item === 'top' ? (
                     <div>
-                      <div className='btn btn-ghost text-red-600 font-bold text-base font-sans'>
+                      <div
+                        className='btn btn-ghost text-red-600 font-bold text-base font-sans'
+                        onClick={() => {
+                          setDecorateimage('');
+                        }}
+                      >
                         초기화
                       </div>
-                      <div className='grid grid-cols-2'>
-                        <div className='btn btn-ghost font-bold text-base font-sans'>
-                          상의1
+                      {items.map((item, index) => (
+                        <div
+                          className='btn btn-ghost font-bold text-base font-sans'
+                          key={index}
+                          onClick={() =>
+                            setDecorateimage(
+                              VITE_APP_IMAGE_URL + item.imageUrl.toString()
+                            )
+                          }
+                        >
+                          {item.name}
                         </div>
-                        <div className='btn btn-ghost font-bold text-base font-sans'>
-                          상의2
-                        </div>
-                        <div className='btn btn-ghost font-bold text-base font-sans'>
-                          상의3
-                        </div>
-                        <div className='btn btn-ghost font-bold text-base font-sans'>
-                          상의4
-                        </div>
-                      </div>
+                      ))}
                     </div>
                   ) : item === 'pants' ? (
                     <div>
-                      <div className='btn btn-ghost text-red-600 font-bold text-base font-sans'>
+                      <div
+                        className='btn btn-ghost text-red-600 font-bold text-base font-sans'
+                        onClick={() => {
+                          setDecorateimage('');
+                        }}
+                      >
                         초기화
                       </div>
                       <div className='grid grid-cols-2'>
                         <div className='btn btn-ghost font-bold text-base font-sans'>
-                          하의1
+                          악세서리1
                         </div>
                         <div className='btn btn-ghost font-bold text-base font-sans'>
-                          하의2
+                          악세서리2
                         </div>
                         <div className='btn btn-ghost font-bold text-base font-sans'>
-                          하의3
+                          악세서리3
                         </div>
                         <div className='btn btn-ghost font-bold text-base font-sans'>
-                          하의4
+                          악세서리4
                         </div>
                       </div>
                     </div>
@@ -364,7 +465,9 @@ const MemeGenerator = () => {
                     <div>
                       <div
                         className='btn btn-ghost text-red-600 font-bold text-base font-sans'
-                        onClick={() => setEmoticon('')}
+                        onClick={() => {
+                          setDecorateimage('');
+                        }}
                       >
                         초기화
                       </div>
@@ -397,7 +500,12 @@ const MemeGenerator = () => {
                     </div>
                   ) : item === 'text' ? (
                     <div>
-                      <div className='btn btn-ghost text-red-600 font-bold text-base font-sans'>
+                      <div
+                        className='btn btn-ghost text-red-600 font-bold text-base font-sans'
+                        onClick={() => {
+                          setDecorateimage('');
+                        }}
+                      >
                         초기화
                       </div>
                       <div className='grid grid-cols-2'>

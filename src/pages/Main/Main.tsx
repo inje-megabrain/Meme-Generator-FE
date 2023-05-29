@@ -127,7 +127,7 @@ const Main = () => {
               <div className='grid grid-cols-2 gap-2'>
                 <div>
                   <button
-                    className='btn btn-ghost text-lg font-bold text-white bg-gradient-to-r from-cyan-500 to-blue-500 font-sans'
+                    className='btn btn-ghost text-lg font-bold font-sans'
                     onClick={templatebtn}
                   >
                     짤 생성

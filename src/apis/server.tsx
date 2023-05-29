@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_URL } from '../constants/Constants';
-import { MemeOneType, MemeType, ProfileType } from '../types';
+import { ItemType, MemeOneType, MemeType, ProfileType } from '../types';
 import { SetterOrUpdater } from 'recoil';
 import { getCookie, setCookie } from '../util/Cookie';
 import jinInterceptor from './interceptor';
@@ -165,5 +165,60 @@ export const MemeIdAPI = async (
     })
     .finally(() => {
       setLoading && setLoading(false);
+    });
+};
+export const ItemsUploadAPI = async (
+  image: File,
+  category: string,
+  name: string
+) => {
+  console.log(image, category, name);
+  const formData = new FormData();
+  formData.append('image', image); // {contentType: 'multipart/form-data'}
+  const obj = { category: category, name: name };
+  formData.append(
+    'dto',
+    new Blob([JSON.stringify(obj)], { type: 'application/json' })
+  ); // {contentType: 'application/json'}
+  await jinInterceptor
+    .post(API_URL + '/items', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: 'Bearer ' + getCookie('access_token'),
+      },
+      transformRequest: (data) => {
+        return data;
+      },
+    })
+    .then((response) => {
+      if (response.status === 201) {
+        setCookie('status', 'upload success');
+      }
+    })
+    .catch((error) => {
+      toast.error('업로드 실패');
+    });
+};
+export const ItemsDownloadAPI = async (
+  category: string,
+  setItems: SetterOrUpdater<ItemType>
+) => {
+  await axios
+    .get(API_URL + '/items', {
+      params: {
+        category: category,
+        page: 0,
+        size: 6,
+        sort_direction: 'desc',
+      },
+      headers: headerConfig,
+    })
+    .then((response) => {
+      console.log(response.data.items);
+      setItems(response.data.items);
+    })
+    .catch((error) => {
+      console.log(error);
     });
 };

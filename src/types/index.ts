@@ -20,4 +20,10 @@ type MemeOneType = {
   name: string;
   username: string;
 };
-export type { MemeType, decodedjwtType, ProfileType, MemeOneType };
+type ItemType = {
+  ItemId: number;
+  name: string;
+  imageUrl: string;
+  category: string;
+}[];
+export type { MemeType, decodedjwtType, ProfileType, MemeOneType, ItemType };
