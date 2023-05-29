@@ -151,6 +151,7 @@ const Share = () => {
                 onClick={sharebtn}
                 className='btn btn-ghost text-base font-bold font-sans'
               >
+                <img src='/kakaologo.png' className='w-6 h-6 inline-block' />{' '}
                 공유
               </button>
             </div>
