@@ -57,6 +57,7 @@ const MemeGenerator = () => {
   const [decorate, setDecorate] = useState<string>('');
   const [items, setItems] = useRecoilState<ItemType>(ItemDataState);
   const [itemcategory, setItemcategory] = useState<string>('도구');
+  const [itemstorage, setItemstorage] = useState<string>('');
 
   const handleMouseDown = (e: Konva.KonvaEventObject<MouseEvent>) => {
     isDrawing.current = true;
@@ -136,7 +137,7 @@ const MemeGenerator = () => {
     const files = e.target.files;
     if (files) {
       setDecorateSrc(files[0]);
-      setDecorateimage(test);
+      setDecorateimage(itemstorage);
     }
   };
   const textroateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -183,8 +184,6 @@ const MemeGenerator = () => {
   useEffect(() => {
     ItemsDownloadAPI(itemcategory, setItems);
   }, [itemcategory]);
-
-  const [test, setTest] = useState<string>('');
 
   return (
     <div>
@@ -466,8 +465,7 @@ const MemeGenerator = () => {
                               const files = new File([blob], 'decorate.png', {
                                 type: 'image/jpg',
                               });
-                              const decorate = URL.createObjectURL(files);
-                              setTest(decorate);
+                              setItemstorage(URL.createObjectURL(files));
                             }}
                           >
                             {item.name}
@@ -497,8 +495,7 @@ const MemeGenerator = () => {
                               const files = new File([blob], 'decorate.png', {
                                 type: 'image/jpg',
                               });
-                              const decorate = URL.createObjectURL(files);
-                              setTest(decorate);
+                              setItemstorage(URL.createObjectURL(files));
                             }}
                           >
                             {item.name}
@@ -528,8 +525,7 @@ const MemeGenerator = () => {
                               const files = new File([blob], 'decorate.png', {
                                 type: 'image/jpg',
                               });
-                              const decorate = URL.createObjectURL(files);
-                              setTest(decorate);
+                              setItemstorage(URL.createObjectURL(files));
                             }}
                           >
                             {item.name}
@@ -559,8 +555,7 @@ const MemeGenerator = () => {
                               const files = new File([blob], 'decorate.png', {
                                 type: 'image/jpg',
                               });
-                              const decorate = URL.createObjectURL(files);
-                              setTest(decorate);
+                              setItemstorage(URL.createObjectURL(files));
                             }}
                           >
                             {item.name}
