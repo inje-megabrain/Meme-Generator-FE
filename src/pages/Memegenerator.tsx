@@ -151,7 +151,6 @@ const MemeGenerator = () => {
     const uri = stageRef.current?.toDataURL();
     setPreviewimage(uri!);
     setMemetype('MEME');
-    setPreviewimage('');
     navigate('/share');
   };
 
