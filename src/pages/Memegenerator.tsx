@@ -488,11 +488,18 @@ const MemeGenerator = () => {
                           <div
                             className='btn btn-ghost font-bold text-base font-sans'
                             key={index}
-                            onClick={() =>
+                            onClick={async () => {
                               setDecorateimage(
                                 VITE_APP_IMAGE_URL + item.imageUrl.toString()
-                              )
-                            }
+                              );
+                              const response = await fetch(decorateimage);
+                              const blob = await response.blob();
+                              const files = new File([blob], 'decorate.png', {
+                                type: 'image/jpg',
+                              });
+                              const decorate = URL.createObjectURL(files);
+                              setTest(decorate);
+                            }}
                           >
                             {item.name}
                           </div>
@@ -512,11 +519,18 @@ const MemeGenerator = () => {
                           <div
                             className='btn btn-ghost font-bold text-base font-sans'
                             key={index}
-                            onClick={() =>
+                            onClick={async () => {
                               setDecorateimage(
                                 VITE_APP_IMAGE_URL + item.imageUrl.toString()
-                              )
-                            }
+                              );
+                              const response = await fetch(decorateimage);
+                              const blob = await response.blob();
+                              const files = new File([blob], 'decorate.png', {
+                                type: 'image/jpg',
+                              });
+                              const decorate = URL.createObjectURL(files);
+                              setTest(decorate);
+                            }}
                           >
                             {item.name}
                           </div>
@@ -536,11 +550,18 @@ const MemeGenerator = () => {
                           <div
                             className='btn btn-ghost font-bold text-base font-sans'
                             key={index}
-                            onClick={() =>
+                            onClick={async () => {
                               setDecorateimage(
                                 VITE_APP_IMAGE_URL + item.imageUrl.toString()
-                              )
-                            }
+                              );
+                              const response = await fetch(decorateimage);
+                              const blob = await response.blob();
+                              const files = new File([blob], 'decorate.png', {
+                                type: 'image/jpg',
+                              });
+                              const decorate = URL.createObjectURL(files);
+                              setTest(decorate);
+                            }}
                           >
                             {item.name}
                           </div>
