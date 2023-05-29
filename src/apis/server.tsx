@@ -193,7 +193,7 @@ export const ItemsUploadAPI = async (
     })
     .then((response) => {
       if (response.status === 201) {
-        setCookie('status', 'upload success');
+        toast.success('업로드 성공');
       }
     })
     .catch((error) => {
