@@ -107,7 +107,7 @@ const Loginform = () => {
       <div className='grid place-items-center'>
         <div>
           <img
-            src='src/assets/memelogo.png'
+            src='/memelogo.png'
             className='w-12 h-12 inline-block object-cover'
             onClick={homebtn}
           />
@@ -116,8 +116,8 @@ const Loginform = () => {
               여러 짤들을 지금 만들어보세요!
             </div>
           </div>
-          {login ? (
-            <div className='grid grid-rows-3 gap-3 mt-4'>
+          {login || signup ? (
+            <div className='grid grid-rows-2 gap-4 mt-4'>
               <div className='grid place-items-center'>
                 <input
                   type='text'
@@ -136,14 +136,16 @@ const Loginform = () => {
                   onChange={onChangePassword}
                 />
               </div>
-              <div className='grid place-items-center'>
-                <div
-                  className='btn btn-outline outline outline-black font-bold text-lg rounded-xl w-full max-w-sm mt-4 normal-case font-sans'
-                  onClick={LoginFunc}
-                >
-                  Login
+              {!signup ? (
+                <div className='grid place-items-center'>
+                  <div
+                    className='btn btn-outline outline outline-black font-bold text-lg rounded-xl w-full max-w-sm mt-4 normal-case font-sans'
+                    onClick={LoginFunc}
+                  >
+                    Login
+                  </div>
                 </div>
-              </div>
+              ) : null}
             </div>
           ) : null}
           {signup ? (
@@ -168,7 +170,7 @@ const Loginform = () => {
               </div>
             </div>
           ) : null}
-          {login === false ? (
+          {login === false && !signup ? (
             <div className='mt-4 grid place-items-center'>
               <div
                 className='btn btn-outline outline outline-black font-bold text-lg rounded-xl w-full max-w-sm mt-4  normal-case font-sans'
@@ -187,7 +189,7 @@ const Loginform = () => {
                   onClick={googlelogin}
                 >
                   <img
-                    src='src/assets/googlelogo.svg'
+                    src='/googlelogo.svg'
                     className='w-full h-6 inline-block object-contain'
                   />
                 </div>

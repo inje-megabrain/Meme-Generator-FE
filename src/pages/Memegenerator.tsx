@@ -146,7 +146,7 @@ const MemeGenerator = () => {
     <div>
       <div>
         <img
-          src='src/assets/memelogo.png'
+          src='/memelogo.png'
           className='w-12 h-12 inline-block object-cover'
           onClick={homebtn}
         />

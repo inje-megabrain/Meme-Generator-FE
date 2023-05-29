@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { imageUploadApi } from '@src/apis/server';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { MemeTypeDataState, PreviewDateState } from '@src/states/atom';
 import { toast } from 'react-toastify';
+import { Buffer } from 'buffer';
 
 const Upload = () => {
   const naviage = useNavigate();
@@ -21,15 +22,33 @@ const Upload = () => {
       setPreviewimage(URL.createObjectURL(files[0]));
     }
   };
+
+  useEffect(() => {
+    if (previewimage !== '') {
+      const base64ToFile = (dataurl: string) => {
+        let arr = dataurl.split(','),
+          bstr = Buffer.from(arr[1], 'base64'),
+          n = bstr.length,
+          u8arr = new Uint8Array(n);
+        while (n--) {
+          u8arr[n] = bstr[n];
+        }
+        return new File([u8arr], name + '.jpg', { type: 'image/jpg' });
+      };
+      const file = base64ToFile(previewimage);
+      setImageSrc(file);
+    }
+  }, [name]);
+
   const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
   const uploadbtn = async () => {
+    console.log(imageSrc);
     if (!imageSrc) {
       toast.error('이미지를 선택해주세요');
     } else {
       await imageUploadApi(imageSrc as File, name, memetype, publicFlag);
-      naviage('/');
     }
   };
   const sharepage = () => {
@@ -43,7 +62,7 @@ const Upload = () => {
     <div>
       <div>
         <img
-          src='src/assets/memelogo.png'
+          src='/memelogo.png'
           className='w-12 h-12 inline-block object-cover'
           onClick={homebtn}
         />

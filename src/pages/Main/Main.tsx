@@ -76,7 +76,7 @@ const Main = () => {
           <div>
             <div>
               <img
-                src={'https://meme.megabrain.kr' + '/src/assets/memelogo.png'}
+                src='/memelogo.png'
                 className='w-12 h-12 inline-block object-cover'
                 onClick={homebtn}
               />

@@ -34,14 +34,14 @@ const Share = () => {
   };
   const base64ToFile = (dataurl: string, filename: string) => {
     let arr = dataurl.split(','),
-      mime = arr[0].match(/:(.*?);/)![1],
+      meme = arr[0].match(/:(.*?);/)![1],
       bstr = Buffer.from(arr[1], 'base64'),
       n = bstr.length,
       u8arr = new Uint8Array(n);
     while (n--) {
       u8arr[n] = bstr[n];
     }
-    return new File([u8arr], filename, { type: mime });
+    return new File([u8arr], filename, { type: meme });
   };
   const file = base64ToFile(previewimage, name);
   const myurl = 'https://meme.megabrain.kr'; // url 수정해야함
@@ -88,7 +88,7 @@ const Share = () => {
     <div>
       <div>
         <img
-          src='src/assets/memelogo.png'
+          src='/memelogo.png'
           className='w-12 h-12 inline-block object-cover'
           onClick={homebtn}
         />
