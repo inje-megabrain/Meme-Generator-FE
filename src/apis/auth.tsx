@@ -98,10 +98,7 @@ const SignUpAPI = (
       window.location.href = '/login';
     })
     .catch((error) => {
-      console.log(error.response.data.status);
-      if (error.response.data.status !== 200) {
-        toast.error('이미 존재하는 회원입니다.');
-      }
+      toast.error(error.response.data.detail);
     });
 };
 const MemberSecessionAPI = async (username: string) => {

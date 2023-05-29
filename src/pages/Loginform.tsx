@@ -34,21 +34,6 @@ const Loginform = () => {
   };
   const SignupFunc = async (e: any) => {
     e.preventDefault();
-    if (!id || !checkId) {
-      return toast.error(
-        '아이디는 4자 이상 20자 이하의 영어 또는 숫자로 입력해주세요'
-      );
-    } else if (!password || !checkPassword) {
-      return toast.error(
-        '비밀번호는 영문, 숫자 조합으로 8~25자리로 입력해주세요.'
-      );
-    } else if (!email || !checkEmail) {
-      return toast.error('이메일 형식이 틀렸습니다.');
-    } else if (!username || !checkUsername) {
-      return toast.error(
-        '이름은 2자 이상 10자 이하의 한글 또는 영어로 입력해주세요'
-      );
-    }
     await SignUpAPI(id, password, username, email);
   };
   const onChangePassword = useCallback(
