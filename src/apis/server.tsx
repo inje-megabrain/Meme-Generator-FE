@@ -215,7 +215,6 @@ export const ItemsDownloadAPI = async (
       headers: headerConfig,
     })
     .then((response) => {
-      console.log(response.data.items);
       setItems(response.data.items);
     })
     .catch((error) => {

@@ -33,21 +33,15 @@ const MemeGenerator = () => {
   const [lines, setLines] = useState<any>([]);
   const [text, setText] = useState<string>('');
   const [pensize, setPensize] = useState<number>(10);
-  const [image] = useImage(previewimage);
-  const [decoimage] = useImage(decorateimage);
+  const [image] = useImage(previewimage, 'anonymous');
+  const [decoimage] = useImage(decorateimage, 'anonymous');
   const isDrawing = useRef(false);
   const stageRef = useRef<Konva.Stage>(null);
   const [boxbtn, setBoxbtn] = useState<string>('drawing');
-  const [item, setItem] = useState<string>('도구');
   const [textstate, setTextstate] = useState<any>({
     isDragging: false,
     x: 50,
     y: 50,
-  });
-  const [emoticonstate, setEmoticonstate] = useState<any>({
-    isDragging: false,
-    x: 50,
-    y: 70,
   });
   const [imgstate, setImgstate] = useState<any>({
     isDragging: false,
@@ -59,7 +53,6 @@ const MemeGenerator = () => {
   const [textroate, setTextroate] = useState<number>(0);
   const [imgroate, setImgroate] = useState<number>(0);
   const [textstyle, setTextstyle] = useState<string>('normal');
-  const [emoticon, setEmoticon] = useState<string>('');
   const [category, setCategory] = useState<string>('도구');
   const [decorate, setDecorate] = useState<string>('');
   const [items, setItems] = useRecoilState<ItemType>(ItemDataState);
@@ -137,14 +130,15 @@ const MemeGenerator = () => {
       setMemetype('MEME');
     }
   };
-  const DecorateFileOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const DecorateFileOnChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const files = e.target.files;
     if (files) {
       setDecorateSrc(files[0]);
-      setDecorateimage(URL.createObjectURL(files[0]));
+      setDecorateimage(test);
     }
   };
-
   const textroateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTextroate(Number(e.target.value));
   };
@@ -154,6 +148,7 @@ const MemeGenerator = () => {
 
   const sharepage = () => {
     const uri = stageRef.current?.toDataURL();
+    console.log(uri);
     setPreviewimage(uri!);
     setMemetype('MEME');
     navigate('/share');
@@ -188,6 +183,8 @@ const MemeGenerator = () => {
   useEffect(() => {
     ItemsDownloadAPI(itemcategory, setItems);
   }, [itemcategory]);
+
+  const [test, setTest] = useState<string>('');
 
   return (
     <div>
@@ -353,27 +350,6 @@ const MemeGenerator = () => {
               rotation={textroate}
             />
           </Layer>
-          <Layer>
-            <Text
-              text={emoticon}
-              fontSize={40}
-              x={emoticonstate.x}
-              y={emoticonstate.y}
-              draggable
-              onDragStart={() => {
-                setEmoticonstate({
-                  isDragging: true,
-                });
-              }}
-              onDragEnd={(e) => {
-                setEmoticonstate({
-                  x: e.target.x(),
-                  y: e.target.y(),
-                  isDragging: false,
-                });
-              }}
-            />
-          </Layer>
         </Stage>
       </div>
       <div className='grid place-items-center'>
@@ -481,11 +457,18 @@ const MemeGenerator = () => {
                           <div
                             className='btn btn-ghost font-bold text-base font-sans'
                             key={index}
-                            onClick={() =>
+                            onClick={async () => {
                               setDecorateimage(
                                 VITE_APP_IMAGE_URL + item.imageUrl.toString()
-                              )
-                            }
+                              );
+                              const response = await fetch(decorateimage);
+                              const blob = await response.blob();
+                              const files = new File([blob], 'decorate.png', {
+                                type: 'image/jpg',
+                              });
+                              const decorate = URL.createObjectURL(files);
+                              setTest(decorate);
+                            }}
                           >
                             {item.name}
                           </div>
