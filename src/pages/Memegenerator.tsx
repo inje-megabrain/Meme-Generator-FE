@@ -55,7 +55,9 @@ const MemeGenerator = () => {
     y: 50,
   });
   const [textsize, setTextsize] = useState<number>(30);
+  const [imgsize, setImgsize] = useState<number>(100);
   const [textroate, setTextroate] = useState<number>(0);
+  const [imgroate, setImgroate] = useState<number>(0);
   const [textstyle, setTextstyle] = useState<string>('normal');
   const [emoticon, setEmoticon] = useState<string>('');
   const [category, setCategory] = useState<string>('도구');
@@ -146,6 +148,10 @@ const MemeGenerator = () => {
   const textroateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTextroate(Number(e.target.value));
   };
+  const imgroateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setImgroate(Number(e.target.value));
+  };
+
   const sharepage = () => {
     const uri = stageRef.current?.toDataURL();
     setPreviewimage(uri!);
@@ -201,50 +207,54 @@ const MemeGenerator = () => {
         </ul>
       </div>
       {!previewimage ? (
-        <div className='grid place-items-center'>
-          <div>
-            <input
-              type='file'
-              className='file-input file-input-bordered file-input-black w-full max-w-xs mb-2 rounded-md border-solid font-sans'
-              onChange={handleFileOnChange}
-              accept='image/jpg,image/jpeg,image/png'
-            />
-          </div>
-          {role !== 'ROLE_ADMIN' ? (
-            <div className='grid grid-cols-1 md:grid-cols-4 place-items-center'>
+        <>
+          <div className='grid place-items-center'>
+            <div>
               <input
                 type='file'
                 className='file-input file-input-bordered file-input-black w-full max-w-xs mb-2 rounded-md border-solid font-sans'
-                onChange={DecorateFileOnChange}
-                accept='image/png'
+                onChange={handleFileOnChange}
+                accept='image/jpg,image/jpeg,image/png'
               />
-              <div>
-                <select
-                  className='select select-bordered w-full max-w-xs'
-                  onChange={categoryChange}
-                >
-                  <option value='도구'>도구</option>
-                  <option value='악세서리'>악세서리</option>
-                  <option value='이모티콘'>이모티콘</option>
-                  <option value='말풍선'>말풍선</option>
-                </select>
-              </div>
-              <div>
+            </div>
+          </div>
+          {role !== 'ROLE_ADMIN' ? (
+            <div className='grid place-items-center'>
+              <div className='grid grid-cols-1 md:grid-cols-4 gap-2'>
                 <input
-                  type='text'
-                  placeholder='이름'
-                  className='input input-bordered w-full max-w-xs'
-                  onChange={decorateChange}
+                  type='file'
+                  className='file-input file-input-bordered file-input-black w-full max-w-xs mb-2 rounded-md border-solid font-sans'
+                  onChange={DecorateFileOnChange}
+                  accept='image/png'
                 />
-              </div>
-              <div>
-                <div className='btn' onClick={savebtn}>
-                  저장
+                <div>
+                  <select
+                    className='select select-bordered max-w-xs'
+                    onChange={categoryChange}
+                  >
+                    <option value='도구'>도구</option>
+                    <option value='악세서리'>악세서리</option>
+                    <option value='이모티콘'>이모티콘</option>
+                    <option value='말풍선'>말풍선</option>
+                  </select>
+                </div>
+                <div>
+                  <input
+                    type='text'
+                    placeholder='이름'
+                    className='input input-bordered max-w-xs'
+                    onChange={decorateChange}
+                  />
+                </div>
+                <div>
+                  <div className='btn' onClick={savebtn}>
+                    저장
+                  </div>
                 </div>
               </div>
             </div>
           ) : null}
-        </div>
+        </>
       ) : null}
       <div className='grid place-items-center'>
         <div className='grid grid-cols-2'>
@@ -283,8 +293,8 @@ const MemeGenerator = () => {
           <Layer>
             <Image
               image={decoimage}
-              width={50}
-              height={50}
+              width={imgsize}
+              height={imgsize}
               x={imgstate.x}
               y={imgstate.y}
               draggable
@@ -300,6 +310,7 @@ const MemeGenerator = () => {
                   isDragging: false,
                 });
               }}
+              rotation={imgroate}
             />
           </Layer>
           <Layer>
@@ -317,7 +328,6 @@ const MemeGenerator = () => {
               />
             ))}
           </Layer>
-
           <Layer>
             <Text
               text={text}
@@ -368,7 +378,7 @@ const MemeGenerator = () => {
       </div>
       <div className='grid place-items-center'>
         <div className='grid grid-rows-2 place-items-center h-[280px]'>
-          <div className='grid grid-cols-3 gap-8 h-[135px]'>
+          <div className='grid grid-cols-3 gap-8 h-[130px]'>
             <div
               className='btn btn-ghost text-lg font-bold font-sans'
               onClick={() => setBoxbtn('decorating')}
@@ -388,135 +398,175 @@ const MemeGenerator = () => {
               드로잉
             </div>
           </div>
-          <div className='h-[240px]'>
+          <div className='h-[290px]'>
             {boxbtn === 'decorating' ? (
-              <div className='grid grid-cols-2 place-items-center'>
-                <div className='grid grid-rows-4 w-24'>
-                  <div
-                    className='btn btn-ghost text-base font-sans'
-                    onClick={() => setItemcategory('도구')}
-                  >
-                    도구
+              <>
+                <div className='grid grid-cols-2 gap-1'>
+                  <div className='w-12'>
+                    <div className='grid grid-cols-2 gap-2'>
+                      <div
+                        className='btn btn-ghost text-xs'
+                        onClick={() => {
+                          let size = imgsize;
+                          if (imgsize < 100) {
+                            setImgsize((size += 5));
+                          } else {
+                            setImgsize(100);
+                          }
+                        }}
+                      >
+                        ▲
+                      </div>
+                      <div
+                        className='btn btn-ghost text-xs'
+                        onClick={() => {
+                          let size = imgsize;
+                          if (imgsize > 1) {
+                            setImgsize((size -= 5));
+                          } else {
+                            setImgsize(0);
+                          }
+                        }}
+                      >
+                        ▼
+                      </div>
+                    </div>
                   </div>
-                  <div
-                    className='btn btn-ghost text-base font-sans'
-                    onClick={() => setItemcategory('악세서리')}
-                  >
-                    악세서리
+                  <input
+                    type='range'
+                    min={-180}
+                    max={180}
+                    onChange={imgroateChange}
+                  />
+                </div>
+                <div className='grid grid-cols-2 place-items-center'>
+                  <div className='grid grid-rows-4 w-24'>
+                    <div
+                      className='btn btn-ghost text-base font-sans'
+                      onClick={() => setItemcategory('도구')}
+                    >
+                      도구
+                    </div>
+                    <div
+                      className='btn btn-ghost text-base font-sans'
+                      onClick={() => setItemcategory('악세서리')}
+                    >
+                      악세서리
+                    </div>
+                    <div
+                      className='btn btn-ghost text-base font-sans'
+                      onClick={() => setItemcategory('이모티콘')}
+                    >
+                      이모티콘
+                    </div>
+                    <div
+                      className='btn btn-ghost text-base font-sans'
+                      onClick={() => setItemcategory('말풍선')}
+                    >
+                      말풍선
+                    </div>
                   </div>
-                  <div
-                    className='btn btn-ghost text-base font-sans'
-                    onClick={() => setItemcategory('이모티콘')}
-                  >
-                    이모티콘
-                  </div>
-                  <div
-                    className='btn btn-ghost text-base font-sans'
-                    onClick={() => setItemcategory('말풍선')}
-                  >
-                    말풍선
+                  <div className='grid place-items-center'>
+                    {itemcategory === '도구' ? (
+                      <div>
+                        <div
+                          className='btn btn-ghost text-red-600 font-bold text-base font-sans'
+                          onClick={() => {
+                            setDecorateimage('');
+                          }}
+                        >
+                          초기화
+                        </div>
+                        {items.map((item, index) => (
+                          <div
+                            className='btn btn-ghost font-bold text-base font-sans'
+                            key={index}
+                            onClick={() =>
+                              setDecorateimage(
+                                VITE_APP_IMAGE_URL + item.imageUrl.toString()
+                              )
+                            }
+                          >
+                            {item.name}
+                          </div>
+                        ))}
+                      </div>
+                    ) : itemcategory === '악세서리' ? (
+                      <div>
+                        <div
+                          className='btn btn-ghost text-red-600 font-bold text-base font-sans'
+                          onClick={() => {
+                            setDecorateimage('');
+                          }}
+                        >
+                          초기화
+                        </div>
+                        {items.map((item, index) => (
+                          <div
+                            className='btn btn-ghost font-bold text-base font-sans'
+                            key={index}
+                            onClick={() =>
+                              setDecorateimage(
+                                VITE_APP_IMAGE_URL + item.imageUrl.toString()
+                              )
+                            }
+                          >
+                            {item.name}
+                          </div>
+                        ))}
+                      </div>
+                    ) : itemcategory === '이모티콘' ? (
+                      <div>
+                        <div
+                          className='btn btn-ghost text-red-600 font-bold text-base font-sans'
+                          onClick={() => {
+                            setDecorateimage('');
+                          }}
+                        >
+                          초기화
+                        </div>
+                        {items.map((item, index) => (
+                          <div
+                            className='btn btn-ghost font-bold text-base font-sans'
+                            key={index}
+                            onClick={() =>
+                              setDecorateimage(
+                                VITE_APP_IMAGE_URL + item.imageUrl.toString()
+                              )
+                            }
+                          >
+                            {item.name}
+                          </div>
+                        ))}
+                      </div>
+                    ) : itemcategory === '말풍선' ? (
+                      <div>
+                        <div
+                          className='btn btn-ghost text-red-600 font-bold text-base font-sans'
+                          onClick={() => {
+                            setDecorateimage('');
+                          }}
+                        >
+                          초기화
+                        </div>
+                        {items.map((item, index) => (
+                          <div
+                            className='btn btn-ghost font-bold text-base font-sans'
+                            key={index}
+                            onClick={() =>
+                              setDecorateimage(
+                                VITE_APP_IMAGE_URL + item.imageUrl.toString()
+                              )
+                            }
+                          >
+                            {item.name}
+                          </div>
+                        ))}
+                      </div>
+                    ) : null}
                   </div>
                 </div>
-                <div className='grid place-items-center'>
-                  {itemcategory === '도구' ? (
-                    <div>
-                      <div
-                        className='btn btn-ghost text-red-600 font-bold text-base font-sans'
-                        onClick={() => {
-                          setDecorateimage('');
-                        }}
-                      >
-                        초기화
-                      </div>
-                      {items.map((item, index) => (
-                        <div
-                          className='btn btn-ghost font-bold text-base font-sans'
-                          key={index}
-                          onClick={() =>
-                            setDecorateimage(
-                              VITE_APP_IMAGE_URL + item.imageUrl.toString()
-                            )
-                          }
-                        >
-                          {item.name}
-                        </div>
-                      ))}
-                    </div>
-                  ) : itemcategory === '악세서리' ? (
-                    <div>
-                      <div
-                        className='btn btn-ghost text-red-600 font-bold text-base font-sans'
-                        onClick={() => {
-                          setDecorateimage('');
-                        }}
-                      >
-                        초기화
-                      </div>
-                      {items.map((item, index) => (
-                        <div
-                          className='btn btn-ghost font-bold text-base font-sans'
-                          key={index}
-                          onClick={() =>
-                            setDecorateimage(
-                              VITE_APP_IMAGE_URL + item.imageUrl.toString()
-                            )
-                          }
-                        >
-                          {item.name}
-                        </div>
-                      ))}
-                    </div>
-                  ) : itemcategory === '이모티콘' ? (
-                    <div>
-                      <div
-                        className='btn btn-ghost text-red-600 font-bold text-base font-sans'
-                        onClick={() => {
-                          setDecorateimage('');
-                        }}
-                      >
-                        초기화
-                      </div>
-                      {items.map((item, index) => (
-                        <div
-                          className='btn btn-ghost font-bold text-base font-sans'
-                          key={index}
-                          onClick={() =>
-                            setDecorateimage(
-                              VITE_APP_IMAGE_URL + item.imageUrl.toString()
-                            )
-                          }
-                        >
-                          {item.name}
-                        </div>
-                      ))}
-                    </div>
-                  ) : itemcategory === '말풍선' ? (
-                    <div>
-                      <div
-                        className='btn btn-ghost text-red-600 font-bold text-base font-sans'
-                        onClick={() => {
-                          setDecorateimage('');
-                        }}
-                      >
-                        초기화
-                      </div>
-                      {items.map((item, index) => (
-                        <div
-                          className='btn btn-ghost font-bold text-base font-sans'
-                          key={index}
-                          onClick={() =>
-                            setDecorateimage(
-                              VITE_APP_IMAGE_URL + item.imageUrl.toString()
-                            )
-                          }
-                        >
-                          {item.name}
-                        </div>
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
-              </div>
+              </>
             ) : boxbtn === 'picture' ? (
               <div>
                 <div className='grid gird-rows-3 gap-4 place-items-center'>
