@@ -51,34 +51,35 @@ const Profile = () => {
 
   return (
     <div>
-      <div
-        className='btn btn-ghost normal-case text-3xl font-bold'
-        onClick={homebtn}
-      >
-        MEME
+      <div>
+        <img
+          src='src/assets/memelogo.png'
+          className='w-12 h-12 inline-block object-cover'
+          onClick={homebtn}
+        />
       </div>
-      <div className='font-bold text-3xl mt-2'>Profile</div>
+      <div className='font-bold text-3xl mt-2 font-sans'>Profile</div>
       <div className='mt-10'>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-20'>
           <div className='gird place-items-center'>
-            <div className='text-2xl font-bold'>{profile.name}</div>
+            <div className='text-2xl font-bold font-sans'>{profile.name}</div>
             <hr />
             <div className='grid grid-cols-3 mt-2'>
               <div>
-                <div className='text-base'>내가 올린 짤</div>
-                <div className='font-bold text-lg'>{meme.length}</div>
+                <div className='text-base font-sans'>내가 올린 짤</div>
+                <div className='font-bold text-lg font-sans'>{meme.length}</div>
               </div>
               <div>
-                <div className='text-base'>좋아요</div>
-                <div className='font-bold text-lg'>?</div>
+                <div className='text-base font-sans'>좋아요</div>
+                <div className='font-bold text-lg font-sans'>?</div>
               </div>
               <div>
-                <div className='text-base'>짤 조회수</div>
-                <div className='font-bold text-lg'>?</div>
+                <div className='text-base font-sans'>짤 조회수</div>
+                <div className='font-bold text-lg font-sans'>?</div>
               </div>
             </div>
             <div
-              className='btn btn-ghost font-bold text-xl mt-4'
+              className='btn btn-ghost font-bold text-xl mt-4 font-sans'
               onClick={secession}
             >
               회원탈퇴
@@ -118,13 +119,21 @@ const Profile = () => {
             <div className='mt-8'>
               <div className='btn-group'>
                 {page > 0 ? (
-                  <button className='btn btn-ghost' onClick={prevpage}>
+                  <button
+                    className='btn btn-ghost font-sans'
+                    onClick={prevpage}
+                  >
                     {'<<'}
                   </button>
                 ) : null}
-                <button className='btn btn-ghost'>Page {page + 1}</button>
+                <button className='btn btn-ghost font-sans'>
+                  Page {page + 1}
+                </button>
                 {page < totalpage - 1 ? (
-                  <button className='btn btn-ghost' onClick={nextpage}>
+                  <button
+                    className='btn btn-ghost font-sans'
+                    onClick={nextpage}
+                  >
                     {'>>'}
                   </button>
                 ) : null}

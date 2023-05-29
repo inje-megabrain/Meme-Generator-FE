@@ -93,7 +93,7 @@ const Meme = () => {
   return (
     <div>
       {memeList.length === 0 ? (
-        <div className='grid place-items-center'>
+        <div className='grid place-items-center font-sans'>
           <h1>공사중입니다...</h1>
         </div>
       ) : (
@@ -165,7 +165,7 @@ const Meme = () => {
                     )}
                   </label>
                   <div className='inline-block'>
-                    <div className='font-bold text-xl text-start'>
+                    <div className='font-bold text-xl text-start font-sans'>
                       <div>{meme.name} 짤</div>
                     </div>
                   </div>
@@ -175,13 +175,21 @@ const Meme = () => {
             <div className='mt-2'>
               <div className='btn-group'>
                 {page > 0 ? (
-                  <button className='btn btn-ghost' onClick={prevpage}>
+                  <button
+                    className='btn btn-ghost font-sans'
+                    onClick={prevpage}
+                  >
                     {'<<'}
                   </button>
                 ) : null}
-                <button className='btn btn-ghost'>Page {page + 1}</button>
+                <button className='btn btn-ghost font-sans'>
+                  Page {page + 1}
+                </button>
                 {page < totalpage - 1 ? (
-                  <button className='btn btn-ghost' onClick={nextpage}>
+                  <button
+                    className='btn btn-ghost font-sans'
+                    onClick={nextpage}
+                  >
                     {'>>'}
                   </button>
                 ) : null}

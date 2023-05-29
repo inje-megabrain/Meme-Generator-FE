@@ -83,7 +83,7 @@ const Template = () => {
         />
       </div>
       <div className='grid place-items-center'>
-        <ul className='steps'>
+        <ul className='steps font-sans'>
           <li className='step step-primary'>Template</li>
           <li className='step'>Meme-Generator</li>
           <li className='step'>Save & Share</li>
@@ -105,7 +105,7 @@ const Template = () => {
               <input
                 type='text'
                 placeholder='업로드 할 파일명'
-                className='input input-bordered max-w-xs'
+                className='input input-bordered max-w-xs font-sans'
                 maxLength={8}
                 onChange={nameChange}
               />
@@ -113,7 +113,7 @@ const Template = () => {
             <div>
               <button
                 onClick={uploadbtn}
-                className='btn btn-ghost text-base font-bold'
+                className='btn btn-ghost text-base font-bold font-sans'
               >
                 업로드
               </button>
@@ -122,7 +122,7 @@ const Template = () => {
         </div>
       ) : null}
       <div
-        className='btn btn-ghost font-bold text-2xl rounded-xl'
+        className='btn btn-ghost font-bold text-2xl rounded-xl font-sans'
         onClick={memebtn}
       >
         NEXT
@@ -164,7 +164,7 @@ const Template = () => {
 
                     <div className='inline-block'>
                       <div className='font-bold text-xl text-start'>
-                        <div>템플릿 : {meme.name}</div>
+                        <div className='font-sans'>템플릿 : {meme.name}</div>
                       </div>
                     </div>
                   </div>
@@ -178,13 +178,13 @@ const Template = () => {
         <div className='mt-8'>
           <div className='btn-group'>
             {page > 0 ? (
-              <button className='btn btn-ghost' onClick={prevpage}>
+              <button className='btn btn-ghost font-sans' onClick={prevpage}>
                 {'<<'}
               </button>
             ) : null}
-            <button className='btn btn-ghost'>Page {page + 1}</button>
+            <button className='btn btn-ghost font-sans'>Page {page + 1}</button>
             {page < totalpage - 1 ? (
-              <button className='btn btn-ghost' onClick={nextpage}>
+              <button className='btn btn-ghost font-sans' onClick={nextpage}>
                 {'>>'}
               </button>
             ) : null}

@@ -49,7 +49,7 @@ const Upload = () => {
         />
       </div>
       <div className='grid place-items-center'>
-        <ul className='steps'>
+        <ul className='steps font-sans'>
           <li className='step step-primary'>Template</li>
           <li className='step step-primary'>Meme-Generator</li>
           <li className='step step-primary'>Save & Share</li>
@@ -58,7 +58,7 @@ const Upload = () => {
       </div>
       <div className='grid place-items-center'>
         <div
-          className='btn btn-ghost font-bold text-2xl rounded-xl'
+          className='btn btn-ghost font-bold text-2xl rounded-xl font-sans'
           onClick={sharepage}
         >
           Previous
@@ -74,7 +74,7 @@ const Upload = () => {
         <input
           type='text'
           placeholder='업로드 할 이름'
-          className='input input-bordered max-w-xs'
+          className='input input-bordered max-w-xs font-sans'
           maxLength={8}
           onChange={nameChange}
         />
@@ -87,14 +87,14 @@ const Upload = () => {
             setPublicFlag(e.target.checked);
           }}
         />
-        <div className='font-bold text-xl'>
+        <div className='font-bold text-xl font-sans'>
           {publicFlag === false ? <div>비공개</div> : <div>공개</div>}
         </div>
       </div>
       <div className='mt-4'>
         <button
           onClick={uploadbtn}
-          className='btn btn-ghost text-base font-bold'
+          className='btn btn-ghost text-base font-bold font-sans'
         >
           업로드
         </button>

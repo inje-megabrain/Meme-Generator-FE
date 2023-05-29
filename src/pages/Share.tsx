@@ -94,7 +94,7 @@ const Share = () => {
         />
       </div>
       <div className='grid place-items-center'>
-        <ul className='steps'>
+        <ul className='steps font-sans'>
           <li className='step step-primary'>Template</li>
           <li className='step step-primary'>Meme-Generator</li>
           <li className='step step-primary'>Save & Share</li>
@@ -104,13 +104,13 @@ const Share = () => {
       <div className='grid place-items-center'>
         <div className='grid grid-cols-2 '>
           <div
-            className='btn btn-ghost font-bold text-2xl rounded-xl max-w-sm'
+            className='btn btn-ghost font-bold text-2xl rounded-xl max-w-sm font-sans'
             onClick={memebtn}
           >
             Previous
           </div>
           <div
-            className='btn btn-ghost font-bold text-2xl rounded-xl max-w-sm'
+            className='btn btn-ghost font-bold text-2xl rounded-xl max-w-sm font-sans'
             onClick={uploadpage}
           >
             Next
@@ -123,7 +123,7 @@ const Share = () => {
             <input
               type='text'
               placeholder='저장 할 파일명'
-              className='input input-bordered max-w-xs'
+              className='input input-bordered max-w-xs font-sans'
               maxLength={8}
               onChange={nameChange}
             />
@@ -132,7 +132,7 @@ const Share = () => {
             <div>
               <button
                 onClick={savebtn}
-                className='btn btn-ghost text-base font-bold'
+                className='btn btn-ghost text-base font-bold font-sans'
               >
                 저장
               </button>
@@ -149,7 +149,7 @@ const Share = () => {
               </button>
               <button
                 onClick={sharebtn}
-                className='btn btn-ghost text-base font-bold'
+                className='btn btn-ghost text-base font-bold font-sans'
               >
                 공유
               </button>

@@ -99,7 +99,7 @@ const Main = () => {
             {!cookie ? (
               <div className='text-right'>
                 <div
-                  className='btn btn-ghost normal-case text-base'
+                  className='btn btn-ghost normal-case text-base font-sans'
                   onClick={signbtn}
                 >
                   로그인
@@ -108,13 +108,13 @@ const Main = () => {
             ) : (
               <div className='text-right'>
                 <div
-                  className='btn btn-ghost normal-case text-base'
+                  className='btn btn-ghost normal-case text-base font-sans'
                   onClick={profilebtn}
                 >
                   내 정보
                 </div>
                 <div
-                  className='btn btn-ghost normal-case text-base'
+                  className='btn btn-ghost normal-case text-base font-sans'
                   onClick={logoutbtn}
                 >
                   로그아웃
@@ -127,7 +127,7 @@ const Main = () => {
               <div className='grid grid-cols-2 gap-2'>
                 <div>
                   <button
-                    className='btn btn-ghost text-lg font-bold text-white bg-gradient-to-r from-cyan-500 to-blue-500'
+                    className='btn btn-ghost text-lg font-bold text-white bg-gradient-to-r from-cyan-500 to-blue-500 font-sans'
                     onClick={templatebtn}
                   >
                     짤 생성
@@ -135,7 +135,7 @@ const Main = () => {
                 </div>
                 <div className='text-left'>
                   <div
-                    className='btn normal-case text-lg font-bold text-white bg-gradient-to-r from-violet-500 to-fuchsia-500'
+                    className='btn normal-case text-lg font-bold text-white bg-gradient-to-r from-violet-500 to-fuchsia-500 font-sans'
                     onClick={() => {
                       window.open(
                         'https://83fh02wrhoh.typeform.com/to/TsXOKfsj'
