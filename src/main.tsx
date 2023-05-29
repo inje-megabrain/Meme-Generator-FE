@@ -20,7 +20,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <RecoilRoot>
     <ToastContainer />
     <App />
-    <footer className='bottom-0 footer footer-center p-4 text-base-content mt-10'>
+    <footer className='relative bottom-0 footer footer-center p-4 text-base-content mt-10'>
       <div>
         <p>Copyright © 2023 - Megabrain Meme-Generator</p>
       </div>

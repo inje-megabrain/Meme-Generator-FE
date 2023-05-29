@@ -92,10 +92,7 @@ const Upload = () => {
         </div>
       </div>
       <div className='mt-4'>
-        <button
-          onClick={uploadbtn}
-          className='btn btn-ghost text-base font-bold font-sans'
-        >
+        <button onClick={uploadbtn} className='btn btn-ghost text-lg font-sans'>
           업로드
         </button>
       </div>
