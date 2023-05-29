@@ -209,6 +209,19 @@ const Loginform = () => {
             ) : null}
           </div>
         </div>
+        <div className='mt-8 font-sans'>
+          <p>구글 로그인 및 회원가입 시</p>
+          <p>
+            <a href='' target='_blank' className='text-blue-500'>
+              개인정보 수집 및 이용 동의서
+            </a>{' '}
+            및{' '}
+            <a href='' target='_blank' className='text-blue-500'>
+              개인정보 처리방침
+            </a>
+            에 동의하게 됩니다.
+          </p>
+        </div>
       </div>
     </>
   );
