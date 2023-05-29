@@ -67,7 +67,7 @@ const Upload = () => {
       <div>
         <input
           type='file'
-          className='file-input file-input-ghost file-input-sm max-w-xs mb-2'
+          className='file-input file-input-ghost file-input-sm max-w-xs mb-2 font-sans'
           onChange={handleFileOnChange}
           accept='image/jpg, image/jpeg,image/png'
         />
