@@ -476,32 +476,19 @@ const MemeGenerator = () => {
                       >
                         초기화
                       </div>
-                      <div className='grid grid-cols-2'>
+                      {items.map((item, index) => (
                         <div
                           className='btn btn-ghost font-bold text-base font-sans'
-                          onClick={() => setEmoticon('👍')}
+                          key={index}
+                          onClick={() =>
+                            setDecorateimage(
+                              VITE_APP_IMAGE_URL + item.imageUrl.toString()
+                            )
+                          }
                         >
-                          이모티콘1
+                          {item.name}
                         </div>
-                        <div
-                          className='btn btn-ghost font-bold text-base font-sans'
-                          onClick={() => setEmoticon('✌️')}
-                        >
-                          이모티콘2
-                        </div>
-                        <div
-                          className='btn btn-ghost font-bold text-base font-sans'
-                          onClick={() => setEmoticon('😝')}
-                        >
-                          이모티콘3
-                        </div>
-                        <div
-                          className='btn btn-ghost font-bold text-base font-sans'
-                          onClick={() => setEmoticon('✨')}
-                        >
-                          이모티콘4
-                        </div>
-                      </div>
+                      ))}
                     </div>
                   ) : itemcategory === '말풍선' ? (
                     <div>
@@ -513,20 +500,19 @@ const MemeGenerator = () => {
                       >
                         초기화
                       </div>
-                      <div className='grid grid-cols-2'>
-                        <div className='btn btn-ghost font-bold text-base font-sans'>
-                          말풍선1
+                      {items.map((item, index) => (
+                        <div
+                          className='btn btn-ghost font-bold text-base font-sans'
+                          key={index}
+                          onClick={() =>
+                            setDecorateimage(
+                              VITE_APP_IMAGE_URL + item.imageUrl.toString()
+                            )
+                          }
+                        >
+                          {item.name}
                         </div>
-                        <div className='btn btn-ghost font-bold text-base font-sans'>
-                          말풍선2
-                        </div>
-                        <div className='btn btn-ghost font-bold text-base font-sans'>
-                          말풍선3
-                        </div>
-                        <div className='btn btn-ghost font-bold text-base font-sans'>
-                          말풍선4
-                        </div>
-                      </div>
+                      ))}
                     </div>
                   ) : null}
                 </div>
