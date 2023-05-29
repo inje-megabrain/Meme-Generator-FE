@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Black Han Sans', 'sans-serif'],
+        sans: ['Gaegu', 'sans-serif'],
       },
     },
   },

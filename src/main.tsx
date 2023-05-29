@@ -20,10 +20,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <RecoilRoot>
     <ToastContainer />
     <App />
-    <footer className='relative bottom-0 footer footer-center p-4 text-base-content mt-10'>
-      <div>
-        <p>Copyright © 2023 - Megabrain Meme-Generator</p>
-      </div>
+    <footer className='footer footer-center bottom-0 p-4 text-base-content mt-10'>
+      <p>Copyright © 2023 - Megabrain Meme-Generator</p>
     </footer>
   </RecoilRoot>
 );

@@ -104,13 +104,13 @@ const Share = () => {
       <div className='grid place-items-center'>
         <div className='grid grid-cols-2 '>
           <div
-            className='btn btn-ghost font-bold text-2xl rounded-xl max-w-sm font-sans'
+            className='btn btn-ghost font-bold text-xl rounded-xl max-w-sm font-sans'
             onClick={memebtn}
           >
             Previous
           </div>
           <div
-            className='btn btn-ghost font-bold text-2xl rounded-xl max-w-sm font-sans'
+            className='btn btn-ghost font-bold text-xl rounded-xl max-w-sm font-sans'
             onClick={uploadpage}
           >
             Next

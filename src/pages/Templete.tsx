@@ -122,7 +122,7 @@ const Template = () => {
         </div>
       ) : null}
       <div
-        className='btn btn-ghost font-bold text-2xl rounded-xl font-sans'
+        className='btn btn-ghost font-bold text-xl rounded-xl font-sans'
         onClick={memebtn}
       >
         NEXT

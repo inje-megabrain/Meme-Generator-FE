@@ -174,14 +174,14 @@ const MemeGenerator = () => {
       <div className='grid place-items-center'>
         <div className='grid grid-cols-2'>
           <div
-            className='btn btn-ghost font-bold text-2xl rounded-xl font-sans'
+            className='btn btn-ghost font-bold text-xl rounded-xl font-sans'
             onClick={templatebtn}
           >
             Previous
           </div>
           {previewimage ? (
             <div
-              className='btn btn-ghost font-bold text-2xl rounded-xl font-sans'
+              className='btn btn-ghost font-bold text-xl rounded-xl font-sans'
               onClick={sharepage}
             >
               Next
@@ -269,21 +269,21 @@ const MemeGenerator = () => {
       </div>
       <div className='grid place-items-center'>
         <div className='grid grid-rows-2 place-items-center h-[280px]'>
-          <div className='grid grid-cols-3 gap-8 h-[130px]'>
+          <div className='grid grid-cols-3 gap-8 h-[135px]'>
             <div
-              className='btn btn-ghost text-base font-bold font-sans'
+              className='btn btn-ghost text-lg font-bold font-sans'
               onClick={() => setBoxbtn('decorating')}
             >
               꾸미기
             </div>
             <div
-              className='btn btn-ghost text-base font-bold font-sans'
+              className='btn btn-ghost text-lg font-sans'
               onClick={() => setBoxbtn('picture')}
             >
               텍스트
             </div>
             <div
-              className='btn btn-ghost text-base font-bold font-sans'
+              className='btn btn-ghost text-lg font-sans'
               onClick={() => setBoxbtn('drawing')}
             >
               드로잉
@@ -292,27 +292,27 @@ const MemeGenerator = () => {
           <div className='h-[240px]'>
             {boxbtn === 'decorating' ? (
               <div className='grid grid-cols-2'>
-                <div className='grid grid-rows-4'>
+                <div className='grid grid-rows-4 w-24'>
                   <div
-                    className='btn btn-ghost text-font font-sans'
+                    className='btn btn-ghost text-lg font-sans'
                     onClick={() => setItem('top')}
                   >
                     상의
                   </div>
                   <div
-                    className='btn btn-ghost text-font font-sans'
+                    className='btn btn-ghost text-lg font-sans'
                     onClick={() => setItem('pants')}
                   >
                     하의
                   </div>
                   <div
-                    className='btn btn-ghost text-font font-sans'
+                    className='btn btn-ghost text-lg font-sans'
                     onClick={() => setItem('icon')}
                   >
                     이모티콘
                   </div>
                   <div
-                    className='btn btn-ghost text-font font-sans'
+                    className='btn btn-ghost text-lg font-sans'
                     onClick={() => setItem('text')}
                   >
                     말풍선
@@ -321,40 +321,40 @@ const MemeGenerator = () => {
                 <div className='grid place-items-center'>
                   {item === 'top' ? (
                     <div>
-                      <div className='btn btn-ghost text-red-600 font-bold font-sans'>
+                      <div className='btn btn-ghost text-red-600 font-bold text-lg font-sans'>
                         초기화
                       </div>
-                      <div className='grid grid-cols-4'>
-                        <div className='btn btn-ghost font-bold font-sans'>
+                      <div className='grid grid-cols-2'>
+                        <div className='btn btn-ghost font-bold text-lg font-sans'>
                           상의1
                         </div>
-                        <div className='btn btn-ghost font-bold font-sans'>
+                        <div className='btn btn-ghost font-bold text-lg font-sans'>
                           상의2
                         </div>
-                        <div className='btn btn-ghost font-bold font-sans'>
+                        <div className='btn btn-ghost font-bold text-lg font-sans'>
                           상의3
                         </div>
-                        <div className='btn btn-ghost font-bold font-sans'>
+                        <div className='btn btn-ghost font-bold text-lg font-sans'>
                           상의4
                         </div>
                       </div>
                     </div>
                   ) : item === 'pants' ? (
                     <div>
-                      <div className='btn btn-ghost text-red-600 font-bold font-sans'>
+                      <div className='btn btn-ghost text-red-600 font-bold text-lg font-sans'>
                         초기화
                       </div>
-                      <div className='grid grid-cols-4'>
-                        <div className='btn btn-ghost font-bold font-sans'>
+                      <div className='grid grid-cols-2'>
+                        <div className='btn btn-ghost font-bold text-lg font-sans'>
                           하의1
                         </div>
-                        <div className='btn btn-ghost font-bold font-sans'>
+                        <div className='btn btn-ghost font-bold text-lg font-sans'>
                           하의2
                         </div>
-                        <div className='btn btn-ghost font-bold font-sans'>
+                        <div className='btn btn-ghost font-bold text-lg font-sans'>
                           하의3
                         </div>
-                        <div className='btn btn-ghost font-bold font-sans'>
+                        <div className='btn btn-ghost font-bold text-lg font-sans'>
                           하의4
                         </div>
                       </div>
@@ -362,32 +362,32 @@ const MemeGenerator = () => {
                   ) : item === 'icon' ? (
                     <div>
                       <div
-                        className='btn btn-ghost text-red-600 font-bold font-sans'
+                        className='btn btn-ghost text-red-600 font-bold text-lg font-sans'
                         onClick={() => setEmoticon('')}
                       >
                         초기화
                       </div>
-                      <div className='grid grid-cols-4'>
+                      <div className='grid grid-cols-2'>
                         <div
-                          className='btn btn-ghost font-bold font-sans'
+                          className='btn btn-ghost font-bold text-lg font-sans'
                           onClick={() => setEmoticon('👍')}
                         >
                           이모티콘1
                         </div>
                         <div
-                          className='btn btn-ghost font-bold font-sans'
+                          className='btn btn-ghost font-bold text-lg font-sans'
                           onClick={() => setEmoticon('✌️')}
                         >
                           이모티콘2
                         </div>
                         <div
-                          className='btn btn-ghost font-bold font-sans'
+                          className='btn btn-ghost font-bold text-lg font-sans'
                           onClick={() => setEmoticon('😝')}
                         >
                           이모티콘3
                         </div>
                         <div
-                          className='btn btn-ghost font-bold font-sans'
+                          className='btn btn-ghost font-bold text-lg font-sans'
                           onClick={() => setEmoticon('✨')}
                         >
                           이모티콘4
@@ -396,20 +396,20 @@ const MemeGenerator = () => {
                     </div>
                   ) : item === 'text' ? (
                     <div>
-                      <div className='btn btn-ghost text-red-600 font-bold font-sans'>
+                      <div className='btn btn-ghost text-red-600 font-bold text-lg font-sans'>
                         초기화
                       </div>
-                      <div className='grid grid-cols-4'>
-                        <div className='btn btn-ghost font-bold font-sans'>
+                      <div className='grid grid-cols-2'>
+                        <div className='btn btn-ghost font-bold text-lg font-sans'>
                           말풍선1
                         </div>
-                        <div className='btn btn-ghost font-bold font-sans'>
+                        <div className='btn btn-ghost font-bold text-lg font-sans'>
                           말풍선2
                         </div>
-                        <div className='btn btn-ghost font-bold font-sans'>
+                        <div className='btn btn-ghost font-bold text-lg font-sans'>
                           말풍선3
                         </div>
-                        <div className='btn btn-ghost font-bold font-sans'>
+                        <div className='btn btn-ghost font-bold text-lg font-sans'>
                           말풍선4
                         </div>
                       </div>
@@ -420,15 +420,28 @@ const MemeGenerator = () => {
             ) : boxbtn === 'picture' ? (
               <div>
                 <div className='grid gird-rows-3 gap-4 place-items-center'>
-                  <div>
-                    <HexColorPicker
-                      color={textcolor}
-                      onChange={setTextcolor}
-                      style={{
-                        height: '150px',
-                        width: '150px',
-                      }}
-                    />
+                  <div className='grid grid-cols-2'>
+                    <div>
+                      <HexColorPicker
+                        color={textcolor}
+                        onChange={setTextcolor}
+                        style={{
+                          height: '100px',
+                          width: '100px',
+                        }}
+                      />
+                    </div>
+                    <div className='grid grid-rows-2'>
+                      <div className='font-bold w-24 font-sans'>
+                        {textsize}px
+                      </div>
+                      <div className='grid place-items-center'>
+                        <select onChange={textstyleChange}>
+                          <option value='Normal'>Normal</option>
+                          <option value='Bold'>Bold</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
                   <div className='grid grid-cols-2 place-items-center'>
                     <div>
@@ -441,7 +454,7 @@ const MemeGenerator = () => {
                     </div>
                     <div className='w-20'>
                       <div
-                        className='btn'
+                        className='btn font-sans'
                         onClick={() => {
                           const uri = stageRef.current?.toDataURL();
                           setPreviewimage(uri!);
@@ -459,41 +472,36 @@ const MemeGenerator = () => {
                       </div>
                     </div>
                   </div>
-                  <div className='font-bold w-24 font-sans'>{textsize}px</div>
-                  <div className='grid grid-cols-3 gap-1 mb-2'>
+                  <div className='grid grid-cols-2 gap-1 mb-2'>
                     <div className='w-12'>
-                      <div
-                        className='btn btn-ghost text-xs'
-                        onClick={() => {
-                          let size = textsize;
-                          if (textsize < 100) {
-                            setTextsize((size += 5));
-                          } else {
-                            setTextsize(100);
-                          }
-                        }}
-                      >
-                        ▲
+                      <div className='grid grid-cols-2 gap-2'>
+                        <div
+                          className='btn btn-ghost text-xs'
+                          onClick={() => {
+                            let size = textsize;
+                            if (textsize < 100) {
+                              setTextsize((size += 5));
+                            } else {
+                              setTextsize(100);
+                            }
+                          }}
+                        >
+                          ▲
+                        </div>
+                        <div
+                          className='btn btn-ghost text-xs'
+                          onClick={() => {
+                            let size = textsize;
+                            if (textsize > 1) {
+                              setTextsize((size -= 5));
+                            } else {
+                              setTextsize(0);
+                            }
+                          }}
+                        >
+                          ▼
+                        </div>
                       </div>
-                      <div
-                        className='btn btn-ghost text-xs'
-                        onClick={() => {
-                          let size = textsize;
-                          if (textsize > 1) {
-                            setTextsize((size -= 5));
-                          } else {
-                            setTextsize(0);
-                          }
-                        }}
-                      >
-                        ▼
-                      </div>
-                    </div>
-                    <div className='grid place-items-center'>
-                      <select onChange={textstyleChange}>
-                        <option value='Normal'>Normal</option>
-                        <option value='Bold'>Bold</option>
-                      </select>
                     </div>
                     <input
                       type='range'
@@ -565,7 +573,7 @@ const MemeGenerator = () => {
                     <div>
                       <button
                         onClick={clearbtn}
-                        className='btn btn-ghost text-base font-bold font-sans'
+                        className='btn btn-ghost text-lg font-bold  font-sans'
                       >
                         지우기
                       </button>

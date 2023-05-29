@@ -58,7 +58,7 @@ const Upload = () => {
       </div>
       <div className='grid place-items-center'>
         <div
-          className='btn btn-ghost font-bold text-2xl rounded-xl font-sans'
+          className='btn btn-ghost font-bold text-xl rounded-xl font-sans'
           onClick={sharepage}
         >
           Previous
