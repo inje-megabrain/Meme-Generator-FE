@@ -20,7 +20,7 @@ const { VITE_APP_IMAGE_URL } = import.meta.env;
 
 const MemeGenerator = () => {
   const navigate = useNavigate();
-  const role = getCookie('role');
+  const username = getCookie('username');
   const [imageSrc, setImageSrc] = useState<File | undefined>();
   const [decorateSrc, setDecorateSrc] = useState<File | undefined>();
   const [previewimage, setPreviewimage] =
@@ -218,7 +218,7 @@ const MemeGenerator = () => {
               />
             </div>
           </div>
-          {role !== 'ROLE_ADMIN' ? (
+          {username === 'admin' ? (
             <div className='grid place-items-center'>
               <div className='grid grid-cols-1 md:grid-cols-4 gap-2'>
                 <input
