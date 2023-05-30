@@ -114,7 +114,7 @@ const Loginform = () => {
                 <input
                   type='text'
                   placeholder='ID'
-                  className='input w-full max-w-sm outline font-sans'
+                  className='input w-full max-w-sm outline font-sans  dark:focus:outline-blue-500'
                   value={id}
                   onChange={onChangeId}
                 />
@@ -123,7 +123,7 @@ const Loginform = () => {
                 <input
                   type='password'
                   placeholder='Password'
-                  className='input w-full max-w-sm outline font-sans'
+                  className='input w-full max-w-sm outline font-sans  dark:focus:outline-blue-500'
                   value={password}
                   onChange={onChangePassword}
                 />
@@ -131,7 +131,7 @@ const Loginform = () => {
               {!signup ? (
                 <div className='grid place-items-center'>
                   <div
-                    className='btn btn-outline outline outline-black dark:outline-white font-bold text-lg rounded-xl w-full max-w-sm mt-4 normal-case font-sans'
+                    className='btn btn-outline outline outline-black dark:outline-white dark:hover:bg-white  font-bold text-lg rounded-xl w-full max-w-sm mt-4 normal-case font-sans '
                     onClick={LoginFunc}
                   >
                     Login
@@ -156,7 +156,7 @@ const Loginform = () => {
                 <input
                   type='text'
                   placeholder='Email'
-                  className='input w-full max-w-sm outline font-sans'
+                  className='input w-full max-w-sm outline font-sans  dark:focus:outline-blue-500'
                   value={email}
                   onChange={onChangeEmail}
                 />
@@ -166,7 +166,7 @@ const Loginform = () => {
           {login === false && !signup ? (
             <div className='mt-4 grid place-items-center'>
               <div
-                className='btn btn-outline outline outline-black dark:outline-white font-bold text-lg rounded-xl w-full max-w-sm mt-4  normal-case font-sans'
+                className='btn btn-outline outline outline-black dark:outline-white dark:hover:bg-white font-bold text-lg rounded-xl w-full max-w-sm mt-4  normal-case font-sans'
                 onClick={() => setLogin(true)}
               >
                 Login
@@ -178,7 +178,7 @@ const Loginform = () => {
             {!signup ? (
               <>
                 <div
-                  className='btn btn-outline outline outline-black dark:outline-white font-bold text-lg rounded-xl w-full max-w-sm  normal-case font-sans'
+                  className='btn btn-outline outline outline-black dark:outline-white dark:hover:bg-white font-bold text-lg rounded-xl w-full max-w-sm  normal-case font-sans'
                   onClick={googlelogin}
                 >
                   <img
@@ -187,7 +187,7 @@ const Loginform = () => {
                   />
                 </div>
                 <div
-                  className='btn btn-outline outline outline-black dark:outline-white font-bold text-lg w-full rounded-xl max-w-sm mt-4  normal-case font-sans'
+                  className='btn btn-outline outline outline-black dark:outline-white dark:hover:bg-white font-bold text-lg w-full rounded-xl max-w-sm mt-4  normal-case font-sans'
                   onClick={() => setSignup(true)}
                 >
                   Sign Up
@@ -196,7 +196,7 @@ const Loginform = () => {
             ) : null}
             {signup ? (
               <button
-                className='btn btn-outline outline outline-black font-bold text-lg rounded-xl w-full max-w-sm mt-4  normal-case font-sans'
+                className='btn btn-outline outline outline-black dark:outline-white dark:hover:bg-white font-bold text-lg rounded-xl w-full max-w-sm mt-4  normal-case font-sans'
                 onClick={SignupFunc}
               >
                 Sign Up
