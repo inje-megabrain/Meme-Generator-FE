@@ -94,7 +94,7 @@ const Loginform = () => {
         <div>
           <img
             src='/newlogo.png'
-            className='w-40 h-24 inline-block object-fill'
+            className='w-40 h-[94px] inline-block object-fill'
             onClick={homebtn}
           />
           <div

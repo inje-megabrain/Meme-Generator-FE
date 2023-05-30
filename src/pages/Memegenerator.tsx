@@ -193,7 +193,7 @@ const MemeGenerator = () => {
       <div className='grid place-items-center'>
         <img
           src='/newlogo.png'
-          className='w-40 h-24 inline-block object-fill'
+          className='w-40 h-[94px] inline-block object-fill'
           onClick={homebtn}
         />
         <div
@@ -278,6 +278,9 @@ const MemeGenerator = () => {
             </div>
           ) : null}
         </div>
+      </div>
+      <div className='font-bold font-sans text-base text-red-500 animate-pulse'>
+        저장을 누르면 수정이 불가합니다!
       </div>
       <div className='grid place-items-center mt-4 object-contain'>
         <Stage
@@ -465,13 +468,35 @@ const MemeGenerator = () => {
                   <div className='grid place-items-center'>
                     {itemcategory === '도구' ? (
                       <div>
-                        <div
-                          className='btn btn-ghost text-red-600 font-bold text-base font-sans'
-                          onClick={() => {
-                            setDecorateimage('');
-                          }}
-                        >
-                          초기화
+                        <div className='grid grid-cols-2'>
+                          <div
+                            className='btn btn-ghost text-red-600 font-bold text-base font-sans'
+                            onClick={() => {
+                              setDecorateimage('');
+                            }}
+                          >
+                            초기화
+                          </div>
+                          <div className='w-20'>
+                            <div
+                              className='btn btn-ghost text-base font-sans'
+                              onClick={() => {
+                                const uri = stageRef.current?.toDataURL();
+                                setPreviewimage(uri!);
+                                setTextstate({
+                                  isDrawing: false,
+                                  x: 10,
+                                  y: 10,
+                                });
+                                toast.success('저장되었습니다!');
+                                toast.info('아이템 추가가 가능합니다');
+                                setText('');
+                                setDecorateimage('');
+                              }}
+                            >
+                              저장
+                            </div>
+                          </div>
                         </div>
                         {items.map((item, index) => (
                           <div
@@ -495,13 +520,35 @@ const MemeGenerator = () => {
                       </div>
                     ) : itemcategory === '악세서리' ? (
                       <div>
-                        <div
-                          className='btn btn-ghost text-red-600 font-bold text-base font-sans'
-                          onClick={() => {
-                            setDecorateimage('');
-                          }}
-                        >
-                          초기화
+                        <div className='grid grid-cols-2'>
+                          <div
+                            className='btn btn-ghost text-red-600 font-bold text-base font-sans'
+                            onClick={() => {
+                              setDecorateimage('');
+                            }}
+                          >
+                            초기화
+                          </div>
+                          <div className='w-20'>
+                            <div
+                              className='btn btn-ghost text-base font-sans'
+                              onClick={() => {
+                                const uri = stageRef.current?.toDataURL();
+                                setPreviewimage(uri!);
+                                setTextstate({
+                                  isDrawing: false,
+                                  x: 10,
+                                  y: 10,
+                                });
+                                toast.success('저장되었습니다!');
+                                toast.info('아이템 추가가 가능합니다');
+                                setText('');
+                                setDecorateimage('');
+                              }}
+                            >
+                              저장
+                            </div>
+                          </div>
                         </div>
                         {items.map((item, index) => (
                           <div
@@ -525,13 +572,35 @@ const MemeGenerator = () => {
                       </div>
                     ) : itemcategory === '이모티콘' ? (
                       <div>
-                        <div
-                          className='btn btn-ghost text-red-600 font-bold text-base font-sans'
-                          onClick={() => {
-                            setDecorateimage('');
-                          }}
-                        >
-                          초기화
+                        <div className='grid grid-cols-2'>
+                          <div
+                            className='btn btn-ghost text-red-600 font-bold text-base font-sans'
+                            onClick={() => {
+                              setDecorateimage('');
+                            }}
+                          >
+                            초기화
+                          </div>
+                          <div className='w-20'>
+                            <div
+                              className='btn btn-ghost text-base font-sans'
+                              onClick={() => {
+                                const uri = stageRef.current?.toDataURL();
+                                setPreviewimage(uri!);
+                                setTextstate({
+                                  isDrawing: false,
+                                  x: 10,
+                                  y: 10,
+                                });
+                                toast.success('저장되었습니다!');
+                                toast.info('아이템 추가가 가능합니다');
+                                setText('');
+                                setDecorateimage('');
+                              }}
+                            >
+                              저장
+                            </div>
+                          </div>
                         </div>
                         {items.map((item, index) => (
                           <div
@@ -555,13 +624,35 @@ const MemeGenerator = () => {
                       </div>
                     ) : itemcategory === '말풍선' ? (
                       <div>
-                        <div
-                          className='btn btn-ghost text-red-600 font-bold text-base font-sans'
-                          onClick={() => {
-                            setDecorateimage('');
-                          }}
-                        >
-                          초기화
+                        <div className='grid grid-cols-2'>
+                          <div
+                            className='btn btn-ghost text-red-600 font-bold text-base font-sans'
+                            onClick={() => {
+                              setDecorateimage('');
+                            }}
+                          >
+                            초기화
+                          </div>
+                          <div className='w-20'>
+                            <div
+                              className='btn btn-ghost text-base font-sans'
+                              onClick={() => {
+                                const uri = stageRef.current?.toDataURL();
+                                setPreviewimage(uri!);
+                                setTextstate({
+                                  isDrawing: false,
+                                  x: 10,
+                                  y: 10,
+                                });
+                                toast.success('저장되었습니다!');
+                                toast.info('아이템 추가가 가능합니다');
+                                setText('');
+                                setDecorateimage('');
+                              }}
+                            >
+                              저장
+                            </div>
+                          </div>
                         </div>
                         {items.map((item, index) => (
                           <div
@@ -638,7 +729,7 @@ const MemeGenerator = () => {
                             y: 10,
                           });
                           toast.success('저장되었습니다!');
-                          toast.info('또 다른 텍스트를 더 입력할 수 있습니다');
+                          toast.info('텍스트를 더 입력할 수 있습니다');
                           setText('');
                           setDecorateimage('');
                         }}

@@ -78,7 +78,7 @@ const Template = () => {
       <div className='grid place-items-center'>
         <img
           src='/newlogo.png'
-          className='w-40 h-24 inline-block object-fill'
+          className='w-40 h-[94px] inline-block object-fill'
           onClick={homebtn}
         />
         <div
@@ -135,53 +135,51 @@ const Template = () => {
       </div>
       <div>
         <div className='grid grid-cols-1 md:grid-cols-3'>
-          {templatelist.map((meme, index) => {
-            return (
-              <div key={index} className='mt-8'>
-                <div>
-                  {getCookie('username') === 'admin' ? (
-                    <div
-                      className='btn btn-ghost font-bold'
-                      onClick={() => {
-                        MemeDeleteAPI(meme.memeId);
-                      }}
-                    >
-                      X
-                    </div>
-                  ) : null}
-                </div>
-                {!loading && meme.imageUrl !== '' ? (
+          {templatelist.map((meme, index) => (
+            <div key={index} className='mt-10'>
+              <div>
+                {getCookie('username') === 'admin' ? (
                   <div
-                    className='btn btn-ghost w-[270px] h-[310px]'
+                    className='btn btn-ghost font-bold'
                     onClick={() => {
-                      converURLtoFile(
-                        VITE_APP_IMAGE_URL + meme.imageUrl.toString()
-                      );
-                      navigate('/generator');
+                      MemeDeleteAPI(meme.memeId);
                     }}
                   >
-                    <div>
-                      <img
-                        src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
-                        className='w-[310px] h-[310px] object-cover'
-                        alt={meme.name}
-                      />
-                    </div>
+                    X
+                  </div>
+                ) : null}
+              </div>
+              {!loading && meme.imageUrl !== '' ? (
+                <div
+                  className='btn btn-ghost w-[270px] h-[310px]'
+                  onClick={() => {
+                    converURLtoFile(
+                      VITE_APP_IMAGE_URL + meme.imageUrl.toString()
+                    );
+                    navigate('/generator');
+                  }}
+                >
+                  <div>
+                    <img
+                      src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
+                      className='w-[310px] h-[310px] object-cover'
+                      alt={meme.name}
+                    />
+                  </div>
 
-                    <div className='inline-block'>
-                      <div className='font-bold text-xl text-start'>
-                        <div className='font-sans'>템플릿 : {meme.name}</div>
-                      </div>
+                  <div className='inline-block'>
+                    <div className='font-bold text-xl text-start'>
+                      <div className='font-sans'>템플릿 : {meme.name}</div>
                     </div>
                   </div>
-                ) : (
-                  <Loading />
-                )}
-              </div>
-            );
-          })}
+                </div>
+              ) : (
+                <Loading />
+              )}
+            </div>
+          ))}
         </div>
-        <div className='mt-8'>
+        <div className='mt-10'>
           <div className='btn-group'>
             {page > 0 ? (
               <button

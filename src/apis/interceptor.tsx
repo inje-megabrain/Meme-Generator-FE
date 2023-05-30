@@ -34,7 +34,10 @@ jinInterceptor.interceptors.response.use(
     if (error.response.status === 400) {
       throw error;
     }
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (
+      (error.response.status === 401 && !originalRequest._retry) ||
+      error.response.status === 403
+    ) {
       originalRequest._retry = true;
       const res = await fetch(API_URL + '/refresh', {
         method: 'POST',

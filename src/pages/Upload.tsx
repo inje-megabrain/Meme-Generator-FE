@@ -36,7 +36,6 @@ const Upload = () => {
     setName(e.target.value);
   };
   const uploadbtn = async () => {
-    console.log(imageSrc);
     if (!imageSrc) {
       toast.error('이미지를 선택해주세요');
     } else {
@@ -55,7 +54,7 @@ const Upload = () => {
       <div className='grid place-items-center'>
         <img
           src='/newlogo.png'
-          className='w-40 h-24 inline-block object-fill'
+          className='w-40 h-[94px] inline-block object-fill'
           onClick={homebtn}
         />
         <div
