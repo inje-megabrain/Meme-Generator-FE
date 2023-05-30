@@ -87,15 +87,22 @@ const Loginform = () => {
     },
     []
   );
+
   return (
     <>
       <div className='grid place-items-center'>
-        <div>
+        <div className='grid place-items-center'>
           <img
-            src='/memelogo.png'
-            className='w-12 h-12 inline-block object-cover'
+            src='/newlogo.png'
+            className='w-40 h-24 inline-block object-fill'
             onClick={homebtn}
           />
+          <div
+            className='grid place-items-center font-bold text-3xl font-sans'
+            onClick={homebtn}
+          >
+            Meme Generator
+          </div>
           <div>
             <div className='font-bold font-sans text-xl mt-4 animate-pulse text-blue-500'>
               여러 짤들을 지금 만들어보세요!

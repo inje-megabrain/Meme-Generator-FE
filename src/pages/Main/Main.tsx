@@ -71,17 +71,23 @@ const Main = () => {
       {servercheck ? (
         <div>
           <div>
-            <div>
+            <div className='grid place-items-center'>
               <img
-                src='/memelogo.png'
-                className='w-12 h-12 inline-block object-cover'
+                src='/newlogo.png'
+                className='w-40 h-24 inline-block object-fill'
                 onClick={homebtn}
               />
+              <div
+                className='grid place-items-center font-bold text-3xl font-sans'
+                onClick={homebtn}
+              >
+                Meme Generator
+              </div>
             </div>
             {!cookie ? (
               <div className='text-right'>
                 <div
-                  className='btn btn-ghost normal-case text-base font-sans'
+                  className='btn btn-ghost normal-case text-lg font-sans'
                   onClick={signbtn}
                 >
                   로그인
@@ -90,13 +96,13 @@ const Main = () => {
             ) : (
               <div className='text-right'>
                 <div
-                  className='btn btn-ghost normal-case text-base font-sans'
+                  className='btn btn-ghost normal-case text-lg font-sans'
                   onClick={profilebtn}
                 >
                   내 정보
                 </div>
                 <div
-                  className='btn btn-ghost normal-case text-base font-sans'
+                  className='btn btn-ghost normal-case text-lg font-sans'
                   onClick={logoutbtn}
                 >
                   로그아웃

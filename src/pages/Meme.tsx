@@ -177,18 +177,16 @@ const Meme = () => {
               <div className='btn-group'>
                 {page > 0 ? (
                   <button
-                    className='btn btn-ghost font-sans'
+                    className='btn btn-ghost font-sans text-base'
                     onClick={prevpage}
                   >
                     {'<<'}
                   </button>
                 ) : null}
-                <button className='btn btn-ghost font-sans'>
-                  Page {page + 1}
-                </button>
+                <div className='font-sans text-base'>Page {page + 1}</div>
                 {page < totalpage - 1 ? (
                   <button
-                    className='btn btn-ghost font-sans'
+                    className='btn btn-ghost font-sans text-base'
                     onClick={nextpage}
                   >
                     {'>>'}

@@ -86,15 +86,21 @@ const Share = () => {
 
   return (
     <div>
-      <div>
+      <div className='grid place-items-center'>
         <img
-          src='/memelogo.png'
-          className='w-12 h-12 inline-block object-cover'
+          src='/newlogo.png'
+          className='w-40 h-24 inline-block object-fill'
           onClick={homebtn}
         />
+        <div
+          className='grid place-items-center font-bold text-3xl font-sans'
+          onClick={homebtn}
+        >
+          Meme Generator
+        </div>
       </div>
       <div className='grid place-items-center'>
-        <ul className='steps font-sans'>
+        <ul className='steps font-sans text-lg'>
           <li className='step step-primary'>Template</li>
           <li className='step step-primary'>Meme-Generator</li>
           <li className='step step-primary'>Save & Share</li>
@@ -132,7 +138,7 @@ const Share = () => {
             <div>
               <button
                 onClick={savebtn}
-                className='btn btn-ghost text-base font-bold font-sans'
+                className='btn btn-ghost text-lg font-bold font-sans'
               >
                 저장
               </button>
@@ -149,7 +155,7 @@ const Share = () => {
               </button>
               <button
                 onClick={sharebtn}
-                className='btn btn-ghost text-base font-bold font-sans'
+                className='btn btn-ghost text-lg font-bold font-sans'
               >
                 <img src='/kakaologo.png' className='w-6 h-6 inline-block' />{' '}
                 공유

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './style/global.css';
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, useRecoilState } from 'recoil';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { darkModeState } from './states/atom';
 
 const { VITE_APP_KAKAO_KEY } = import.meta.env;
 const kakaokey = VITE_APP_KAKAO_KEY;
@@ -15,6 +16,7 @@ let counter = setInterval(() => {
     clearInterval(counter);
   }
 }, 1000);
+
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <RecoilRoot>

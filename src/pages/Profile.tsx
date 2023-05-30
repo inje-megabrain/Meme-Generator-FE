@@ -51,12 +51,18 @@ const Profile = () => {
 
   return (
     <div>
-      <div>
+      <div className='grid place-items-center'>
         <img
-          src='/memelogo.png'
-          className='w-12 h-12 inline-block object-cover'
+          src='/newlogo.png'
+          className='w-40 h-24 inline-block object-fill'
           onClick={homebtn}
         />
+        <div
+          className='grid place-items-center font-bold text-3xl font-sans'
+          onClick={homebtn}
+        >
+          Meme Generator
+        </div>
       </div>
       <div className='font-bold text-3xl mt-2 font-sans'>Profile</div>
       <div className='mt-10'>
@@ -100,13 +106,13 @@ const Profile = () => {
                       />
                     </div>
                     <div>
-                      <div className='w-[310px] h-[310px] object-cover skew-y-12 shadow-xl bg-gray-400 blur-sm' />
+                      <div className='w-[280px] h-[280px] object-cover skew-y-12 shadow-xl bg-gray-400 blur-sm' />
                     </div>
-                    <div className='-translate-y-[300px] -translate-x-[15px] sm:-translate-y-[300px] sm:-translate-x-[20px]'>
+                    <div className='-translate-y-[300px] -translate-x-[15px] sm:-translate-y-[270px] sm:-translate-x-[20px]'>
                       {!loading && meme.imageUrl !== '' ? (
                         <img
                           src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
-                          className='w-[310px] h-[310px] object-cover skew-y-12 shadow-xl border-spacing-4 border-solid'
+                          className='w-[280px] h-[280px] object-cover skew-y-12 shadow-xl border-spacing-4 border-solid'
                           alt={meme.name}
                         />
                       ) : (

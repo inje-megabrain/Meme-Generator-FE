@@ -75,15 +75,21 @@ const Template = () => {
 
   return (
     <div>
-      <div>
+      <div className='grid place-items-center'>
         <img
-          src='/memelogo.png'
-          className='w-12 h-12 inline-block object-cover'
+          src='/newlogo.png'
+          className='w-40 h-24 inline-block object-fill'
           onClick={homebtn}
         />
+        <div
+          className='grid place-items-center font-bold text-3xl font-sans'
+          onClick={homebtn}
+        >
+          Meme Generator
+        </div>
       </div>
       <div className='grid place-items-center'>
-        <ul className='steps font-sans'>
+        <ul className='steps font-sans text-lg'>
           <li className='step step-primary'>Template</li>
           <li className='step'>Meme-Generator</li>
           <li className='step'>Save & Share</li>
@@ -178,13 +184,19 @@ const Template = () => {
         <div className='mt-8'>
           <div className='btn-group'>
             {page > 0 ? (
-              <button className='btn btn-ghost font-sans' onClick={prevpage}>
+              <button
+                className='btn btn-ghost font-sans text-base'
+                onClick={prevpage}
+              >
                 {'<<'}
               </button>
             ) : null}
-            <button className='btn btn-ghost font-sans'>Page {page + 1}</button>
+            <div className='font-sans text-base'>Page {page + 1}</div>
             {page < totalpage - 1 ? (
-              <button className='btn btn-ghost font-sans' onClick={nextpage}>
+              <button
+                className='btn btn-ghost font-sans text-base'
+                onClick={nextpage}
+              >
                 {'>>'}
               </button>
             ) : null}
