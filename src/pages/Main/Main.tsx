@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { API_URL } from '@src/constants/Constants';
 import Errorpage from '../Errorpage';
+import Scrollmeme from '../Scrollmeme';
 
 const Main = () => {
   const navigate = useNavigate();
@@ -140,7 +141,8 @@ const Main = () => {
       ) : (
         <Errorpage />
       )}
-      {servercheck ? <Meme /> : null}
+      {/* {servercheck ? <Meme /> : null} */}
+      {servercheck ? <Scrollmeme /> : null}
     </>
   );
 };
