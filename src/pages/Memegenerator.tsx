@@ -291,7 +291,29 @@ const MemeGenerator = () => {
           <Layer>
             <Image image={image} width={320} height={320} />
           </Layer>
-
+          <Layer>
+            <Image
+              image={decoimage}
+              width={imgsize}
+              height={imgsize}
+              x={imgstate.x}
+              y={imgstate.y}
+              draggable
+              onDragStart={() => {
+                setImgstate({
+                  isDragging: true,
+                });
+              }}
+              onDragEnd={(e) => {
+                setImgstate({
+                  x: e.target.x(),
+                  y: e.target.y(),
+                  isDragging: false,
+                });
+              }}
+              rotation={imgroate}
+            />
+          </Layer>
           <Layer>
             {lines.map((line: any, i: number) => (
               <Line
@@ -332,29 +354,6 @@ const MemeGenerator = () => {
               rotation={textroate}
             />
           </Layer>
-          <Layer>
-            <Image
-              image={decoimage}
-              width={imgsize}
-              height={imgsize}
-              x={imgstate.x}
-              y={imgstate.y}
-              draggable
-              onDragStart={() => {
-                setImgstate({
-                  isDragging: true,
-                });
-              }}
-              onDragEnd={(e) => {
-                setImgstate({
-                  x: e.target.x(),
-                  y: e.target.y(),
-                  isDragging: false,
-                });
-              }}
-              rotation={imgroate}
-            />
-          </Layer>
         </Stage>
       </div>
       <div className='grid place-items-center'>
@@ -392,7 +391,7 @@ const MemeGenerator = () => {
                         className='btn btn-ghost text-xs'
                         onClick={() => {
                           let size = imgsize;
-                          if (imgsize < 100) {
+                          if (imgsize < 200) {
                             setImgsize((size += 5));
                           } else {
                             setImgsize(100);
@@ -629,6 +628,7 @@ const MemeGenerator = () => {
                             '저장되었습니다! 또 다른 텍스트를 더 입력할 수 있습니다.'
                           );
                           setText('새로운 텍스트');
+                          setDecorateimage('');
                         }}
                       >
                         저장

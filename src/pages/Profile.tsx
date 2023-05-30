@@ -46,7 +46,8 @@ const Profile = () => {
     );
   }, [page]);
   const secession = () => {
-    MemberSecessionAPI(getCookie('username'));
+    confirm('정말로 탈퇴하시겠습니까?') &&
+      MemberSecessionAPI(getCookie('username'));
   };
 
   return (
@@ -85,7 +86,7 @@ const Profile = () => {
               </div>
             </div>
             <div
-              className='btn btn-ghost font-bold text-xl mt-4 font-sans'
+              className='btn btn-ghost font-bold text-sm mt-8 font-sans'
               onClick={secession}
             >
               회원탈퇴
