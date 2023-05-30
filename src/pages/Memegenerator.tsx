@@ -285,29 +285,7 @@ const MemeGenerator = () => {
           <Layer>
             <Image image={image} width={320} height={320} />
           </Layer>
-          <Layer>
-            <Image
-              image={decoimage}
-              width={imgsize}
-              height={imgsize}
-              x={imgstate.x}
-              y={imgstate.y}
-              draggable
-              onDragStart={() => {
-                setImgstate({
-                  isDragging: true,
-                });
-              }}
-              onDragEnd={(e) => {
-                setImgstate({
-                  x: e.target.x(),
-                  y: e.target.y(),
-                  isDragging: false,
-                });
-              }}
-              rotation={imgroate}
-            />
-          </Layer>
+
           <Layer>
             {lines.map((line: any, i: number) => (
               <Line
@@ -348,6 +326,29 @@ const MemeGenerator = () => {
               rotation={textroate}
             />
           </Layer>
+          <Layer>
+            <Image
+              image={decoimage}
+              width={imgsize}
+              height={imgsize}
+              x={imgstate.x}
+              y={imgstate.y}
+              draggable
+              onDragStart={() => {
+                setImgstate({
+                  isDragging: true,
+                });
+              }}
+              onDragEnd={(e) => {
+                setImgstate({
+                  x: e.target.x(),
+                  y: e.target.y(),
+                  isDragging: false,
+                });
+              }}
+              rotation={imgroate}
+            />
+          </Layer>
         </Stage>
       </div>
       <div className='grid place-items-center'>
@@ -361,7 +362,10 @@ const MemeGenerator = () => {
             </div>
             <div
               className='btn btn-ghost text-lg font-sans'
-              onClick={() => setBoxbtn('picture')}
+              onClick={() => {
+                setBoxbtn('picture');
+                setTool('eraser');
+              }}
             >
               텍스트
             </div>
@@ -700,25 +704,25 @@ const MemeGenerator = () => {
                     <div className='grid grid-cols-4 place-items-center gap-3'>
                       <button
                         onClick={() => setPensize(5)}
-                        className='w-[40px] rounded-full bg-white font-bold text-base font-sans'
+                        className='w-[40px] rounded-full bg-white font-bold text-base font-sans dark:text-black'
                       >
                         5
                       </button>
                       <button
                         onClick={() => setPensize(10)}
-                        className='w-[40px] rounded-full bg-white font-bold text-base font-sans'
+                        className='w-[40px] rounded-full bg-white font-bold text-base font-sans dark:text-black'
                       >
                         10
                       </button>
                       <button
                         onClick={() => setPensize(15)}
-                        className='w-[40px] rounded-full bg-white font-bold text-base font-sans'
+                        className='w-[40px] rounded-full bg-white font-bold text-base font-sans dark:text-black'
                       >
                         15
                       </button>
                       <button
                         onClick={() => setPensize(20)}
-                        className='w-[40px] rounded-full bg-white font-bold text-base font-sans'
+                        className='w-[40px] rounded-full bg-white font-bold text-base font-sans dark:text-black'
                       >
                         20
                       </button>

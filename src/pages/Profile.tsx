@@ -94,7 +94,8 @@ const Profile = () => {
                       <AiOutlineClose
                         className='btn btn-ghost font-bold text-xl'
                         onClick={() => {
-                          MemeDeleteAPI(meme.memeId);
+                          confirm(meme.name + '을 삭제하시겠습니까?') &&
+                            MemeDeleteAPI(meme.memeId);
                         }}
                       />
                     </div>

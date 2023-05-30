@@ -124,7 +124,7 @@ const Loginform = () => {
               {!signup ? (
                 <div className='grid place-items-center'>
                   <div
-                    className='btn btn-outline outline outline-black font-bold text-lg rounded-xl w-full max-w-sm mt-4 normal-case font-sans'
+                    className='btn btn-outline outline outline-black dark:outline-white font-bold text-lg rounded-xl w-full max-w-sm mt-4 normal-case font-sans'
                     onClick={LoginFunc}
                   >
                     Login
@@ -133,13 +133,14 @@ const Loginform = () => {
               ) : null}
             </div>
           ) : null}
+
           {signup ? (
             <div className='grid grid-rows-2 gap-5 mt-4'>
               <div className='grid place-items-center'>
                 <input
                   type='text'
                   placeholder='Username'
-                  className='input w-full max-w-sm outline font-sans'
+                  className='input w-full max-w-sm outline font-sans dark:focus:outline-blue-500'
                   value={username}
                   onChange={onChangeUsername}
                 />
@@ -158,7 +159,7 @@ const Loginform = () => {
           {login === false && !signup ? (
             <div className='mt-4 grid place-items-center'>
               <div
-                className='btn btn-outline outline outline-black font-bold text-lg rounded-xl w-full max-w-sm mt-4  normal-case font-sans'
+                className='btn btn-outline outline outline-black dark:outline-white font-bold text-lg rounded-xl w-full max-w-sm mt-4  normal-case font-sans'
                 onClick={() => setLogin(true)}
               >
                 Login
@@ -170,7 +171,7 @@ const Loginform = () => {
             {!signup ? (
               <>
                 <div
-                  className='btn btn-outline outline outline-black font-bold text-lg rounded-xl w-full max-w-sm  normal-case font-sans'
+                  className='btn btn-outline outline outline-black dark:outline-white font-bold text-lg rounded-xl w-full max-w-sm  normal-case font-sans'
                   onClick={googlelogin}
                 >
                   <img
@@ -179,7 +180,7 @@ const Loginform = () => {
                   />
                 </div>
                 <div
-                  className='btn btn-outline outline outline-black font-bold text-lg w-full rounded-xl max-w-sm mt-4  normal-case font-sans'
+                  className='btn btn-outline outline outline-black dark:outline-white font-bold text-lg w-full rounded-xl max-w-sm mt-4  normal-case font-sans'
                   onClick={() => setSignup(true)}
                 >
                   Sign Up

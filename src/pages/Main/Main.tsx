@@ -9,7 +9,6 @@ import Errorpage from '../Errorpage';
 
 const Main = () => {
   const navigate = useNavigate();
-  const [theme, setTheme] = useState<string>('light');
   const [servercheck, setServercheck] = useState<boolean>(true);
   const status = getCookie('status');
   const cookie = getCookie('access_token');
@@ -66,9 +65,7 @@ const Main = () => {
         toast.error('서버가 꺼져있습니다.');
       });
   }, []);
-  useEffect(() => {
-    document.querySelector('html')?.setAttribute('data-theme', theme);
-  }, [theme]);
+
   return (
     <>
       {servercheck ? (
@@ -80,21 +77,6 @@ const Main = () => {
                 className='w-12 h-12 inline-block object-cover'
                 onClick={homebtn}
               />
-            </div>
-            <div className='grid place-items-start'>
-              <div className='grid grid-cols-2'>
-                <div>
-                  <input
-                    type='checkbox'
-                    className='toggle border border-solid'
-                    checked={theme === 'dark'}
-                    onChange={(e) => {
-                      setTheme(e.target.checked ? 'dark' : 'light');
-                    }}
-                  />
-                </div>
-                {theme === 'dark' ? <div className='text-xl'>🌙</div> : null}
-              </div>
             </div>
             {!cookie ? (
               <div className='text-right'>
