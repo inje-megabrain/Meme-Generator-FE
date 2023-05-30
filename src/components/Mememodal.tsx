@@ -24,8 +24,8 @@ const Mememodal = (props: props) => {
   return !loading ? (
     <div>
       <input type='checkbox' id={modalnumber} className='modal-toggle' />
-      <div className='modal'>
-        <div className='modal-box'>
+      <label className='modal' htmlFor={modalnumber}>
+        <label className='modal-box relative' htmlFor=''>
           <label
             htmlFor={modalnumber}
             className='btn btn-sm btn-circle absolute top-2 right-4 mt-2'
@@ -43,14 +43,14 @@ const Mememodal = (props: props) => {
                 <Loading />
               )}
             </div>
-            <div className='font-bold text-xl mt-2'>
+            <div className='font-bold text-xl mt-4'>
               {memeList.username} 제작자의 {'"'}
               {memeList.name}
               {'"'} 짤
             </div>
           </div>
-        </div>
-      </div>
+        </label>
+      </label>
     </div>
   ) : null;
 };
