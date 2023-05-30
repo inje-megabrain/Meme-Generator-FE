@@ -91,7 +91,7 @@ const Loginform = () => {
   return (
     <>
       <div className='grid place-items-center'>
-        <div className='grid place-items-center'>
+        <div>
           <img
             src='/newlogo.png'
             className='w-40 h-24 inline-block object-fill'

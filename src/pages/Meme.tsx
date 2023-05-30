@@ -156,11 +156,17 @@ const Meme = () => {
                     }}
                   >
                     {!loading && meme.imageUrl !== '' ? (
-                      <img // 이미지 크기 체크 console 범인
-                        src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
-                        className='w-full h-[300px] object-contain'
-                        alt={meme.name}
-                      />
+                      <div
+                        style={{
+                          overflow: 'hidden',
+                        }}
+                      >
+                        <img // 이미지 크기 체크 console 범인
+                          src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
+                          className='w-full h-[300px] object-contain hover:scale-110 transition-transform ease-in-out duration-300'
+                          alt={meme.name}
+                        />
+                      </div>
                     ) : (
                       <Loading />
                     )}
