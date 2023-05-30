@@ -80,16 +80,18 @@ const Upload = () => {
           Previous
         </div>
       </div>
-      <div className='grid place-content-center'>
-        <div className='grid grid-cols-1 md:grid-cols-3 mt-2 w-[600px]'>
-          <input
-            type='text'
-            placeholder='업로드 할 이름'
-            className='input input-bordered max-w-xs font-sans'
-            maxLength={8}
-            onChange={nameChange}
-          />
+      <div className='grid place-items-center'>
+        <div className='grid grid-cols-1 md:grid-cols-3 mt-2'>
           <div>
+            <input
+              type='text'
+              placeholder='업로드 할 이름'
+              className='input input-bordered max-w-xs font-sans'
+              maxLength={8}
+              onChange={nameChange}
+            />
+          </div>
+          <div className='mt-2'>
             <input
               type='checkbox'
               className='toggle toggle-primary border border-solid'
