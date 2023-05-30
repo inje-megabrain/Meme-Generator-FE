@@ -394,8 +394,8 @@ const MemeGenerator = () => {
           </div>
           <div className='h-[290px]'>
             {boxbtn === 'decorating' ? (
-              <>
-                <div className='grid grid-cols-2 gap-1'>
+              <div className='grid place-items-center'>
+                <div className='grid grid-cols-2 w-40'>
                   <div className='w-12'>
                     <div className='grid grid-cols-2 gap-2'>
                       <div
@@ -426,12 +426,14 @@ const MemeGenerator = () => {
                       </div>
                     </div>
                   </div>
-                  <input
-                    type='range'
-                    min={-180}
-                    max={180}
-                    onChange={imgroateChange}
-                  />
+                  <div className='grid place-items-center'>
+                    <input
+                      type='range'
+                      min={-180}
+                      max={180}
+                      onChange={imgroateChange}
+                    />
+                  </div>
                 </div>
                 <div className='grid grid-cols-2 place-items-center'>
                   <div className='grid grid-rows-4 w-24'>
@@ -584,7 +586,7 @@ const MemeGenerator = () => {
                     ) : null}
                   </div>
                 </div>
-              </>
+              </div>
             ) : boxbtn === 'picture' ? (
               <div>
                 <div className='grid gird-rows-3 gap-4 place-items-center'>
@@ -600,7 +602,7 @@ const MemeGenerator = () => {
                       />
                     </div>
                     <div className='grid grid-rows-2'>
-                      <div className='font-bold w-24 font-sans'>
+                      <div className='grid font-bold w-24 font-sans place-items-center'>
                         {textsize}px
                       </div>
                       <div className='grid place-items-center'>
@@ -635,10 +637,9 @@ const MemeGenerator = () => {
                             x: 10,
                             y: 10,
                           });
-                          toast.success(
-                            '저장되었습니다! 또 다른 텍스트를 더 입력할 수 있습니다.'
-                          );
-                          setText('새로운 텍스트');
+                          toast.success('저장되었습니다!');
+                          toast.info('또 다른 텍스트를 더 입력할 수 있습니다');
+                          setText('');
                           setDecorateimage('');
                         }}
                       >
@@ -694,15 +695,15 @@ const MemeGenerator = () => {
                       color={color}
                       onChange={setColor}
                       style={{
-                        height: '150px',
-                        width: '150px',
+                        height: '120px',
+                        width: '120px',
                       }}
                     />
                   </div>
                 </div>
                 <div className='grid place-items-center mb-4'>
-                  <div className='grid grid-cols-1 md:grid-cols-3 gap-2'>
-                    <div className='grid grid-cols-2'>
+                  <div className='grid place-items-center'>
+                    <div className='grid grid-cols-3 mt-1'>
                       <div>
                         <SlPencil
                           className='btn btn-ghost text-lg'
@@ -717,41 +718,41 @@ const MemeGenerator = () => {
                         />
                         <div className='font-sans'>Eraser</div>
                       </div>
+                      <div className='grid place-items-center'>
+                        <button
+                          onClick={clearbtn}
+                          className='btn btn-ghost text-lg font-bold  font-sans'
+                        >
+                          지우기
+                        </button>
+                      </div>
                     </div>
-                    <div className='grid grid-cols-4 place-items-center gap-3'>
-                      <button
-                        onClick={() => setPensize(5)}
-                        className='w-[40px] rounded-full bg-white font-bold text-base font-sans dark:text-black'
-                      >
-                        5
-                      </button>
-                      <button
-                        onClick={() => setPensize(10)}
-                        className='w-[40px] rounded-full bg-white font-bold text-base font-sans dark:text-black'
-                      >
-                        10
-                      </button>
-                      <button
-                        onClick={() => setPensize(15)}
-                        className='w-[40px] rounded-full bg-white font-bold text-base font-sans dark:text-black'
-                      >
-                        15
-                      </button>
-                      <button
-                        onClick={() => setPensize(20)}
-                        className='w-[40px] rounded-full bg-white font-bold text-base font-sans dark:text-black'
-                      >
-                        20
-                      </button>
-                    </div>
-                    <div>
-                      <button
-                        onClick={clearbtn}
-                        className='btn btn-ghost text-lg font-bold  font-sans'
-                      >
-                        지우기
-                      </button>
-                    </div>
+                  </div>
+                  <div className='grid grid-cols-4 place-items-center gap-3 mt-4'>
+                    <button
+                      onClick={() => setPensize(5)}
+                      className='w-[40px] rounded-full bg-white font-bold text-base font-sans dark:text-black'
+                    >
+                      5
+                    </button>
+                    <button
+                      onClick={() => setPensize(10)}
+                      className='w-[40px] rounded-full bg-white font-bold text-base font-sans dark:text-black'
+                    >
+                      10
+                    </button>
+                    <button
+                      onClick={() => setPensize(15)}
+                      className='w-[40px] rounded-full bg-white font-bold text-base font-sans dark:text-black'
+                    >
+                      15
+                    </button>
+                    <button
+                      onClick={() => setPensize(20)}
+                      className='w-[40px] rounded-full bg-white font-bold text-base font-sans dark:text-black'
+                    >
+                      20
+                    </button>
                   </div>
                 </div>
               </div>
