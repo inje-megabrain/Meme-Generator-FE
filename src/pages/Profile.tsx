@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { AiOutlineClose } from 'react-icons/ai';
 import Loading from '@src/components/Loading';
+import Mememodal from '@src/components/Mememodal';
 
 const { VITE_APP_IMAGE_URL } = import.meta.env;
 
@@ -22,6 +23,9 @@ const Profile = () => {
   const [totalpage, setTotalpage] = useRecoilState<number>(MemePage);
   const [page, setPage] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
+  const [id, setId] = useState<number>(0);
+  const [modal, setModal] = useState<string>('');
+
   const homebtn = () => {
     navigate('/');
   };
@@ -106,19 +110,28 @@ const Profile = () => {
                         }}
                       />
                     </div>
+
                     <div>
                       <div className='w-[280px] h-[280px] object-cover skew-y-12 shadow-xl bg-gray-400 blur-sm' />
                     </div>
                     <div className='-translate-y-[300px] -translate-x-[15px] sm:-translate-y-[270px] sm:-translate-x-[20px]'>
-                      {!loading && meme.imageUrl !== '' ? (
-                        <img
-                          src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
-                          className='w-[280px] h-[280px] object-cover skew-y-12 shadow-xl border-spacing-4 border-solid'
-                          alt={meme.name}
-                        />
-                      ) : (
-                        <Loading />
-                      )}
+                      <label
+                        htmlFor={modal}
+                        onClick={() => {
+                          setId(meme.memeId);
+                          setModal('my-modal-1');
+                        }}
+                      >
+                        {!loading && meme.imageUrl !== '' ? (
+                          <img
+                            src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
+                            className='w-[280px] h-[280px] object-cover skew-y-12 shadow-xl border-spacing-4 border-solid'
+                            alt={meme.name}
+                          />
+                        ) : (
+                          <Loading />
+                        )}
+                      </label>
                     </div>
                   </div>
                 );
@@ -150,6 +163,8 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
+      <Mememodal modalnumber='my-modal-1' id={id} />
     </div>
   );
 };
