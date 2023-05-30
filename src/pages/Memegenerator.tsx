@@ -60,7 +60,9 @@ const MemeGenerator = () => {
   const [itemstorage, setItemstorage] = useState<string>('');
 
   const handleMouseDown = (e: Konva.KonvaEventObject<MouseEvent>) => {
-    isDrawing.current = true;
+    if (tool !== 'hand') {
+      isDrawing.current = true;
+    }
     const pos = e.target.getStage()?.getPointerPosition();
     if (pos) {
       let nlines = null;
@@ -88,7 +90,9 @@ const MemeGenerator = () => {
     setLines(lines.concat());
   };
   const mobliehandleMouseDown = (e: Konva.KonvaEventObject<TouchEvent>) => {
-    isDrawing.current = true;
+    if (tool !== 'hand') {
+      isDrawing.current = true;
+    }
     const pos = e.target.getStage()?.getPointerPosition();
     if (pos) {
       let nlines = null;
@@ -324,7 +328,11 @@ const MemeGenerator = () => {
                 tension={0.5}
                 lineCap='round'
                 globalCompositeOperation={
-                  line.tool === 'pen' ? 'source-over' : 'destination-out'
+                  line.tool === 'pen'
+                    ? 'source-over'
+                    : line.tool === 'eraser'
+                    ? 'destination-out'
+                    : undefined
                 }
               />
             ))}
@@ -361,7 +369,10 @@ const MemeGenerator = () => {
           <div className='grid grid-cols-3 gap-8 h-[130px]'>
             <div
               className='btn btn-ghost text-lg font-bold font-sans'
-              onClick={() => setBoxbtn('decorating')}
+              onClick={() => {
+                setBoxbtn('decorating');
+                setTool('hand');
+              }}
             >
               꾸미기
             </div>
@@ -369,7 +380,7 @@ const MemeGenerator = () => {
               className='btn btn-ghost text-lg font-sans'
               onClick={() => {
                 setBoxbtn('picture');
-                setTool('eraser');
+                setTool('hand');
               }}
             >
               텍스트
