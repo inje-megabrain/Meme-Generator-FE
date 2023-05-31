@@ -89,6 +89,10 @@ const InfinitiPage = atom<number>({
   key: 'InfinitiPage',
   default: 0,
 });
+const SignupCheck = atom<boolean>({
+  key: 'SignupChaeck',
+  default: false,
+});
 
 export {
   MemeDataState,
@@ -103,4 +107,5 @@ export {
   MemeIdDataState,
   ItemDataState,
   InfinitiPage,
+  SignupCheck,
 };

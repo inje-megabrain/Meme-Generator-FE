@@ -140,7 +140,7 @@ const Share = () => {
                 onClick={savebtn}
                 className='btn btn-ghost text-lg font-bold font-sans'
               >
-                저장
+                파일저장
               </button>
             </div>
             <div>

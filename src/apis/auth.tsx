@@ -83,7 +83,8 @@ const SignUpAPI = (
   id: string,
   password: string,
   name: string,
-  email: string
+  email: string,
+  setSignupcheck: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   axios
     .post(
@@ -94,8 +95,11 @@ const SignUpAPI = (
       }
     )
     .then((response) => {
-      if (response.status == 201) toast.success('회원가입 성공');
-      window.location.href = '/login';
+      if (response.status == 201) {
+        setSignupcheck(true);
+        toast.success('회원가입 성공');
+      }
+      //window.location.href = '/login';
     })
     .catch((error) => {
       toast.error(error.response.data.detail);

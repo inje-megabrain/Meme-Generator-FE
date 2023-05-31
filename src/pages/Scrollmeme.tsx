@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { MemeDeleteAPI, imageDownloadAPI } from '../apis/server';
+import { MemeDeleteAPI } from '../apis/server';
 import { useRecoilState } from 'recoil';
-import { InfinitiPage, MemeDataState, MemePage } from '../states/atom';
+import { InfinitiPage, MemeDataState } from '../states/atom';
 import { MemeType } from '../types';
 import { getCookie } from '@src/util/Cookie';
 import { toast } from 'react-toastify';
@@ -24,12 +24,10 @@ const Scrollmeme = () => {
   const [id, setId] = useState<number>(0);
   const [modal, setModal] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [ishover, setIshover] = useState<boolean>(false);
 
   const myurl = 'https://meme.megabrain.kr'; // url 수정해야함
 
-  //   useEffect(() => {
-  //     imageDownloadAPI(page, setMemeList, setTotalpage, 'MEME', setLoading);
-  //   }, [page]);
   const memeFetch = () => {
     axios
       .get(API_URL + '/meme', {
@@ -125,7 +123,7 @@ const Scrollmeme = () => {
               {memeList.map((meme, index) => (
                 <>
                   {meme.imageUrl !== '' ? (
-                    <div key={meme.memeId}>
+                    <div key={index}>
                       {getCookie('access_token') ? (
                         <div className='grid grid-cols-3'>
                           {getCookie('username') === meme.username ||
@@ -182,16 +180,27 @@ const Scrollmeme = () => {
                         <div
                           style={{
                             overflow: 'hidden',
+                            cursor: 'pointer',
                           }}
+                          className='relative'
                         >
                           {!loading ? (
                             <img // 이미지 크기 체크 console 범인
                               src={
                                 VITE_APP_IMAGE_URL + meme.imageUrl.toString()
                               }
-                              className='w-full h-[300px] object-contain hover:scale-110 transition-transform ease-in-out duration-300'
+                              className='w-[300px] h-[300px] object-contain z-0 hover:scale-110 transition-transform duration-300 hover:opacity-50'
                               alt={meme.name}
+                              onMouseOver={() => setIshover(true)}
+                              onMouseOut={() => setIshover(false)}
                             />
+                          ) : null}
+                          {ishover && index ? (
+                            <div>
+                              <div className='absolute font-bold text-lg top-[20px] right-[70px]'>
+                                좋아요
+                              </div>
+                            </div>
                           ) : null}
                         </div>
                       </label>

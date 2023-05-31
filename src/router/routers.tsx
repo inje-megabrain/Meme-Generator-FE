@@ -7,6 +7,7 @@ import Share from '@src/pages/Share';
 import Upload from '@src/pages/Upload';
 import Profile from '@src/pages/Profile';
 import Errorpage from '@src/pages/Errorpage';
+import Emailcheck from '@src/pages/Emailcheck';
 const Router = [
   {
     title: 'Home',
@@ -52,6 +53,11 @@ const Router = [
     title: 'Errorpage',
     url: '/errorpage',
     component: <Errorpage />,
+  },
+  {
+    title: 'Emailcheck',
+    url: '/email/auth',
+    component: <Emailcheck />,
   },
 ];
 export default Router;

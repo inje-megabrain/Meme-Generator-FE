@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SignUpAPI, loginAPI } from '../apis/auth';
 import { toast } from 'react-toastify';
+import { useRecoilState } from 'recoil';
+import { SignupCheck } from '@src/states/atom';
 const { VITE_APP_GOOGLE_OAUTH } = import.meta.env;
 
 const Loginform = () => {
@@ -17,6 +19,7 @@ const Loginform = () => {
   const [checkId, setCheckId] = useState(false);
   const [checkUsername, setCheckUsername] = useState(false);
   const [login, setLogin] = useState(false);
+  const [signupcheck, setSignupcheck] = useRecoilState<boolean>(SignupCheck);
   const homebtn = () => {
     navigate('/');
   };
@@ -34,7 +37,10 @@ const Loginform = () => {
   };
   const SignupFunc = async (e: any) => {
     e.preventDefault();
-    await SignUpAPI(id, password, username, email);
+    await SignUpAPI(id, password, username, email, setSignupcheck);
+    if (signupcheck) {
+      navigate('/auth/mail');
+    }
   };
   const onChangePassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {

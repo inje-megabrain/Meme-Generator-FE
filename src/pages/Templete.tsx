@@ -189,7 +189,9 @@ const Template = () => {
                 {'<<'}
               </button>
             ) : null}
-            <div className='font-sans text-base'>Page {page + 1}</div>
+            <div className='font-sans text-base grid place-items-center'>
+              Page {page + 1}
+            </div>
             {page < totalpage - 1 ? (
               <button
                 className='btn btn-ghost font-sans text-base'
