@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MemeDeleteAPI, imageDownloadAPI } from '../apis/server';
 import { useRecoilState } from 'recoil';
-import { MemeDataState, MemePage } from '../states/atom';
+import { InfinitiPage, MemeDataState, MemePage } from '../states/atom';
 import { MemeType } from '../types';
 import { getCookie } from '@src/util/Cookie';
 import { toast } from 'react-toastify';
@@ -11,7 +11,6 @@ import {
   AiOutlineShareAlt,
 } from 'react-icons/ai';
 import Mememodal from '@src/components/Mememodal';
-import Loading from '@src/components/Loading';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import { API_URL } from '@src/constants/Constants';
@@ -19,22 +18,13 @@ import { API_URL } from '@src/constants/Constants';
 const Scrollmeme = () => {
   const { VITE_APP_IMAGE_URL } = import.meta.env;
   const [memeList, setMemeList] = useRecoilState<MemeType>(MemeDataState);
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useRecoilState<number>(InfinitiPage);
   const [ref, inView] = useInView();
-  const [totalpage, setTotalpage] = useRecoilState<number>(MemePage);
   const [file, setFile] = useState<File>(new File([], ''));
   const [id, setId] = useState<number>(0);
   const [modal, setModal] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
-  const prevpage = () => {
-    if (page > 0) {
-      setPage(page - 1);
-    }
-  };
-  const nextpage = () => {
-    setPage(page + 1);
-  };
   const myurl = 'https://meme.megabrain.kr'; // url 수정해야함
 
   //   useEffect(() => {
@@ -54,14 +44,14 @@ const Scrollmeme = () => {
           'Access-Control-Allow-Origin': '*',
         },
       })
-      .then((res) => {
-        setMemeList((memeList) => [...memeList, ...res.data.dtos]);
-        setTotalpage(res.data.totalPages);
+      .then((response) => {
+        setMemeList((memeList) => [...memeList, ...response.data.dtos]);
+        setLoading && setLoading(false);
+        setPage((page) => page + 1);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        console.log(error);
       });
-    setPage((page) => page + 1);
   };
   useEffect(() => {
     if (inView) {
@@ -135,7 +125,7 @@ const Scrollmeme = () => {
               {memeList.map((meme, index) => (
                 <>
                   {meme.imageUrl !== '' ? (
-                    <div key={index}>
+                    <div key={meme.memeId}>
                       {getCookie('access_token') ? (
                         <div className='grid grid-cols-3'>
                           {getCookie('username') === meme.username ||
@@ -194,11 +184,15 @@ const Scrollmeme = () => {
                             overflow: 'hidden',
                           }}
                         >
-                          <img // 이미지 크기 체크 console 범인
-                            src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
-                            className='w-full h-[300px] object-contain hover:scale-110 transition-transform ease-in-out duration-300'
-                            alt={meme.name}
-                          />
+                          {!loading ? (
+                            <img // 이미지 크기 체크 console 범인
+                              src={
+                                VITE_APP_IMAGE_URL + meme.imageUrl.toString()
+                              }
+                              className='w-full h-[300px] object-contain hover:scale-110 transition-transform ease-in-out duration-300'
+                              alt={meme.name}
+                            />
+                          ) : null}
                         </div>
                       </label>
                       <div className='inline-block'>

@@ -85,6 +85,10 @@ const ItemDataState = atom<ItemType>({
     },
   ],
 });
+const InfinitiPage = atom<number>({
+  key: 'InfinitiPage',
+  default: 0,
+});
 
 export {
   MemeDataState,
@@ -98,4 +102,5 @@ export {
   templatePage,
   MemeIdDataState,
   ItemDataState,
+  InfinitiPage,
 };
