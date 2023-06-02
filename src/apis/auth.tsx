@@ -77,6 +77,7 @@ const loginAPI = (id: string, password: string) => {
       if (error.response.data === '자격 증명에 실패하였습니다.') {
         toast.error('회원이 아니십니다! 아이디 혹은 패스워드를 확인해주세요!!');
       }
+      toast.error('회원이 아니십니다! 아이디 혹은 패스워드를 확인해주세요!!');
     });
 };
 const SignUpAPI = (
@@ -130,20 +131,20 @@ const MemberSecessionAPI = async (username: string) => {
     .catch((error) => {});
 };
 const NicknameChangeAPI = async (newName: string) => {
-  await jinInterceptor
-    .put(
-      API_URL + '/member/name',
-      { newName: newName },
-      {
-        headers: {
-          ...headerConfig,
-          Authorization: 'Bearer ' + getCookie('access_token'),
-        },
-      }
-    )
+  await axios
+    .put(API_URL + '/member/name', null, {
+      params: {
+        newName: newName,
+      },
+      headers: {
+        ...headerConfig,
+        Authorization: 'Bearer ' + getCookie('access_token'),
+      },
+    })
     .then((response) => {
       if (response.status === 200) {
-        toast.success('닉네임 변경 성공');
+        setCookie('status', '닉네임 변경 성공');
+        window.location.href = '/profile';
       }
     })
     .catch((error) => {
@@ -151,17 +152,13 @@ const NicknameChangeAPI = async (newName: string) => {
     });
 };
 const EmailPostAPI = async (email: string) => {
-  await jinInterceptor
-    .post(
-      API_URL + '/member/email',
-      { email: email },
-      {
-        headers: {
-          ...headerConfig,
-          Authorization: 'Bearer ' + getCookie('access_token'),
-        },
-      }
-    )
+  await axios
+    .post(API_URL + '/auth/email', null, {
+      params: {
+        email: email,
+      },
+      headers: headerConfig,
+    })
     .then((response) => {
       if (response.status === 200) {
         toast.success('이메일 전송 성공');

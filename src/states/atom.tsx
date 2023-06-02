@@ -96,6 +96,10 @@ const SignupCheck = atom<boolean>({
   key: 'SignupChaeck',
   default: false,
 });
+const EmailCheck = atom<string>({
+  key: 'EmailCheck',
+  default: '',
+});
 
 export {
   MemeDataState,
@@ -111,4 +115,5 @@ export {
   ItemDataState,
   InfinitiPage,
   SignupCheck,
+  EmailCheck,
 };

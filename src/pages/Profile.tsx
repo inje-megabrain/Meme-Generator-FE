@@ -1,12 +1,17 @@
 import { MemberSecessionAPI } from '@src/apis/auth';
-import { MemberMemeAPI, MemeDeleteAPI, ProfileAPI } from '@src/apis/server';
+import {
+  MemberMemeAPI,
+  MemeDeleteAPI,
+  MemePublicAPI,
+  ProfileAPI,
+} from '@src/apis/server';
 import {
   ProfileDataState,
   MemePage,
   MemberMemeDataState,
 } from '@src/states/atom';
 import { MemeType, ProfileType } from '@src/types';
-import { getCookie } from '@src/util/Cookie';
+import { getCookie, removeCookie } from '@src/util/Cookie';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -14,6 +19,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import Loading from '@src/components/Loading';
 import Mememodal from '@src/components/Mememodal';
 import Nickmemodal from '@src/components/Nicknamemodal';
+import { toast } from 'react-toastify';
 
 const { VITE_APP_IMAGE_URL } = import.meta.env;
 
@@ -26,6 +32,8 @@ const Profile = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [id, setId] = useState<number>(0);
   const [modal, setModal] = useState<string>('');
+  const [publicFlag, setPublicFlag] = useState<boolean>(false);
+  const [totalelements, setTotalelements] = useState<number>(0);
 
   const homebtn = () => {
     navigate('/');
@@ -47,6 +55,7 @@ const Profile = () => {
       page,
       setMeme,
       setTotalpage,
+      setTotalelements,
       setLoading
     );
   }, [page]);
@@ -54,6 +63,11 @@ const Profile = () => {
     confirm('정말로 탈퇴하시겠습니까?') &&
       MemberSecessionAPI(getCookie('username'));
   };
+
+  if (getCookie('status') === '닉네임 변경 성공') {
+    toast.success('닉네임 변경 성공');
+    removeCookie('status');
+  }
 
   return (
     <div>
@@ -79,7 +93,9 @@ const Profile = () => {
             <div className='grid grid-cols-3 mt-2'>
               <div>
                 <div className='text-base font-sans'>내가 올린 짤</div>
-                <div className='font-bold text-lg font-sans'>{meme.length}</div>
+                <div className='font-bold text-lg font-sans'>
+                  {totalelements}
+                </div>
               </div>
               <div>
                 <div className='text-base font-sans'>좋아요</div>
@@ -113,14 +129,34 @@ const Profile = () => {
               {meme.map((meme, index) => {
                 return (
                   <div key={index} className='h-[400px]'>
-                    <div>
-                      <AiOutlineClose
-                        className='btn btn-ghost font-bold text-xl'
-                        onClick={() => {
-                          confirm(meme.name + '을 삭제하시겠습니까?') &&
-                            MemeDeleteAPI(meme.memeId);
-                        }}
-                      />
+                    <div className='grid grid-cols-2'>
+                      <div>
+                        <AiOutlineClose
+                          className='btn btn-ghost font-bold text-xl'
+                          onClick={() => {
+                            confirm(meme.name + '을 삭제하시겠습니까?') &&
+                              MemeDeleteAPI(meme.memeId);
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <div className='font-bold text-xl font-sans'>
+                          {meme.publicFlag === false ? (
+                            <div>비공개</div>
+                          ) : (
+                            <div>공개</div>
+                          )}
+                        </div>
+                        <input
+                          type='checkbox'
+                          className='toggle toggle-primary border border-solid'
+                          defaultChecked={meme.publicFlag}
+                          onChange={(e) => {
+                            setPublicFlag(e.target.checked);
+                            MemePublicAPI(meme.memeId, e.target.checked);
+                          }}
+                        />
+                      </div>
                     </div>
                     <div>
                       <div className='w-[280px] h-[280px] object-cover skew-y-12 shadow-xl bg-gray-400 blur-sm' />

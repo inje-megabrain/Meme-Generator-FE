@@ -1,22 +1,25 @@
+import { EmailPostAPI } from '@src/apis/auth';
 import EmailLoading from '@src/components/EmailLoading';
 import { API_URL } from '@src/constants/Constants';
+import { EmailCheck } from '@src/states/atom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useRecoilState } from 'recoil';
 
 const Emailcheck = () => {
   const code = new URL(window.location.href).searchParams.get('code');
   const [check, setCheck] = useState<boolean>(true);
+  const [email, setEmail] = useRecoilState<string>(EmailCheck);
   console.log(check);
   const navigate = useNavigate();
   const homebtn = () => {
     navigate('/');
   };
   useEffect(() => {
-    toast.info('이메일을 인증해주세요!');
     axios
-      .get(API_URL + `/email/auth?code=${code}`)
+      .get(API_URL + `/auth/email?code=${code}`)
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
@@ -29,8 +32,7 @@ const Emailcheck = () => {
       });
   }, []);
   const ReEmail = () => {
-    navigate('/email/auth');
-    window.location.reload();
+    EmailPostAPI(email);
   };
 
   return (

@@ -114,6 +114,7 @@ export const MemberMemeAPI = async (
   page: number,
   setMeme: SetterOrUpdater<MemeType>,
   setTotalpage: SetterOrUpdater<number>,
+  setTotalElements: SetterOrUpdater<number>,
   setLoading?: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   await jinInterceptor
@@ -129,6 +130,7 @@ export const MemberMemeAPI = async (
       setLoading && setLoading(false);
       setMeme(response.data.dtos);
       setTotalpage(response.data.pageInfo.totalPages);
+      setTotalElements(response.data.pageInfo.totalElements);
     })
     .catch((error) => {
       console.log(error);
@@ -223,19 +225,14 @@ export const ItemsDownloadAPI = async (
 };
 export const MemePublicAPI = async (memeid: number, publicFlag: boolean) => {
   await jinInterceptor
-    .put(
-      API_URL + `/meme/${memeid}/public`,
-      {
-        publicFlag: publicFlag,
+    .put(API_URL + `/meme/${memeid}/public`, null, {
+      params: { flag: publicFlag, memeId: memeid },
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: 'Bearer ' + getCookie('access_token'),
       },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          Authorization: 'Bearer ' + getCookie('access_token'),
-        },
-      }
-    )
+    })
     .then((response) => {
       if (response.status === 200) {
         toast.success('공개범위 수정완료');

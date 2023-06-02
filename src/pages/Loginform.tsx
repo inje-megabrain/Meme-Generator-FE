@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { EmailPostAPI, SignUpAPI, loginAPI } from '../apis/auth';
 import { toast } from 'react-toastify';
 import { useRecoilState } from 'recoil';
-import { SignupCheck } from '@src/states/atom';
+import { EmailCheck, SignupCheck } from '@src/states/atom';
 const { VITE_APP_GOOGLE_OAUTH } = import.meta.env;
 
 const Loginform = () => {
@@ -12,7 +12,7 @@ const Loginform = () => {
   const [signup, setSignup] = useState(false);
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useRecoilState<string>(EmailCheck);
   const [username, setUsername] = useState('');
   const [checkEmail, setCheckEmail] = useState(false);
   const [checkPassword, setCheckPassword] = useState(false);
@@ -40,7 +40,7 @@ const Loginform = () => {
     await SignUpAPI(id, password, username, email, setSignupcheck);
     await EmailPostAPI(email);
     if (signupcheck) {
-      navigate('/auth/mail');
+      navigate('/auth/email');
     }
   };
   const onChangePassword = useCallback(
