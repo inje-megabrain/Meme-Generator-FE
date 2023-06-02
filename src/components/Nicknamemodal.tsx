@@ -1,5 +1,4 @@
 import { NicknameChangeAPI } from '@src/apis/auth';
-import { getCookie } from '@src/util/Cookie';
 import { useState } from 'react';
 
 interface NickmemodalProps {

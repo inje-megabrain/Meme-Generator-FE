@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SignUpAPI, loginAPI } from '../apis/auth';
+import { EmailPostAPI, SignUpAPI, loginAPI } from '../apis/auth';
 import { toast } from 'react-toastify';
 import { useRecoilState } from 'recoil';
 import { SignupCheck } from '@src/states/atom';
@@ -38,6 +38,7 @@ const Loginform = () => {
   const SignupFunc = async (e: any) => {
     e.preventDefault();
     await SignUpAPI(id, password, username, email, setSignupcheck);
+    await EmailPostAPI(email);
     if (signupcheck) {
       navigate('/auth/mail');
     }

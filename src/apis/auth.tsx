@@ -102,6 +102,7 @@ const SignUpAPI = (
       //window.location.href = '/login';
     })
     .catch((error) => {
+      toast.error(error.response.data);
       toast.error(error.response.data.detail);
     });
 };
@@ -128,11 +129,11 @@ const MemberSecessionAPI = async (username: string) => {
     })
     .catch((error) => {});
 };
-const NicknameChangeAPI = async (nickname: string) => {
+const NicknameChangeAPI = async (newName: string) => {
   await jinInterceptor
     .put(
       API_URL + '/member/name',
-      { newName: nickname },
+      { newName: newName },
       {
         headers: {
           ...headerConfig,
@@ -149,6 +150,27 @@ const NicknameChangeAPI = async (nickname: string) => {
       toast.error('닉네임 변경 실패');
     });
 };
+const EmailPostAPI = async (email: string) => {
+  await jinInterceptor
+    .post(
+      API_URL + '/member/email',
+      { email: email },
+      {
+        headers: {
+          ...headerConfig,
+          Authorization: 'Bearer ' + getCookie('access_token'),
+        },
+      }
+    )
+    .then((response) => {
+      if (response.status === 200) {
+        toast.success('이메일 전송 성공');
+      }
+    })
+    .catch((error) => {
+      toast.error('이메일 전송 실패');
+    });
+};
 
 export {
   loginAPI,
@@ -156,4 +178,5 @@ export {
   oauthLoginAPI,
   MemberSecessionAPI,
   NicknameChangeAPI,
+  EmailPostAPI,
 };
