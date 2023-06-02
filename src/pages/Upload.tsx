@@ -85,7 +85,7 @@ const Upload = () => {
           <div>
             <input
               type='text'
-              placeholder='업로드 할 이름'
+              placeholder='업로드 이름(최대 8자)'
               className='input input-bordered max-w-xs font-sans'
               maxLength={8}
               onChange={nameChange}

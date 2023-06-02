@@ -5,6 +5,9 @@ type MemeType = {
   username: string;
   userid: string;
   publicFlag: boolean;
+  viewCount: number;
+  likeCount: number;
+  isLiked: boolean;
 }[];
 type decodedjwtType = {
   sub: string;

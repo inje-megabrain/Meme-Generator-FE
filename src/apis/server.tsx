@@ -64,6 +64,7 @@ export const imageDownloadAPI = async (
       headers: headerConfig,
     })
     .then((response) => {
+      console.log(response);
       setLoading && setLoading(false);
       setMemeList(response.data.dtos);
       setTotalpage(response.data.pageInfo.totalPages);
@@ -236,9 +237,32 @@ export const MemePublicAPI = async (memeid: number, publicFlag: boolean) => {
     .then((response) => {
       if (response.status === 200) {
         toast.success('공개범위 수정완료');
+        window.location.reload();
       }
     })
     .catch((error) => {
       toast.error('공개 실패');
+    });
+};
+export const MemeLikeAPI = async (memeid: number) => {
+  await jinInterceptor
+    .post(API_URL + `/meme/${memeid}/like`, null, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: 'Bearer ' + getCookie('access_token'),
+      },
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        toast.success('좋아요');
+        window.location.reload();
+      }
+      if (response.status === 204) {
+        window.location.reload();
+      }
+    })
+    .catch((error) => {
+      toast.error('좋아요 실패');
     });
 };

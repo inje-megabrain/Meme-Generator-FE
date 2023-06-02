@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MemeDeleteAPI } from '../apis/server';
+import { MemeDeleteAPI, MemeLikeAPI } from '../apis/server';
 import { useRecoilState } from 'recoil';
 import { InfinitiPage, MemeDataState } from '../states/atom';
 import { MemeType } from '../types';
@@ -9,6 +9,8 @@ import {
   AiOutlineClose,
   AiOutlineCloudDownload,
   AiOutlineShareAlt,
+  AiOutlineHeart,
+  AiFillHeart,
 } from 'react-icons/ai';
 import Mememodal from '@src/components/Mememodal';
 import { useInView } from 'react-intersection-observer';
@@ -41,9 +43,11 @@ const Scrollmeme = () => {
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
+          Authorization: 'Bearer ' + getCookie('access_token'),
         },
       })
       .then((response) => {
+        console.log(response.data.dtos);
         setMemeList((memeList) => [...memeList, ...response.data.dtos]);
         setLoading && setLoading(false);
         setPage((page) => page + 1);
@@ -71,6 +75,7 @@ const Scrollmeme = () => {
     link.click();
     document.body.removeChild(link);
     toast.success('짤 다운로드 성공');
+    setCheck(false);
     return data;
   };
   const shareurl = async (url: string) => {
@@ -80,6 +85,7 @@ const Scrollmeme = () => {
     setFile(files);
   };
   const sharebtn = async () => {
+    setCheck(false);
     setFile(new File([], ''));
     const shareurl = (
       await window.Kakao.Share.uploadImage({
@@ -126,7 +132,7 @@ const Scrollmeme = () => {
                   {meme.imageUrl !== '' ? (
                     <div key={index}>
                       {getCookie('access_token') ? (
-                        <div className='grid grid-cols-3'>
+                        <div className='grid grid-cols-1'>
                           {getCookie('username') === meme.userid ||
                           getCookie('username') === 'admin' ? (
                             <div>
@@ -139,92 +145,106 @@ const Scrollmeme = () => {
                               />
                             </div>
                           ) : null}
-                          <button
-                            id='kakao-share-btn'
-                            onClick={sharebtn}
-                            style={{
-                              display: 'none',
-                            }}
-                          >
-                            카카오톡 이미지 업로드 버튼
-                          </button>
-                          <div>
-                            <AiOutlineShareAlt
-                              className='btn btn-ghost font-bold text-xl'
-                              onClick={() => {
-                                const image =
-                                  VITE_APP_IMAGE_URL + meme.imageUrl.toString();
-                                shareurl(image);
-                                sharebtn();
-                              }}
-                            />
-                          </div>
-                          <div>
-                            <AiOutlineCloudDownload
-                              className='btn btn-ghost font-bold text-xl'
-                              onClick={() => {
-                                const image =
-                                  VITE_APP_IMAGE_URL + meme.imageUrl.toString();
-                                converURLtoFile(image, meme.name + '.png');
-                              }}
-                            />
-                          </div>
                         </div>
                       ) : null}
-                      {!check ? (
-                        <>
-                          <label
-                            htmlFor={modal}
-                            onClick={() => {
-                              setId(meme.memeId);
-                              setModal('my-modal-1');
-                            }}
-                          ></label>
-                        </>
-                      ) : null}
-                      <div
-                        style={{
-                          overflow: 'hidden',
-                          cursor: 'pointer',
-                        }}
-                        className='relative z-10'
-                        onMouseOver={() => {
-                          setIshover(true);
+                      <label
+                        htmlFor='my-modal-1'
+                        onClick={() => {
                           setId(meme.memeId);
-                          setModal('');
-                        }}
-                        onMouseOut={() => {
-                          setIshover(false);
-                          setId(0);
+                          setModal('my-modal-1');
                         }}
                       >
-                        {!loading ? (
-                          <img // 이미지 크기 체크 console 범인
-                            src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
-                            className='w-[300px] h-[300px] object-contain z-0 hover:scale-110 transition-transform duration-300 hover:opacity-70'
-                            alt={meme.name}
-                          />
-                        ) : null}
-                        {ishover && id === meme.memeId ? (
-                          <div>
+                        <div
+                          style={{
+                            overflow: 'hidden',
+                          }}
+                          className='relative z-10'
+                          onMouseOver={() => {
+                            setIshover(true);
+                            setId(meme.memeId);
+                            setModal('');
+                          }}
+                          onMouseOut={() => {
+                            setIshover(false);
+                            setId(0);
+                          }}
+                        >
+                          {!loading ? (
+                            <img // 이미지 크기 체크 console 범인
+                              src={
+                                VITE_APP_IMAGE_URL + meme.imageUrl.toString()
+                              }
+                              className='w-[300px] h-[300px] object-contain z-0 hover:scale-110 transition-transform duration-300 hover:opacity-70'
+                              alt={meme.name}
+                            />
+                          ) : null}
+                          {ishover && id === meme.memeId ? (
+                            <div>
+                              {getCookie('access_token') ? (
+                                <div>
+                                  <div>
+                                    <AiOutlineCloudDownload
+                                      className='absolute btn btn-md bg-slate-200 text-black opacity-80 hover:bg-white hover:opacity-100 font-bold text-xl top-[10px] right-[65px] z-10 rounded-full'
+                                      onClick={() => {
+                                        const image =
+                                          VITE_APP_IMAGE_URL +
+                                          meme.imageUrl.toString();
+                                        converURLtoFile(
+                                          image,
+                                          meme.name + '.png'
+                                        );
+                                        setCheck(true);
+                                      }}
+                                    />
+                                  </div>
+                                  <button
+                                    id='kakao-share-btn'
+                                    onClick={sharebtn}
+                                    style={{
+                                      display: 'none',
+                                    }}
+                                  >
+                                    카카오톡 이미지 업로드 버튼
+                                  </button>
+                                  <AiOutlineShareAlt
+                                    className='absolute text-center btn btn-md bg-slate-200 text-black opacity-80 hover:bg-white hover:opacity-100 font-bold text-sm bottom-[12px] right-[65px] z-10 rounded-full'
+                                    onClick={() => {
+                                      const image =
+                                        VITE_APP_IMAGE_URL +
+                                        meme.imageUrl.toString();
+                                      shareurl(image);
+                                      sharebtn();
+                                      setCheck(true);
+                                    }}
+                                  />
+                                </div>
+                              ) : null}
+                            </div>
+                          ) : null}
+                        </div>
+                        <div className='grid grid-cols-2 place-items-center w-[330px] z-10'>
+                          <div className='grid grid-cols-2 gap-2'>
                             <div
-                              className='absolute btn glass font-bold text-lg top-[20px] right-[70px] z-10'
-                              onClick={() => {
-                                toast.success('감사요 ㅅㄱ');
+                              className='font-bold text-xl btn-xs w-[10px]'
+                              onClick={async () => {
                                 setModal('');
                                 setCheck(true);
+                                await MemeLikeAPI(meme.memeId);
                               }}
                             >
-                              🩷
+                              {meme.isLiked == false ? (
+                                <AiOutlineHeart />
+                              ) : (
+                                <AiFillHeart />
+                              )}
                             </div>
+                            <div>{meme.likeCount}개</div>
                           </div>
-                        ) : null}
-                      </div>
-                      <div className='inline-block'>
-                        <div className='font-bold text-xl text-start font-sans'>
-                          <div>{meme.name} 짤</div>
+                          <div className='font-bold text-xl text-start font-sans'>
+                            <div>{meme.name}</div>
+                          </div>
                         </div>
-                      </div>
+                      </label>
                     </div>
                   ) : null}
                 </>
@@ -232,7 +252,7 @@ const Scrollmeme = () => {
               <div ref={ref}></div>
             </div>
           </div>
-          <Mememodal modalnumber={modal} id={id} />
+          {!check ? <Mememodal modalnumber='my-modal-1' id={id} /> : null}
         </>
       )}
     </div>

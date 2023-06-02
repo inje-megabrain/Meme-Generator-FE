@@ -11,6 +11,9 @@ const MemeDataState = atom<MemeType>({
       username: '',
       userid: '',
       publicFlag: false,
+      viewCount: 0,
+      likeCount: 0,
+      isLiked: false,
     },
   ],
 });
@@ -48,6 +51,9 @@ const MemberMemeDataState = atom<MemeType>({
       username: '',
       userid: '',
       publicFlag: false,
+      viewCount: 0,
+      likeCount: 0,
+      isLiked: false,
     },
   ],
 });
@@ -61,6 +67,9 @@ const TemplateDataState = atom<MemeType>({
       username: '',
       userid: '',
       publicFlag: false,
+      viewCount: 0,
+      likeCount: 0,
+      isLiked: false,
     },
   ],
 });
@@ -100,7 +109,6 @@ const EmailCheck = atom<string>({
   key: 'EmailCheck',
   default: '',
 });
-
 export {
   MemeDataState,
   MemePage,
