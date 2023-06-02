@@ -221,3 +221,27 @@ export const ItemsDownloadAPI = async (
       console.log(error);
     });
 };
+export const MemePublicAPI = async (memeid: number, publicFlag: boolean) => {
+  await jinInterceptor
+    .put(
+      API_URL + `/meme/${memeid}/public`,
+      {
+        publicFlag: publicFlag,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          Authorization: 'Bearer ' + getCookie('access_token'),
+        },
+      }
+    )
+    .then((response) => {
+      if (response.status === 200) {
+        toast.success('공개범위 수정완료');
+      }
+    })
+    .catch((error) => {
+      toast.error('공개 실패');
+    });
+};

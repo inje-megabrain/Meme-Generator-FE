@@ -128,5 +128,32 @@ const MemberSecessionAPI = async (username: string) => {
     })
     .catch((error) => {});
 };
+const NicknameChangeAPI = async (nickname: string) => {
+  await jinInterceptor
+    .put(
+      API_URL + '/member/name',
+      { newName: nickname },
+      {
+        headers: {
+          ...headerConfig,
+          Authorization: 'Bearer ' + getCookie('access_token'),
+        },
+      }
+    )
+    .then((response) => {
+      if (response.status === 200) {
+        toast.success('닉네임 변경 성공');
+      }
+    })
+    .catch((error) => {
+      toast.error('닉네임 변경 실패');
+    });
+};
 
-export { loginAPI, SignUpAPI, oauthLoginAPI, MemberSecessionAPI };
+export {
+  loginAPI,
+  SignUpAPI,
+  oauthLoginAPI,
+  MemberSecessionAPI,
+  NicknameChangeAPI,
+};

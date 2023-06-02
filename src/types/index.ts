@@ -3,6 +3,7 @@ type MemeType = {
   imageUrl: string;
   name: string;
   username: string;
+  userid: string;
   publicFlag: boolean;
 }[];
 type decodedjwtType = {

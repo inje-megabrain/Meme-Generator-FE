@@ -13,6 +13,7 @@ import { useRecoilState } from 'recoil';
 import { AiOutlineClose } from 'react-icons/ai';
 import Loading from '@src/components/Loading';
 import Mememodal from '@src/components/Mememodal';
+import Nickmemodal from '@src/components/Nicknamemodal';
 
 const { VITE_APP_IMAGE_URL } = import.meta.env;
 
@@ -89,11 +90,22 @@ const Profile = () => {
                 <div className='font-bold text-lg font-sans'>?</div>
               </div>
             </div>
-            <div
-              className='btn btn-ghost font-bold text-sm mt-8 font-sans'
-              onClick={secession}
-            >
-              회원탈퇴
+            <div className='grid grid-cols-2'>
+              <label
+                htmlFor={modal}
+                className='btn btn-ghost font-bold text-sm mt-8 font-sans'
+                onClick={() => {
+                  setModal('my-modal-2');
+                }}
+              >
+                닉네임 변경
+              </label>
+              <div
+                className='btn btn-ghost font-bold text-sm mt-8 font-sans'
+                onClick={secession}
+              >
+                회원탈퇴
+              </div>
             </div>
           </div>
           <div className='mt-4'>
@@ -110,7 +122,6 @@ const Profile = () => {
                         }}
                       />
                     </div>
-
                     <div>
                       <div className='w-[280px] h-[280px] object-cover skew-y-12 shadow-xl bg-gray-400 blur-sm' />
                     </div>
@@ -147,9 +158,9 @@ const Profile = () => {
                     {'<<'}
                   </button>
                 ) : null}
-                <button className='btn btn-ghost font-sans'>
+                <div className='grid place-items-center font-sans'>
                   Page {page + 1}
-                </button>
+                </div>
                 {page < totalpage - 1 ? (
                   <button
                     className='btn btn-ghost font-sans'
@@ -163,8 +174,8 @@ const Profile = () => {
           </div>
         </div>
       </div>
-
-      <Mememodal modalnumber='my-modal-1' id={id} />
+      <Nickmemodal modalnumber='my-modal-2' />
+      <Mememodal modalnumber={modal} id={id} />
     </div>
   );
 };

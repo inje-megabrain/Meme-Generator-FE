@@ -127,7 +127,7 @@ const Scrollmeme = () => {
                     <div key={index}>
                       {getCookie('access_token') ? (
                         <div className='grid grid-cols-3'>
-                          {getCookie('username') === meme.username ||
+                          {getCookie('username') === meme.userid ||
                           getCookie('username') === 'admin' ? (
                             <div>
                               <AiOutlineClose
@@ -220,7 +220,6 @@ const Scrollmeme = () => {
                           </div>
                         ) : null}
                       </div>
-
                       <div className='inline-block'>
                         <div className='font-bold text-xl text-start font-sans'>
                           <div>{meme.name} 짤</div>
