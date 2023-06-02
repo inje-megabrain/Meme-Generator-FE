@@ -25,6 +25,7 @@ const Scrollmeme = () => {
   const [modal, setModal] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [ishover, setIshover] = useState<boolean>(false);
+  const [check, setCheck] = useState<boolean>(false);
 
   const myurl = 'https://meme.megabrain.kr'; // url 수정해야함
 
@@ -170,40 +171,56 @@ const Scrollmeme = () => {
                           </div>
                         </div>
                       ) : null}
-                      <label
-                        htmlFor={modal}
-                        onClick={() => {
+                      {!check ? (
+                        <>
+                          <label
+                            htmlFor={modal}
+                            onClick={() => {
+                              setId(meme.memeId);
+                              setModal('my-modal-1');
+                            }}
+                          ></label>
+                        </>
+                      ) : null}
+                      <div
+                        style={{
+                          overflow: 'hidden',
+                          cursor: 'pointer',
+                        }}
+                        className='relative z-10'
+                        onMouseOver={() => {
+                          setIshover(true);
                           setId(meme.memeId);
-                          setModal('my-modal-1');
+                          setModal('');
+                        }}
+                        onMouseOut={() => {
+                          setIshover(false);
+                          setId(0);
                         }}
                       >
-                        <div
-                          style={{
-                            overflow: 'hidden',
-                            cursor: 'pointer',
-                          }}
-                          className='relative'
-                        >
-                          {!loading ? (
-                            <img // 이미지 크기 체크 console 범인
-                              src={
-                                VITE_APP_IMAGE_URL + meme.imageUrl.toString()
-                              }
-                              className='w-[300px] h-[300px] object-contain z-0 hover:scale-110 transition-transform duration-300 hover:opacity-50'
-                              alt={meme.name}
-                              onMouseOver={() => setIshover(true)}
-                              onMouseOut={() => setIshover(false)}
-                            />
-                          ) : null}
-                          {ishover && index ? (
-                            <div>
-                              <div className='absolute font-bold text-lg top-[20px] right-[70px]'>
-                                좋아요
-                              </div>
+                        {!loading ? (
+                          <img // 이미지 크기 체크 console 범인
+                            src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
+                            className='w-[300px] h-[300px] object-contain z-0 hover:scale-110 transition-transform duration-300 hover:opacity-70'
+                            alt={meme.name}
+                          />
+                        ) : null}
+                        {ishover && id === meme.memeId ? (
+                          <div>
+                            <div
+                              className='absolute btn glass font-bold text-lg top-[20px] right-[70px] z-10'
+                              onClick={() => {
+                                toast.success('감사요 ㅅㄱ');
+                                setModal('');
+                                setCheck(true);
+                              }}
+                            >
+                              🩷
                             </div>
-                          ) : null}
-                        </div>
-                      </label>
+                          </div>
+                        ) : null}
+                      </div>
+
                       <div className='inline-block'>
                         <div className='font-bold text-xl text-start font-sans'>
                           <div>{meme.name} 짤</div>
@@ -216,7 +233,7 @@ const Scrollmeme = () => {
               <div ref={ref}></div>
             </div>
           </div>
-          <Mememodal modalnumber='my-modal-1' id={id} />
+          <Mememodal modalnumber={modal} id={id} />
         </>
       )}
     </div>

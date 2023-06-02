@@ -49,7 +49,7 @@ const router = createBrowserRouter([
     element: <Errorpage />,
   },
   {
-    path: '/email/auth',
+    path: '/auth/email',
     element: <Emailcheck />,
   },
 ]);

@@ -56,7 +56,7 @@ const Router = [
   },
   {
     title: 'Emailcheck',
-    url: '/email/auth',
+    url: '/auth/email',
     component: <Emailcheck />,
   },
 ];
