@@ -235,7 +235,6 @@ export const MemePublicAPI = async (memeid: number, publicFlag: boolean) => {
     })
     .then((response) => {
       if (response.status === 200) {
-        toast.success('공개범위 수정완료');
         window.location.reload();
       }
     })
