@@ -179,6 +179,115 @@ const Meme = () => {
                 </div>
               ))}
             </div>
+            {/* <div className='place-items-center'>
+                        <div className='grid grid-cols-3 place-items-center z-10'>
+                          <div className='grid grid-cols-2'>
+                            <div
+                              className='font-bold text-xl btn-xs w-[10px] grid place-items-center'
+                              onClick={async () => {
+                                setModal('');
+                                setCheck(true);
+                                await MemeLikeAPI(meme.memeId);
+                              }}
+                            >
+                              {meme.isLiked == false ? (
+                                <AiOutlineHeart />
+                              ) : (
+                                <AiFillHeart />
+                              )}
+                            </div>
+                            <div className='grid place-items-center'>
+                              {meme.likeCount}
+                            </div>
+                          </div>
+                          <div className='font-bold text-xl font-sans'>
+                            <div>{meme.name}</div>
+                          </div>
+                          {webview && getCookie('access_token') ? (
+                            <div>
+                              <div
+                                onClick={() => {
+                                  setModal('');
+                                  setCheck(true);
+                                  setMobiletool(true);
+                                  setMobileimage(
+                                    VITE_APP_IMAGE_URL +
+                                      meme.imageUrl.toString()
+                                  );
+                                  setMobileimagename(meme.name);
+                                  setMobileusername(meme.userid);
+                                  setMobileid(meme.memeId);
+                                }}
+                              >
+                                ...
+                              </div>
+                              {mobiletool ? (
+                                <div className='btm-nav z-10'>
+                                  <button
+                                    className='text-lg font-sans bg-white'
+                                    onClick={() => {
+                                      setMobiletool(false);
+                                      setMobileimage('');
+                                      setMobileimagename('');
+                                      setMobileusername('');
+                                      setMobileid(0);
+                                    }}
+                                  >
+                                    닫기
+                                  </button>
+                                  <button
+                                    className='bg-white'
+                                    onClick={() => {
+                                      shareurl(mobileimage);
+                                      sharebtn();
+                                    }}
+                                  >
+                                    <button
+                                      id='kakao-share-btn'
+                                      onClick={sharebtn}
+                                      style={{
+                                        display: 'none',
+                                      }}
+                                    >
+                                      카카오톡 이미지 업로드 버튼
+                                    </button>
+                                    <AiOutlineShareAlt className='btn btn-ghost font-bold text-xl' />
+                                  </button>
+                                  <button
+                                    className='bg-white'
+                                    onClick={() => {
+                                      converURLtoFile(
+                                        mobileimage,
+                                        mobileimagename + '.png'
+                                      );
+                                    }}
+                                  >
+                                    <AiOutlineCloudDownload className='btn btn-ghost font-bold text-xl' />
+                                  </button>
+                                  {(getCookie('access_token') &&
+                                    getCookie('username') === mobileusername) ||
+                                  (getCookie('access_token') &&
+                                    getCookie('username') === 'admin') ? (
+                                    <button
+                                      className='bg-white'
+                                      onClick={() => {
+                                        confirm(
+                                          mobileimagename +
+                                            '을 삭제하시겠습니까?'
+                                        ) && MemeDeleteAPI(mobileid);
+                                      }}
+                                    >
+                                      <div className='font-bold font-sans text-lg'>
+                                        삭제
+                                      </div>
+                                    </button>
+                                  ) : null}
+                                </div>
+                              ) : null}
+                            </div>
+                          ) : null}
+                        </div>
+                      </div> */}
             <div className='mt-2'>
               <div className='btn-group'>
                 {page > 0 ? (
