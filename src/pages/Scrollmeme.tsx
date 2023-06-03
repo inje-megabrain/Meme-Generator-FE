@@ -328,7 +328,9 @@ const Scrollmeme = () => {
                                         ) && MemeDeleteAPI(mobileid);
                                       }}
                                     >
-                                      <div>삭제</div>
+                                      <div className='font-bold font-sans text-lg'>
+                                        삭제
+                                      </div>
                                     </button>
                                   ) : null}
                                 </div>
