@@ -63,7 +63,6 @@ export const imageDownloadAPI = async (
       headers: headerConfig,
     })
     .then((response) => {
-      console.log(response);
       setLoading && setLoading(false);
       setMemeList(response.data.dtos);
       setTotalpage(response.data.pageInfo.totalPages);
@@ -253,7 +252,6 @@ export const MemeLikeAPI = async (memeid: number) => {
     })
     .then((response) => {
       if (response.status === 200) {
-        toast.success('좋아요');
         window.location.reload();
       }
       if (response.status === 204) {

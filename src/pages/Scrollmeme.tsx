@@ -29,6 +29,11 @@ const Scrollmeme = () => {
   const [ishover, setIshover] = useState<boolean>(false);
   const [check, setCheck] = useState<boolean>(false);
   const [webview, setWebview] = useState<boolean>(false);
+  const [mobiletool, setMobiletool] = useState<boolean>(false);
+  const [mobileimage, setMobileimage] = useState<string>('');
+  const [mobileimagename, setMobileimagename] = useState<string>('');
+  const [mobileusername, setMobileusername] = useState<string>('');
+  const [mobileid, setMobileid] = useState<number>(0);
 
   const myurl = 'https://meme.megabrain.kr'; // url 수정해야함
 
@@ -48,7 +53,6 @@ const Scrollmeme = () => {
         },
       })
       .then((response) => {
-        console.log(response.data.dtos);
         setMemeList((memeList) => [...memeList, ...response.data.dtos]);
         setLoading && setLoading(false);
         setPage((page) => page + 1);
@@ -128,7 +132,6 @@ const Scrollmeme = () => {
       setWebview(true);
     }
   }, []);
-
   return (
     <div>
       {memeList.length === 0 ? (
@@ -136,23 +139,50 @@ const Scrollmeme = () => {
           <h1>공사중입니다...</h1>
         </div>
       ) : (
-        <>
-          <div className='mt-4'>
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
-              {memeList.map((meme, index) => (
-                <>
-                  {meme.imageUrl !== '' ? (
-                    <div key={index}>
-                      {getCookie('access_token') ? (
-                        <div className='grid grid-cols-3'>
-                          {getCookie('username') === meme.userid ||
-                          getCookie('username') === 'admin' ? (
-                            <>
-                              {webview ? (
-                                <>
+        <div className='mt-4'>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
+            {memeList.map((meme) => (
+              <>
+                {meme.imageUrl !== '' ? (
+                  <div key={meme.memeId}>
+                    <label
+                      htmlFor='my-modal-1'
+                      onClick={() => {
+                        setId(meme.memeId);
+                        setModal('my-modal-1');
+                      }}
+                    >
+                      <div
+                        style={{
+                          overflow: 'hidden',
+                        }}
+                        className='relative z-10'
+                        onMouseOver={() => {
+                          setIshover(true);
+                          setId(meme.memeId);
+                          setModal('');
+                        }}
+                        onMouseOut={() => {
+                          setIshover(false);
+                          setId(0);
+                        }}
+                      >
+                        {!loading ? (
+                          <img // 이미지 크기 체크 console 범인
+                            src={VITE_APP_IMAGE_URL + meme.imageUrl.toString()}
+                            className='w-[300px] h-[300px] object-contain z-0 hover:scale-110 transition-transform duration-300 hover:opacity-70'
+                            alt={meme.name}
+                          />
+                        ) : null}
+                        {ishover && id === meme.memeId ? (
+                          <div>
+                            {getCookie('access_token') ? (
+                              <div>
+                                {getCookie('username') === meme.userid ||
+                                getCookie('username') === 'admin' ? (
                                   <div>
                                     <AiOutlineClose
-                                      className='btn btn-ghost font-bold text-xl'
+                                      className='absolute btn btn-md bg-slate-200 text-black opacity-80 hover:bg-white hover:opacity-100 top-[10px] left-[62px] z-10 font-bold text-base rounded-full'
                                       onClick={() => {
                                         confirm(
                                           meme.name + '을 삭제하시겠습니까?'
@@ -160,137 +190,50 @@ const Scrollmeme = () => {
                                       }}
                                     />
                                   </div>
-                                  <button
-                                    id='kakao-share-btn'
-                                    onClick={sharebtn}
-                                    style={{
-                                      display: 'none',
-                                    }}
-                                  >
-                                    카카오톡 이미지 업로드 버튼
-                                  </button>
-                                  <div>
-                                    <AiOutlineShareAlt
-                                      className='btn btn-ghost font-bold text-xl'
-                                      onClick={() => {
-                                        const image =
-                                          VITE_APP_IMAGE_URL +
-                                          meme.imageUrl.toString();
-                                        shareurl(image);
-                                        sharebtn();
-                                      }}
-                                    />
-                                  </div>
-                                  <div>
-                                    <AiOutlineCloudDownload
-                                      className='btn btn-ghost font-bold text-xl'
-                                      onClick={() => {
-                                        const image =
-                                          VITE_APP_IMAGE_URL +
-                                          meme.imageUrl.toString();
-                                        converURLtoFile(
-                                          image,
-                                          meme.name + '.png'
-                                        );
-                                      }}
-                                    />
-                                  </div>
-                                </>
-                              ) : null}
-                            </>
-                          ) : null}
-                        </div>
-                      ) : null}
-                      <label
-                        htmlFor='my-modal-1'
-                        onClick={() => {
-                          setId(meme.memeId);
-                          setModal('my-modal-1');
-                        }}
-                      >
-                        <div
-                          style={{
-                            overflow: 'hidden',
-                          }}
-                          className='relative z-10'
-                          onMouseOver={() => {
-                            setIshover(true);
-                            setId(meme.memeId);
-                            setModal('');
-                          }}
-                          onMouseOut={() => {
-                            setIshover(false);
-                            setId(0);
-                          }}
-                        >
-                          {!loading ? (
-                            <img // 이미지 크기 체크 console 범인
-                              src={
-                                VITE_APP_IMAGE_URL + meme.imageUrl.toString()
-                              }
-                              className='w-[300px] h-[300px] object-contain z-0 hover:scale-110 transition-transform duration-300 hover:opacity-70'
-                              alt={meme.name}
-                            />
-                          ) : null}
-                          {ishover && id === meme.memeId ? (
-                            <div>
-                              {getCookie('access_token') ? (
+                                ) : null}
                                 <div>
-                                  {getCookie('username') === meme.userid ||
-                                  getCookie('username') === 'admin' ? (
-                                    <div>
-                                      <AiOutlineClose
-                                        className='absolute btn btn-md bg-slate-200 text-black opacity-80 hover:bg-white hover:opacity-100 top-[10px] left-[62px] z-10 font-bold text-base rounded-full'
-                                        onClick={() => {
-                                          confirm(
-                                            meme.name + '을 삭제하시겠습니까?'
-                                          ) && MemeDeleteAPI(meme.memeId);
-                                        }}
-                                      />
-                                    </div>
-                                  ) : null}
-                                  <div>
-                                    <AiOutlineCloudDownload
-                                      className='absolute btn btn-md bg-slate-200 text-black opacity-80 hover:bg-white hover:opacity-100 font-bold text-lg top-[10px] right-[65px] z-10 rounded-full'
-                                      onClick={() => {
-                                        const image =
-                                          VITE_APP_IMAGE_URL +
-                                          meme.imageUrl.toString();
-                                        converURLtoFile(
-                                          image,
-                                          meme.name + '.png'
-                                        );
-                                        setCheck(true);
-                                      }}
-                                    />
-                                  </div>
-                                  <button
-                                    id='kakao-share-btn'
-                                    onClick={sharebtn}
-                                    style={{
-                                      display: 'none',
-                                    }}
-                                  >
-                                    카카오톡 이미지 업로드 버튼
-                                  </button>
-                                  <AiOutlineShareAlt
-                                    className='absolute btn btn-md bg-slate-200 text-black opacity-80 hover:bg-white hover:opacity-100 font-bold text-sm bottom-[12px] right-[65px] z-10 rounded-full'
+                                  <AiOutlineCloudDownload
+                                    className='absolute btn btn-md bg-slate-200 text-black opacity-80 hover:bg-white hover:opacity-100 font-bold text-lg top-[10px] right-[65px] z-10 rounded-full'
                                     onClick={() => {
                                       const image =
                                         VITE_APP_IMAGE_URL +
                                         meme.imageUrl.toString();
-                                      shareurl(image);
-                                      sharebtn();
+                                      converURLtoFile(
+                                        image,
+                                        meme.name + '.png'
+                                      );
                                       setCheck(true);
                                     }}
                                   />
                                 </div>
-                              ) : null}
-                            </div>
-                          ) : null}
-                        </div>
-                        <div className='grid grid-cols-2 place-items-center w-[330px] z-10'>
-                          <div className='grid grid-cols-2 gap-1'>
+                                <button
+                                  id='kakao-share-btn'
+                                  onClick={sharebtn}
+                                  style={{
+                                    display: 'none',
+                                  }}
+                                >
+                                  카카오톡 이미지 업로드 버튼
+                                </button>
+                                <AiOutlineShareAlt
+                                  className='absolute btn btn-md bg-slate-200 text-black opacity-80 hover:bg-white hover:opacity-100 font-bold text-sm bottom-[12px] right-[65px] z-10 rounded-full'
+                                  onClick={() => {
+                                    const image =
+                                      VITE_APP_IMAGE_URL +
+                                      meme.imageUrl.toString();
+                                    shareurl(image);
+                                    sharebtn();
+                                    setCheck(true);
+                                  }}
+                                />
+                              </div>
+                            ) : null}
+                          </div>
+                        ) : null}
+                      </div>
+                      <div className='place-items-center'>
+                        <div className='grid grid-cols-3 place-items-center z-10'>
+                          <div className='grid grid-cols-2'>
                             <div
                               className='font-bold text-xl btn-xs w-[10px] grid place-items-center'
                               onClick={async () => {
@@ -309,20 +252,100 @@ const Scrollmeme = () => {
                               {meme.likeCount}
                             </div>
                           </div>
-                          <div className='font-bold text-xl text-start font-sans'>
+                          <div className='font-bold text-xl font-sans'>
                             <div>{meme.name}</div>
                           </div>
+                          {webview ? (
+                            <div>
+                              <div
+                                onClick={() => {
+                                  setModal('');
+                                  setCheck(true);
+                                  setMobiletool(true);
+                                  setMobileimage(
+                                    VITE_APP_IMAGE_URL +
+                                      meme.imageUrl.toString()
+                                  );
+                                  setMobileimagename(meme.name);
+                                  setMobileusername(meme.userid);
+                                  setMobileid(meme.memeId);
+                                }}
+                              >
+                                ...
+                              </div>
+                              {mobiletool ? (
+                                <div className='btm-nav z-10'>
+                                  <button
+                                    className='text-lg font-sans bg-white'
+                                    onClick={() => {
+                                      setMobiletool(false);
+                                      setMobileimage('');
+                                      setMobileimagename('');
+                                      setMobileusername('');
+                                      setMobileid(0);
+                                    }}
+                                  >
+                                    닫기
+                                  </button>
+                                  <button
+                                    className='bg-white'
+                                    onClick={() => {
+                                      shareurl(mobileimage);
+                                      sharebtn();
+                                    }}
+                                  >
+                                    <button
+                                      id='kakao-share-btn'
+                                      onClick={sharebtn}
+                                      style={{
+                                        display: 'none',
+                                      }}
+                                    >
+                                      카카오톡 이미지 업로드 버튼
+                                    </button>
+                                    <AiOutlineShareAlt className='btn btn-ghost font-bold text-xl' />
+                                  </button>
+                                  <button
+                                    className='bg-white'
+                                    onClick={() => {
+                                      converURLtoFile(
+                                        mobileimage,
+                                        mobileimagename + '.png'
+                                      );
+                                    }}
+                                  >
+                                    <AiOutlineCloudDownload className='btn btn-ghost font-bold text-xl' />
+                                  </button>
+                                  {(getCookie('access_token') &&
+                                    getCookie('username') === mobileusername) ||
+                                  getCookie('username') === 'admin' ? (
+                                    <button
+                                      className='bg-white'
+                                      onClick={() => {
+                                        confirm(
+                                          mobileimagename +
+                                            '을 삭제하시겠습니까?'
+                                        ) && MemeDeleteAPI(mobileid);
+                                      }}
+                                    >
+                                      <div>삭제</div>
+                                    </button>
+                                  ) : null}
+                                </div>
+                              ) : null}
+                            </div>
+                          ) : null}
                         </div>
-                      </label>
-                    </div>
-                  ) : null}
-                </>
-              ))}
-              <div ref={ref}></div>
-            </div>
+                      </div>
+                    </label>
+                  </div>
+                ) : null}
+              </>
+            ))}
+            <div ref={ref}></div>
           </div>
           {!check ? <Mememodal modalnumber='my-modal-1' id={id} /> : null}
-        </>
+        </div>
       )}
     </div>
   );
