@@ -148,18 +148,18 @@ const Scrollmeme = () => {
                           {getCookie('username') === meme.userid ||
                           getCookie('username') === 'admin' ? (
                             <>
-                              <div>
-                                <AiOutlineClose
-                                  className='btn btn-ghost font-bold text-xl'
-                                  onClick={() => {
-                                    confirm(
-                                      meme.name + '을 삭제하시겠습니까?'
-                                    ) && MemeDeleteAPI(meme.memeId);
-                                  }}
-                                />
-                              </div>
                               {webview ? (
                                 <>
+                                  <div>
+                                    <AiOutlineClose
+                                      className='btn btn-ghost font-bold text-xl'
+                                      onClick={() => {
+                                        confirm(
+                                          meme.name + '을 삭제하시겠습니까?'
+                                        ) && MemeDeleteAPI(meme.memeId);
+                                      }}
+                                    />
+                                  </div>
                                   <button
                                     id='kakao-share-btn'
                                     onClick={sharebtn}
@@ -236,9 +236,22 @@ const Scrollmeme = () => {
                             <div>
                               {getCookie('access_token') ? (
                                 <div>
+                                  {getCookie('username') === meme.userid ||
+                                  getCookie('username') === 'admin' ? (
+                                    <div>
+                                      <AiOutlineClose
+                                        className='absolute btn btn-md bg-slate-200 text-black opacity-80 hover:bg-white hover:opacity-100 top-[10px] left-[62px] z-10 font-bold text-base rounded-full'
+                                        onClick={() => {
+                                          confirm(
+                                            meme.name + '을 삭제하시겠습니까?'
+                                          ) && MemeDeleteAPI(meme.memeId);
+                                        }}
+                                      />
+                                    </div>
+                                  ) : null}
                                   <div>
                                     <AiOutlineCloudDownload
-                                      className='absolute btn btn-md bg-slate-200 text-black opacity-80 hover:bg-white hover:opacity-100 font-bold text-xl top-[10px] right-[65px] z-10 rounded-full'
+                                      className='absolute btn btn-md bg-slate-200 text-black opacity-80 hover:bg-white hover:opacity-100 font-bold text-lg top-[10px] right-[65px] z-10 rounded-full'
                                       onClick={() => {
                                         const image =
                                           VITE_APP_IMAGE_URL +
@@ -261,7 +274,7 @@ const Scrollmeme = () => {
                                     카카오톡 이미지 업로드 버튼
                                   </button>
                                   <AiOutlineShareAlt
-                                    className='absolute text-center btn btn-md bg-slate-200 text-black opacity-80 hover:bg-white hover:opacity-100 font-bold text-sm bottom-[12px] right-[65px] z-10 rounded-full'
+                                    className='absolute btn btn-md bg-slate-200 text-black opacity-80 hover:bg-white hover:opacity-100 font-bold text-sm bottom-[12px] right-[65px] z-10 rounded-full'
                                     onClick={() => {
                                       const image =
                                         VITE_APP_IMAGE_URL +
