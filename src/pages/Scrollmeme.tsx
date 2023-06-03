@@ -28,6 +28,7 @@ const Scrollmeme = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [ishover, setIshover] = useState<boolean>(false);
   const [check, setCheck] = useState<boolean>(false);
+  const [webview, setWebview] = useState<boolean>(false);
 
   const myurl = 'https://meme.megabrain.kr'; // url 수정해야함
 
@@ -116,6 +117,15 @@ const Scrollmeme = () => {
     });
     (document.querySelector('#kakao-share-btn') as HTMLButtonElement).click();
   };
+  useEffect(() => {
+    if (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    ) {
+      setWebview(true);
+    }
+  }, []);
 
   return (
     <div>
@@ -132,18 +142,60 @@ const Scrollmeme = () => {
                   {meme.imageUrl !== '' ? (
                     <div key={index}>
                       {getCookie('access_token') ? (
-                        <div className='grid grid-cols-1'>
+                        <div className='grid grid-cols-3'>
                           {getCookie('username') === meme.userid ||
                           getCookie('username') === 'admin' ? (
-                            <div>
-                              <AiOutlineClose
-                                className='btn btn-ghost font-bold text-xl'
-                                onClick={() => {
-                                  confirm(meme.name + '을 삭제하시겠습니까?') &&
-                                    MemeDeleteAPI(meme.memeId);
-                                }}
-                              />
-                            </div>
+                            <>
+                              <div>
+                                <AiOutlineClose
+                                  className='btn btn-ghost font-bold text-xl'
+                                  onClick={() => {
+                                    confirm(
+                                      meme.name + '을 삭제하시겠습니까?'
+                                    ) && MemeDeleteAPI(meme.memeId);
+                                  }}
+                                />
+                              </div>
+                              {webview ? (
+                                <>
+                                  <button
+                                    id='kakao-share-btn'
+                                    onClick={sharebtn}
+                                    style={{
+                                      display: 'none',
+                                    }}
+                                  >
+                                    카카오톡 이미지 업로드 버튼
+                                  </button>
+                                  <div>
+                                    <AiOutlineShareAlt
+                                      className='btn btn-ghost font-bold text-xl'
+                                      onClick={() => {
+                                        const image =
+                                          VITE_APP_IMAGE_URL +
+                                          meme.imageUrl.toString();
+                                        shareurl(image);
+                                        sharebtn();
+                                      }}
+                                    />
+                                  </div>
+                                  <div>
+                                    <AiOutlineCloudDownload
+                                      className='btn btn-ghost font-bold text-xl'
+                                      onClick={() => {
+                                        const image =
+                                          VITE_APP_IMAGE_URL +
+                                          meme.imageUrl.toString();
+                                        converURLtoFile(
+                                          image,
+                                          meme.name + '.png'
+                                        );
+                                      }}
+                                    />
+                                  </div>
+                                </>
+                              ) : null}
+                            </>
                           ) : null}
                         </div>
                       ) : null}
