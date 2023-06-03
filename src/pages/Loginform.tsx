@@ -38,10 +38,6 @@ const Loginform = () => {
   const SignupFunc = async (e: any) => {
     e.preventDefault();
     await SignUpAPI(id, password, username, email, setSignupcheck);
-    if (signupcheck) {
-      await EmailPostAPI(email);
-      navigate('/auth/email');
-    }
   };
   const onChangePassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,6 +90,10 @@ const Loginform = () => {
     },
     []
   );
+  if (signupcheck) {
+    EmailPostAPI(email);
+    navigate('/auth/email');
+  }
 
   return (
     <>

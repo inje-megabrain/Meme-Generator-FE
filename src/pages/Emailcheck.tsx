@@ -12,7 +12,7 @@ const Emailcheck = () => {
   const code = new URL(window.location.href).searchParams.get('code');
   const [check, setCheck] = useState<boolean>(true);
   const [email, setEmail] = useRecoilState<string>(EmailCheck);
-  console.log(check);
+
   const navigate = useNavigate();
   const homebtn = () => {
     navigate('/');
@@ -31,6 +31,7 @@ const Emailcheck = () => {
         toast.error('이메일 인증 실패');
       });
   }, []);
+
   const ReEmail = () => {
     EmailPostAPI(email);
   };

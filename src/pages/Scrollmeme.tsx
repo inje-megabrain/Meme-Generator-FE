@@ -290,9 +290,9 @@ const Scrollmeme = () => {
                           ) : null}
                         </div>
                         <div className='grid grid-cols-2 place-items-center w-[330px] z-10'>
-                          <div className='grid grid-cols-2 gap-2'>
+                          <div className='grid grid-cols-2 gap-1'>
                             <div
-                              className='font-bold text-xl btn-xs w-[10px]'
+                              className='font-bold text-xl btn-xs w-[10px] grid place-items-center'
                               onClick={async () => {
                                 setModal('');
                                 setCheck(true);
@@ -305,7 +305,9 @@ const Scrollmeme = () => {
                                 <AiFillHeart />
                               )}
                             </div>
-                            <div>{meme.likeCount}</div>
+                            <div className='grid place-items-center'>
+                              {meme.likeCount}
+                            </div>
                           </div>
                           <div className='font-bold text-xl text-start font-sans'>
                             <div>{meme.name}</div>

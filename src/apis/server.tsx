@@ -5,7 +5,6 @@ import { SetterOrUpdater } from 'recoil';
 import { getCookie, setCookie } from '../util/Cookie';
 import jinInterceptor from './interceptor';
 import { toast } from 'react-toastify';
-import exp from 'constants';
 
 const headerConfig = {
   'Content-Type': 'application/json',
