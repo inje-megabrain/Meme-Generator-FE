@@ -32,10 +32,7 @@ const Profile = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [id, setId] = useState<number>(0);
   const [modal, setModal] = useState<string>('');
-  const [publicFlag, setPublicFlag] = useState<boolean>(false);
   const [totalelements, setTotalelements] = useState<number>(0);
-  const [totalLike, setTotalLike] = useState<number>(0);
-  const [totalView, setTotalView] = useState<number>(0);
 
   const homebtn = () => {
     navigate('/');
@@ -101,11 +98,11 @@ const Profile = () => {
               </div>
               <div>
                 <div className='text-base font-sans'>좋아요</div>
-                <div className='font-bold text-lg font-sans'>{}</div>
+                <div className='font-bold text-lg font-sans'>?</div>
               </div>
               <div>
                 <div className='text-base font-sans'>짤 조회수</div>
-                <div className='font-bold text-lg font-sans'>{}</div>
+                <div className='font-bold text-lg font-sans'>?</div>
               </div>
             </div>
             <div className='grid grid-cols-2'>
