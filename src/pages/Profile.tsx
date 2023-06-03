@@ -150,7 +150,8 @@ const Profile = () => {
                         <input
                           type='checkbox'
                           className='toggle toggle-primary border border-solid'
-                          defaultChecked={meme.publicFlag}
+                          defaultChecked={publicFlag}
+                          checked={meme.publicFlag}
                           onChange={(e) => {
                             setPublicFlag(e.target.checked);
                             MemePublicAPI(meme.memeId, e.target.checked);
