@@ -38,8 +38,8 @@ const Loginform = () => {
   const SignupFunc = async (e: any) => {
     e.preventDefault();
     await SignUpAPI(id, password, username, email, setSignupcheck);
-    await EmailPostAPI(email);
     if (signupcheck) {
+      await EmailPostAPI(email);
       navigate('/auth/email');
     }
   };

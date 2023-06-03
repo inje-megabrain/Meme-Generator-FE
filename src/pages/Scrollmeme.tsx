@@ -117,6 +117,8 @@ const Scrollmeme = () => {
     });
     (document.querySelector('#kakao-share-btn') as HTMLButtonElement).click();
   };
+
+  //web view mobile check
   useEffect(() => {
     if (
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -290,7 +292,7 @@ const Scrollmeme = () => {
                                 <AiFillHeart />
                               )}
                             </div>
-                            <div>{meme.likeCount}개</div>
+                            <div>{meme.likeCount}</div>
                           </div>
                           <div className='font-bold text-xl text-start font-sans'>
                             <div>{meme.name}</div>
