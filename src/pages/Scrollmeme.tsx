@@ -255,7 +255,7 @@ const Scrollmeme = () => {
                           <div className='font-bold text-xl font-sans'>
                             <div>{meme.name}</div>
                           </div>
-                          {webview ? (
+                          {webview && getCookie('access_token') ? (
                             <div>
                               <div
                                 onClick={() => {
@@ -318,7 +318,8 @@ const Scrollmeme = () => {
                                   </button>
                                   {(getCookie('access_token') &&
                                     getCookie('username') === mobileusername) ||
-                                  getCookie('username') === 'admin' ? (
+                                  (getCookie('access_token') &&
+                                    getCookie('username') === 'admin') ? (
                                     <button
                                       className='bg-white'
                                       onClick={() => {
