@@ -231,6 +231,32 @@ const Scrollmeme = () => {
                           </div>
                         ) : null}
                       </div>
+                      <div className='place-items-center'>
+                        <div className='grid grid-cols-3 place-items-center z-10'>
+                          <div className='grid grid-cols-2'>
+                            <div
+                              className='font-bold text-xl btn-xs w-[10px] grid place-items-center'
+                              onClick={async () => {
+                                setModal('');
+                                setCheck(true);
+                                await MemeLikeAPI(meme.memeId);
+                              }}
+                            >
+                              {meme.isLiked == false ? (
+                                <AiOutlineHeart />
+                              ) : (
+                                <AiFillHeart />
+                              )}
+                            </div>
+                            <div className='grid place-items-center'>
+                              {meme.likeCount}
+                            </div>
+                          </div>
+                          <div className='font-bold text-xl font-sans'>
+                            <div>{meme.name}</div>
+                          </div>
+                        </div>
+                      </div>
                     </label>
                   </div>
                 ) : null}
