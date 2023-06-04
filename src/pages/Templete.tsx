@@ -61,6 +61,7 @@ const Template = () => {
       setTemplatelist,
       setTotalpage,
       'TEMPLATE',
+      'createdAt',
       setLoading
     );
   }, [page]);

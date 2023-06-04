@@ -34,7 +34,14 @@ const Meme = () => {
   const myurl = 'https://meme.megabrain.kr'; // url 수정해야함
 
   useEffect(() => {
-    imageDownloadAPI(page, setMemeList, setTotalpage, 'MEME', setLoading);
+    imageDownloadAPI(
+      page,
+      setMemeList,
+      setTotalpage,
+      'MEME',
+      'createdAt',
+      setLoading
+    );
   }, [page]);
 
   // image url => file => image download

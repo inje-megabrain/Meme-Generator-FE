@@ -50,6 +50,7 @@ export const imageDownloadAPI = async (
   setMemeList: SetterOrUpdater<MemeType>,
   setTotalpage: SetterOrUpdater<number>,
   type: string,
+  sort_type: string,
   setLoading?: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   await axios
@@ -59,6 +60,7 @@ export const imageDownloadAPI = async (
         page: page,
         size: 9,
         sort_direction: 'desc',
+        sort_type: sort_type,
       },
       headers: headerConfig,
     })

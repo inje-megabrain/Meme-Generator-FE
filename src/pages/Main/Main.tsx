@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCookie, removeCookie, setCookie } from '../../util/Cookie';
-import Meme from '../Meme';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { API_URL } from '@src/constants/Constants';
@@ -85,8 +84,9 @@ const Main = () => {
                 Meme Generator
               </div>
             </div>
+
             {!cookie ? (
-              <div className='text-right'>
+              <div className='text-end'>
                 <div
                   className='btn btn-ghost normal-case text-lg font-sans'
                   onClick={signbtn}
@@ -141,7 +141,6 @@ const Main = () => {
       ) : (
         <Errorpage />
       )}
-      {/* {servercheck ? <Meme /> : null} */}
       {servercheck ? <Scrollmeme /> : null}
     </>
   );

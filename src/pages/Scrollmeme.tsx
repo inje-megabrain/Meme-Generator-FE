@@ -29,38 +29,41 @@ const Scrollmeme = () => {
   const [ishover, setIshover] = useState<boolean>(false);
   const [check, setCheck] = useState<boolean>(false);
   const [webview, setWebview] = useState<boolean>(false);
-  const [mobiletool, setMobiletool] = useState<boolean>(false);
-  const [mobileimage, setMobileimage] = useState<string>('');
-  const [mobileimagename, setMobileimagename] = useState<string>('');
-  const [mobileusername, setMobileusername] = useState<string>('');
-  const [mobileid, setMobileid] = useState<number>(0);
+  const [sorttype, setSorttype] = useState<string>('createdAt');
+  const [totalpage, setTotalpage] = useState<number>(0);
 
   const myurl = 'https://meme.megabrain.kr'; // url 수정해야함
 
   const memeFetch = () => {
-    axios
-      .get(API_URL + '/meme', {
-        params: {
-          type: 'MEME',
-          page: page,
-          size: 9,
-          sort_direction: 'desc',
-        },
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          Authorization: 'Bearer ' + getCookie('access_token'),
-        },
-      })
-      .then((response) => {
-        setMemeList((memeList) => [...memeList, ...response.data.dtos]);
-        setLoading && setLoading(false);
-        setPage((page) => page + 1);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (page <= totalpage) {
+      // page가 totalpage보다 작거나 같을 때만 memeFetch 실행 (api 호출 제한)
+      axios
+        .get(API_URL + '/meme', {
+          params: {
+            type: 'MEME',
+            page: page,
+            size: 9,
+            sort_type: sorttype,
+            sort_direction: 'desc',
+          },
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            Authorization: 'Bearer ' + getCookie('access_token'),
+          },
+        })
+        .then((response) => {
+          setMemeList((memeList) => [...memeList, ...response.data.dtos]);
+          setTotalpage(response.data.pageInfo.totalPages);
+          setLoading && setLoading(false);
+          setPage((page) => page + 1);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
+
   useEffect(() => {
     if (inView) {
       memeFetch();
@@ -132,14 +135,46 @@ const Scrollmeme = () => {
       setWebview(true);
     }
   }, []);
+
   return (
     <div>
+      <div className='text-start'>
+        <ul className='menu menu-vertical lg:menu-horizontal rounded-box font-sans text-lg'>
+          <li>
+            <div
+              onClick={() => {
+                setSorttype('createdAt');
+              }}
+            >
+              최신순
+            </div>
+          </li>
+          <li>
+            <div
+              onClick={() => {
+                setSorttype('likeCount');
+              }}
+            >
+              좋아요순
+            </div>
+          </li>
+          <li>
+            <div
+              onClick={() => {
+                setSorttype('viewCount');
+              }}
+            >
+              조회순
+            </div>
+          </li>
+        </ul>
+      </div>
       {memeList.length === 0 ? (
         <div className='grid place-items-center font-sans'>
           <h1>공사중입니다...</h1>
         </div>
       ) : (
-        <div className='mt-4'>
+        <>
           <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
             {memeList.map((meme) => (
               <>
@@ -262,10 +297,10 @@ const Scrollmeme = () => {
                 ) : null}
               </>
             ))}
-            <div ref={ref}></div>
           </div>
+          <div ref={ref}></div>
           {!check ? <Mememodal modalnumber='my-modal-1' id={id} /> : null}
-        </div>
+        </>
       )}
     </div>
   );
