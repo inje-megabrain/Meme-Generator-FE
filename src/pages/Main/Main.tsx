@@ -10,6 +10,7 @@ import Scrollmeme from '../Scrollmeme';
 const Main = () => {
   const navigate = useNavigate();
   const [servercheck, setServercheck] = useState<boolean>(true);
+  const [sorttype, setSorttype] = useState<string>('createdAt');
   const status = getCookie('status');
   const cookie = getCookie('access_token');
   const homebtn = () => {

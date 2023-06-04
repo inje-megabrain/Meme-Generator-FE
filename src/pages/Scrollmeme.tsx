@@ -16,6 +16,7 @@ import Mememodal from '@src/components/Mememodal';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import { API_URL } from '@src/constants/Constants';
+import { test } from 'node:test';
 
 const Scrollmeme = () => {
   const { VITE_APP_IMAGE_URL } = import.meta.env;
@@ -29,19 +30,18 @@ const Scrollmeme = () => {
   const [ishover, setIshover] = useState<boolean>(false);
   const [check, setCheck] = useState<boolean>(false);
   const [sorttype, setSorttype] = useState<string>('createdAt');
-  const [totalpage, setTotalpage] = useState<number>(0);
+  const [test, setTest] = useState<string>('');
 
   const myurl = 'https://meme.megabrain.kr'; // url 수정해야함
 
-  const memeFetch = () => {
-    if (page <= totalpage) {
-      // page가 totalpage보다 작거나 같을 때만 memeFetch 실행 (api 호출 제한)
-      axios
+  const memeFetch = async () => {
+    if (test === 'test') {
+      await axios
         .get(API_URL + '/meme', {
           params: {
             type: 'MEME',
             page: page,
-            size: 9,
+            size: 18,
             sort_type: sorttype,
             sort_direction: 'desc',
           },
@@ -53,7 +53,6 @@ const Scrollmeme = () => {
         })
         .then((response) => {
           setMemeList((memeList) => [...memeList, ...response.data.dtos]);
-          setTotalpage(response.data.pageInfo.totalPages);
           setLoading && setLoading(false);
           setPage((page) => page + 1);
         })
@@ -64,10 +63,9 @@ const Scrollmeme = () => {
   };
 
   useEffect(() => {
-    if (inView) {
-      memeFetch();
-    }
-  }, [inView]);
+    setTest('test');
+    memeFetch();
+  }, [sorttype, inView]);
 
   // image url => file => image download
   const converURLtoFile = async (url: string, filename: string) => {
@@ -132,6 +130,8 @@ const Scrollmeme = () => {
             <div
               onClick={() => {
                 setSorttype('createdAt');
+                setMemeList([]);
+                setPage(0);
               }}
             >
               최신순
@@ -141,6 +141,8 @@ const Scrollmeme = () => {
             <div
               onClick={() => {
                 setSorttype('likeCount');
+                setMemeList([]);
+                setPage(0);
               }}
             >
               좋아요순
@@ -150,6 +152,8 @@ const Scrollmeme = () => {
             <div
               onClick={() => {
                 setSorttype('viewCount');
+                setMemeList([]);
+                setPage(0);
               }}
             >
               조회순
@@ -288,8 +292,8 @@ const Scrollmeme = () => {
                 ) : null}
               </>
             ))}
+            <div ref={ref}></div>
           </div>
-          <div ref={ref}></div>
           {!check ? <Mememodal modalnumber='my-modal-1' id={id} /> : null}
         </>
       )}
