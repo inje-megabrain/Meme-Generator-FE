@@ -253,6 +253,7 @@ export const MemeLikeAPI = async (memeid: number) => {
       },
     })
     .then((response) => {
+      console.log(response);
       if (response.status === 200) {
         window.location.reload();
       }
@@ -260,7 +261,5 @@ export const MemeLikeAPI = async (memeid: number) => {
         window.location.reload();
       }
     })
-    .catch((error) => {
-      toast.error('좋아요 실패');
-    });
+    .catch((error) => {});
 };

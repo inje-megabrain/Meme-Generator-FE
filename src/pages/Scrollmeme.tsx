@@ -28,7 +28,6 @@ const Scrollmeme = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [ishover, setIshover] = useState<boolean>(false);
   const [check, setCheck] = useState<boolean>(false);
-  const [webview, setWebview] = useState<boolean>(false);
   const [sorttype, setSorttype] = useState<string>('createdAt');
   const [totalpage, setTotalpage] = useState<number>(0);
 
@@ -124,17 +123,6 @@ const Scrollmeme = () => {
     });
     (document.querySelector('#kakao-share-btn') as HTMLButtonElement).click();
   };
-
-  //web view mobile check
-  useEffect(() => {
-    if (
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      )
-    ) {
-      setWebview(true);
-    }
-  }, []);
 
   return (
     <div>
@@ -272,6 +260,9 @@ const Scrollmeme = () => {
                             <div
                               className='font-bold text-xl btn-xs w-[10px] grid place-items-center'
                               onClick={async () => {
+                                if (!getCookie('access_token')) {
+                                  toast.error('로그인이 필요합니다.');
+                                }
                                 setModal('');
                                 setCheck(true);
                                 await MemeLikeAPI(meme.memeId);

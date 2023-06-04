@@ -84,7 +84,6 @@ const Main = () => {
                 Meme Generator
               </div>
             </div>
-
             {!cookie ? (
               <div className='text-end'>
                 <div

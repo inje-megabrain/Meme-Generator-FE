@@ -74,7 +74,6 @@ const loginAPI = (id: string, password: string) => {
       }
     })
     .catch((error) => {
-      console.log(error.status);
       if (error.response.data === '자격 증명에 실패하였습니다.') {
         toast.error('회원이 아니십니다! 아이디 혹은 패스워드를 확인해주세요!!');
       }

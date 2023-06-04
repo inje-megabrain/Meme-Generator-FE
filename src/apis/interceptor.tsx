@@ -60,7 +60,6 @@ jinInterceptor.interceptors.response.use(
         removeCookie('refresh_token', { path: '/' });
         removeCookie('username', { path: '/' });
         removeCookie('role', { path: '/' });
-        window.location.href = '/login';
       }
     }
   }
