@@ -33,11 +33,12 @@ const Scrollmeme = () => {
   const [latest, setLatest] = useState<boolean>(true);
   const [like, setLike] = useState<boolean>(false);
   const [view, setView] = useState<boolean>(false);
+  const [totalpage, setTotalpage] = useState<number>(0);
 
   const myurl = 'https://meme.megabrain.kr'; // url 수정해야함
 
   const memeFetch = async () => {
-    if (typecheck === 'check') {
+    if (typecheck === 'check' && page <= totalpage) {
       await axios
         .get(API_URL + '/meme', {
           params: {
@@ -55,6 +56,7 @@ const Scrollmeme = () => {
         })
         .then((response) => {
           setMemeList((memeList) => [...memeList, ...response.data.dtos]);
+          setTotalpage(response.data.pageInfo.totalPages);
           setLoading && setLoading(false);
           setPage((page) => page + 1);
         })
