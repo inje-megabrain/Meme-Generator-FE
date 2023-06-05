@@ -263,3 +263,29 @@ export const MemeLikeAPI = async (memeid: number) => {
     })
     .catch((error) => {});
 };
+export const MemeSearchAPI = async (
+  keyword: string,
+  page: number,
+  setMeme: SetterOrUpdater<MemeType>,
+  setTotalpage: SetterOrUpdater<number>
+) => {
+  await jinInterceptor
+    .get(API_URL + `/meme/search`, {
+      params: {
+        keyword: keyword,
+        page: page,
+        size: 6,
+        sort_direction: 'desc',
+      },
+      headers: headerConfig,
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        setMeme(response.data.dtos);
+        setTotalpage(response.data.pageInfo.totalPages);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};

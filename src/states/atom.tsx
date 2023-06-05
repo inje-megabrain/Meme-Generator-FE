@@ -122,6 +122,31 @@ const TotalLikeViewDatatState = atom<TotalLikeViewType>({
     likeTotalCount: 0,
   },
 });
+const MemeSearchDataState = atom<MemeType>({
+  key: 'MemeSearchDataState',
+  default: [
+    {
+      memeId: 0,
+      name: '',
+      imageUrl: '',
+      username: '',
+      userid: '',
+      publicFlag: false,
+      viewCount: 0,
+      likeCount: 0,
+      isLiked: false,
+    },
+  ],
+});
+const MemeSearchTotalpage = atom<number>({
+  key: 'MemeSearchTotalpage',
+  default: 0,
+});
+const SearchData = atom<string>({
+  key: 'SearchData',
+  default: '',
+});
+
 export {
   MemeDataState,
   MemePage,
@@ -138,4 +163,7 @@ export {
   SignupCheck,
   EmailCheck,
   TotalLikeViewDatatState,
+  MemeSearchDataState,
+  MemeSearchTotalpage,
+  SearchData,
 };

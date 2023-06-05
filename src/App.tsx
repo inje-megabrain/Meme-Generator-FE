@@ -10,6 +10,7 @@ import Upload from './pages/Upload';
 import Profile from './pages/Profile';
 import Errorpage from './pages/Errorpage';
 import Emailcheck from './pages/Emailcheck';
+import Search from './pages/Search';
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
   {
     path: '/auth/email',
     element: <Emailcheck />,
+  },
+  {
+    path: '/search',
+    element: <Search/>,
   },
 ]);
 

@@ -185,7 +185,12 @@ const LikeViewCountAPI = async (
       }
     })
     .catch((error) => {
-      toast.error('좋아요 실패');
+      if (error.response.data.code === '403') {
+        removeCookie('access_token', { path: '/' });
+        removeCookie('refresh_token', { path: '/' });
+        removeCookie('username', { path: '/' });
+        window.location.href = '/login';
+      }
     });
 };
 

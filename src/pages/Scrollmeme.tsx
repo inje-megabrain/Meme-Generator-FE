@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MemeDeleteAPI, MemeLikeAPI } from '../apis/server';
 import { useRecoilState } from 'recoil';
-import { InfinitiPage, MemeDataState } from '../states/atom';
+import { InfinitiPage, MemeDataState, SearchData } from '../states/atom';
 import { MemeType } from '../types';
 import { getCookie } from '@src/util/Cookie';
 import { toast } from 'react-toastify';
@@ -16,6 +16,7 @@ import Mememodal from '@src/components/Mememodal';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import { API_URL } from '@src/constants/Constants';
+import { useNavigate } from 'react-router-dom';
 
 const Scrollmeme = () => {
   const { VITE_APP_IMAGE_URL } = import.meta.env;
@@ -35,6 +36,8 @@ const Scrollmeme = () => {
   const [view, setView] = useState<boolean>(false);
   const [hoverid, setHoverid] = useState<number>(0);
   const [totalpage, setTotalpage] = useState<number>(0);
+  const [search, setSearch] = useRecoilState<string>(SearchData);
+  const navigate = useNavigate();
 
   const myurl = 'https://meme.megabrain.kr'; // url 수정해야함
 
@@ -129,7 +132,7 @@ const Scrollmeme = () => {
 
   return (
     <div>
-      <div className='text-start'>
+      <div className='grid grid-cols-2 place-items-center'>
         <ul className='menu menu-horizontal rounded-box font-sans text-lg'>
           <li>
             <button
@@ -180,6 +183,19 @@ const Scrollmeme = () => {
             </button>
           </li>
         </ul>
+        <div>
+          <input
+            type='text'
+            placeholder='Search'
+            className='input input-bordered w-full max-w-xs'
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') {
+                setSearch(e.currentTarget.value);
+                navigate('/search');
+              }
+            }}
+          />
+        </div>
       </div>
       {memeList.length === 0 ? (
         <div className='grid place-items-center font-sans'>
@@ -204,6 +220,9 @@ const Scrollmeme = () => {
                           overflow: 'hidden',
                         }}
                         className='relative z-10'
+                        onClick={() => {
+                          setId(meme.memeId);
+                        }}
                         onMouseOver={() => {
                           setIshover(true);
                           setHoverid(meme.memeId);
