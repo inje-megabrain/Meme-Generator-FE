@@ -2,10 +2,11 @@ import React from 'react';
 import axios, { AxiosError } from 'axios';
 import { API_URL } from '../constants/Constants';
 import jwtDecode from 'jwt-decode';
-import { decodedjwtType } from '../types';
+import { TotalLikeViewType, decodedjwtType } from '../types';
 import { getCookie, removeCookie, setCookie } from '../util/Cookie';
 import jinInterceptor from './interceptor';
 import { toast } from 'react-toastify';
+import { SetterOrUpdater } from 'recoil';
 
 const headerConfig = {
   'Content-Type': 'application/json',
@@ -168,6 +169,25 @@ const EmailPostAPI = async (email: string) => {
       toast.error('이메일 전송 실패');
     });
 };
+const LikeViewCountAPI = async (
+  setTotal: SetterOrUpdater<TotalLikeViewType>
+) => {
+  await axios
+    .get(API_URL + '/meme/counts', {
+      headers: {
+        ...headerConfig,
+        Authorization: 'Bearer ' + getCookie('access_token'),
+      },
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        setTotal(response.data);
+      }
+    })
+    .catch((error) => {
+      toast.error('좋아요 실패');
+    });
+};
 
 export {
   loginAPI,
@@ -176,4 +196,5 @@ export {
   MemberSecessionAPI,
   NicknameChangeAPI,
   EmailPostAPI,
+  LikeViewCountAPI,
 };

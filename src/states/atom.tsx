@@ -1,5 +1,11 @@
 import { atom } from 'recoil';
-import { ItemType, MemeOneType, MemeType, ProfileType } from '../types';
+import {
+  ItemType,
+  MemeOneType,
+  MemeType,
+  ProfileType,
+  TotalLikeViewType,
+} from '../types';
 
 const MemeDataState = atom<MemeType>({
   key: 'MemeDataState',
@@ -109,6 +115,13 @@ const EmailCheck = atom<string>({
   key: 'EmailCheck',
   default: '',
 });
+const TotalLikeViewDatatState = atom<TotalLikeViewType>({
+  key: 'TotalLikeView',
+  default: {
+    viewTotalCount: 0,
+    likeTotalCount: 0,
+  },
+});
 export {
   MemeDataState,
   MemePage,
@@ -124,4 +137,5 @@ export {
   InfinitiPage,
   SignupCheck,
   EmailCheck,
+  TotalLikeViewDatatState,
 };

@@ -30,4 +30,15 @@ type ItemType = {
   imageUrl: string;
   category: string;
 }[];
-export type { MemeType, decodedjwtType, ProfileType, MemeOneType, ItemType };
+type TotalLikeViewType = {
+  viewTotalCount: number;
+  likeTotalCount: number;
+};
+export type {
+  MemeType,
+  decodedjwtType,
+  ProfileType,
+  MemeOneType,
+  ItemType,
+  TotalLikeViewType,
+};

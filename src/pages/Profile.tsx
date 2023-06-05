@@ -1,4 +1,4 @@
-import { MemberSecessionAPI } from '@src/apis/auth';
+import { LikeViewCountAPI, MemberSecessionAPI } from '@src/apis/auth';
 import {
   MemberMemeAPI,
   MemeDeleteAPI,
@@ -9,8 +9,9 @@ import {
   ProfileDataState,
   MemePage,
   MemberMemeDataState,
+  TotalLikeViewDatatState,
 } from '@src/states/atom';
-import { MemeType, ProfileType } from '@src/types';
+import { MemeType, ProfileType, TotalLikeViewType } from '@src/types';
 import { getCookie, removeCookie } from '@src/util/Cookie';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -33,6 +34,9 @@ const Profile = () => {
   const [id, setId] = useState<number>(0);
   const [modal, setModal] = useState<string>('');
   const [totalelements, setTotalelements] = useState<number>(0);
+  const [total, setTotal] = useRecoilState<TotalLikeViewType>(
+    TotalLikeViewDatatState
+  );
 
   const homebtn = () => {
     navigate('/');
@@ -58,6 +62,10 @@ const Profile = () => {
       setLoading
     );
   }, [page]);
+  useEffect(() => {
+    LikeViewCountAPI(setTotal);
+  }, []);
+
   const secession = () => {
     confirm('정말로 탈퇴하시겠습니까?') &&
       MemberSecessionAPI(getCookie('username'));
@@ -96,13 +104,18 @@ const Profile = () => {
                   {totalelements}
                 </div>
               </div>
+
               <div>
                 <div className='text-base font-sans'>좋아요</div>
-                <div className='font-bold text-lg font-sans'>?</div>
+                <div className='font-bold text-lg font-sans'>
+                  {total.likeTotalCount}
+                </div>
               </div>
               <div>
                 <div className='text-base font-sans'>짤 조회수</div>
-                <div className='font-bold text-lg font-sans'>?</div>
+                <div className='font-bold text-lg font-sans'>
+                  {total.viewTotalCount}
+                </div>
               </div>
             </div>
             <div className='grid grid-cols-2'>
