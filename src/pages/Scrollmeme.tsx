@@ -16,7 +16,6 @@ import Mememodal from '@src/components/Mememodal';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import { API_URL } from '@src/constants/Constants';
-import { test } from 'node:test';
 
 const Scrollmeme = () => {
   const { VITE_APP_IMAGE_URL } = import.meta.env;
@@ -173,7 +172,7 @@ const Scrollmeme = () => {
                 {meme.imageUrl !== '' ? (
                   <div key={meme.memeId}>
                     <label
-                      htmlFor='my-modal-1'
+                      htmlFor={modal}
                       onClick={() => {
                         setId(meme.memeId);
                         setModal('my-modal-1');
@@ -186,12 +185,10 @@ const Scrollmeme = () => {
                         className='relative z-10'
                         onMouseOver={() => {
                           setIshover(true);
-                          setId(meme.memeId);
                           setModal('');
                         }}
                         onMouseOut={() => {
                           setIshover(false);
-                          setId(0);
                         }}
                       >
                         {!loading ? (
