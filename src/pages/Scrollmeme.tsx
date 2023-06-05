@@ -29,12 +29,15 @@ const Scrollmeme = () => {
   const [ishover, setIshover] = useState<boolean>(false);
   const [check, setCheck] = useState<boolean>(false);
   const [sorttype, setSorttype] = useState<string>('createdAt');
-  const [test, setTest] = useState<string>('');
+  const [typecheck, setTypecheck] = useState<string>('');
+  const [latest, setLatest] = useState<boolean>(true);
+  const [like, setLike] = useState<boolean>(false);
+  const [view, setView] = useState<boolean>(false);
 
   const myurl = 'https://meme.megabrain.kr'; // url 수정해야함
 
   const memeFetch = async () => {
-    if (test === 'test') {
+    if (typecheck === 'check') {
       await axios
         .get(API_URL + '/meme', {
           params: {
@@ -62,7 +65,7 @@ const Scrollmeme = () => {
   };
 
   useEffect(() => {
-    setTest('test');
+    setTypecheck('check');
     memeFetch();
   }, [sorttype, inView]);
 
@@ -124,39 +127,54 @@ const Scrollmeme = () => {
   return (
     <div>
       <div className='text-start'>
-        <ul className='menu menu-vertical lg:menu-horizontal rounded-box font-sans text-lg'>
+        <ul className='menu menu-horizontal rounded-box font-sans text-lg'>
           <li>
-            <div
+            <button
+              className='btn btn-ghost btn-md font-sans text-lg'
+              disabled={latest}
               onClick={() => {
                 setSorttype('createdAt');
                 setMemeList([]);
                 setPage(0);
+                setLatest(true);
+                setLike(false);
+                setView(false);
               }}
             >
               최신순
-            </div>
+            </button>
           </li>
           <li>
-            <div
+            <button
+              className='btn btn-ghost btn-md font-sans text-lg'
+              disabled={like}
               onClick={() => {
                 setSorttype('likeCount');
                 setMemeList([]);
                 setPage(0);
+                setLike(true);
+                setLatest(false);
+                setView(false);
               }}
             >
               좋아요순
-            </div>
+            </button>
           </li>
           <li>
-            <div
+            <button
+              className='btn btn-ghost btn-md font-sans text-lg'
+              disabled={view}
               onClick={() => {
                 setSorttype('viewCount');
                 setMemeList([]);
                 setPage(0);
+                setView(true);
+                setLike(false);
+                setLatest(false);
               }}
             >
               조회순
-            </div>
+            </button>
           </li>
         </ul>
       </div>
