@@ -25,13 +25,7 @@ const Mememodal = (props: props) => {
     <div>
       <input type='checkbox' id={modalnumber} className='modal-toggle' />
       <label className='modal' htmlFor={modalnumber}>
-        <label
-          className='modal-box relative'
-          htmlFor=''
-          onClick={() => {
-            setMemeList({ memeId: 0, name: '', imageUrl: '', username: '' });
-          }}
-        >
+        <label className='modal-box relative' htmlFor=''>
           <label
             htmlFor={modalnumber}
             className='btn btn-sm btn-circle absolute top-2 right-4 mt-2'
