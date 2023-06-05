@@ -33,6 +33,7 @@ const Scrollmeme = () => {
   const [latest, setLatest] = useState<boolean>(true);
   const [like, setLike] = useState<boolean>(false);
   const [view, setView] = useState<boolean>(false);
+  const [hoverid, setHoverid] = useState<number>(0);
   const [totalpage, setTotalpage] = useState<number>(0);
 
   const myurl = 'https://meme.megabrain.kr'; // url 수정해야함
@@ -205,9 +206,11 @@ const Scrollmeme = () => {
                         className='relative z-10'
                         onMouseOver={() => {
                           setIshover(true);
+                          setHoverid(meme.memeId);
                           setModal('');
                         }}
                         onMouseOut={() => {
+                          setId(0);
                           setIshover(false);
                         }}
                       >
@@ -218,7 +221,7 @@ const Scrollmeme = () => {
                             alt={meme.name}
                           />
                         ) : null}
-                        {ishover && id === meme.memeId ? (
+                        {ishover && hoverid === meme.memeId ? (
                           <div>
                             {getCookie('access_token') ? (
                               <div>
