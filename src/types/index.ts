@@ -7,6 +7,7 @@ type MemeType = {
   publicFlag: boolean;
   viewCount: number;
   likeCount: number;
+  type: string;
   isLiked: boolean;
 }[];
 type decodedjwtType = {

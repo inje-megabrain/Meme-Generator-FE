@@ -53,6 +53,7 @@ export const imageDownloadAPI = async (
   sort_type: string,
   setLoading?: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
+  console.log(type);
   await axios
     .get(API_URL + '/meme', {
       params: {

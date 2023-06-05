@@ -224,11 +224,13 @@ const Scrollmeme = () => {
                         }}
                         className='relative z-10'
                         onClick={() => {
-                          setId(meme.memeId);
+                          setId(hoverid);
                         }}
                         onMouseOver={() => {
                           setIshover(true);
-                          setHoverid(meme.memeId);
+                          if (meme.memeId === hoverid) {
+                            setHoverid(meme.memeId);
+                          }
                           setModal('');
                         }}
                         onMouseOut={() => {
@@ -340,7 +342,7 @@ const Scrollmeme = () => {
             ))}
             <div ref={ref}></div>
           </div>
-          {!check ? <Mememodal modalnumber='my-modal-1' id={hoverid} /> : null}
+          {!check ? <Mememodal modalnumber='my-modal-1' id={id} /> : null}
         </>
       )}
     </div>
