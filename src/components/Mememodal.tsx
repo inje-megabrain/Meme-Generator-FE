@@ -18,7 +18,7 @@ const Mememodal = (props: props) => {
 
   useEffect(() => {
     if (id === 0) return;
-    MemeIdAPI(id, setMemeList, setLoading);
+    MemeIdAPI(id!, setMemeList, setLoading);
   }, [id]);
 
   return !loading ? (

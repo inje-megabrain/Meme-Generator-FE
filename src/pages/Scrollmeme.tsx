@@ -25,7 +25,7 @@ const Scrollmeme = () => {
   const [page, setPage] = useRecoilState<number>(InfinitiPage);
   const [ref, inView] = useInView();
   const [file, setFile] = useState<File>(new File([], ''));
-  const [id, setId] = useState<number>(0);
+  const [id, setId] = useState<number>(114);
   const [modal, setModal] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [ishover, setIshover] = useState<boolean>(false);
