@@ -267,7 +267,8 @@ export const MemeSearchAPI = async (
   keyword: string,
   page: number,
   setMeme: SetterOrUpdater<MemeType>,
-  setTotalpage: SetterOrUpdater<number>
+  setTotalpage: SetterOrUpdater<number>,
+  setTotalElements: SetterOrUpdater<number>
 ) => {
   await jinInterceptor
     .get(API_URL + `/meme/search`, {
@@ -281,8 +282,10 @@ export const MemeSearchAPI = async (
     })
     .then((response) => {
       if (response.status === 200) {
+        toast.success('검색 성공');
         setMeme(response.data.dtos);
         setTotalpage(response.data.pageInfo.totalPages);
+        setTotalElements(response.data.pageInfo.totalElements);
       }
     })
     .catch((error) => {

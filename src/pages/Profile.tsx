@@ -141,7 +141,7 @@ const Profile = () => {
               {meme.map((meme, index) => {
                 return (
                   <div key={index} className='h-[400px]'>
-                    <div className='grid grid-cols-2'>
+                    <div className='grid grid-cols-2 mb-2'>
                       <div>
                         <AiOutlineClose
                           className='btn btn-ghost font-bold text-xl'

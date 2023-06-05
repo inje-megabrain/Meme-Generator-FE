@@ -11,6 +11,7 @@ import {
   AiOutlineShareAlt,
   AiOutlineHeart,
   AiFillHeart,
+  AiOutlineEye,
 } from 'react-icons/ai';
 import Mememodal from '@src/components/Mememodal';
 import { useInView } from 'react-intersection-observer';
@@ -132,7 +133,7 @@ const Scrollmeme = () => {
 
   return (
     <div>
-      <div className='grid grid-cols-2 place-items-center'>
+      <div className='grid grid-cols-1 md:grid-cols-2 place-items-center'>
         <ul className='menu menu-horizontal rounded-box font-sans text-lg'>
           <li>
             <button
@@ -184,17 +185,19 @@ const Scrollmeme = () => {
           </li>
         </ul>
         <div>
-          <input
-            type='text'
-            placeholder='Search'
-            className='input input-bordered w-full max-w-xs'
-            onKeyUp={(e) => {
-              if (e.key === 'Enter') {
-                setSearch(e.currentTarget.value);
-                navigate('/search');
-              }
-            }}
-          />
+          <div className='grid grid-cols-1 place-items-center'>
+            <input
+              type='text'
+              placeholder={'🔍' + '  Search'}
+              className='input input-bordered w-full max-w-xs'
+              onKeyUp={(e) => {
+                if (e.key === 'Enter') {
+                  setSearch(e.currentTarget.value);
+                  navigate('/search');
+                }
+              }}
+            />
+          </div>
         </div>
       </div>
       {memeList.length === 0 ? (
@@ -203,7 +206,7 @@ const Scrollmeme = () => {
         </div>
       ) : (
         <>
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-5 mt-4'>
             {memeList.map((meme) => (
               <>
                 {meme.imageUrl !== '' ? (
@@ -323,6 +326,10 @@ const Scrollmeme = () => {
                           </div>
                           <div className='font-bold text-xl font-sans'>
                             <div>{meme.name}</div>
+                          </div>
+                          <div className='grid grid-cols-2'>
+                            <AiOutlineEye />
+                            <div>{meme.viewCount}</div>
                           </div>
                         </div>
                       </div>
