@@ -193,6 +193,40 @@ const LikeViewCountAPI = async (
       }
     });
 };
+const IDCheckAPI = async (id: string) => {
+  await axios
+    .get(API_URL + '/member/username', {
+      params: {
+        username: id,
+      },
+      headers: headerConfig,
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        toast.success('사용 가능한 아이디입니다.');
+      }
+    })
+    .catch((error) => {
+      toast.error('이미 사용중인 아이디입니다.');
+    });
+};
+const EmailCheckAPI = async (email: string) => {
+  await axios
+    .get(API_URL + '/member/email', {
+      params: {
+        email: email,
+      },
+      headers: headerConfig,
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        toast.success('사용 가능한 이메일입니다.');
+      }
+    })
+    .catch((error) => {
+      toast.error('이미 사용중인 이메일입니다.');
+    });
+};
 
 export {
   loginAPI,
@@ -202,4 +236,6 @@ export {
   NicknameChangeAPI,
   EmailPostAPI,
   LikeViewCountAPI,
+  IDCheckAPI,
+  EmailCheckAPI,
 };

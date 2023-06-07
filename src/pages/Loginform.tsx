@@ -1,7 +1,13 @@
 import React, { useCallback } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { EmailPostAPI, SignUpAPI, loginAPI } from '../apis/auth';
+import {
+  EmailCheckAPI,
+  EmailPostAPI,
+  IDCheckAPI,
+  SignUpAPI,
+  loginAPI,
+} from '../apis/auth';
 import { toast } from 'react-toastify';
 import { useRecoilState } from 'recoil';
 import { EmailCheck, SignupCheck } from '@src/states/atom';
@@ -12,6 +18,7 @@ const Loginform = () => {
   const [signup, setSignup] = useState(false);
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
+  const [repassword, setRepassword] = useState('');
   const [email, setEmail] = useRecoilState<string>(EmailCheck);
   const [username, setUsername] = useState('');
   const [checkEmail, setCheckEmail] = useState(false);
@@ -37,7 +44,10 @@ const Loginform = () => {
   };
   const SignupFunc = async (e: any) => {
     e.preventDefault();
-    await SignUpAPI(id, password, username, email, setSignupcheck);
+
+    if (!checkPassword) {
+      await SignUpAPI(id, password, username, email, setSignupcheck);
+    }
   };
   const onChangePassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +55,18 @@ const Loginform = () => {
       const passwordCurrent = e.target.value;
       setPassword(passwordCurrent);
       if (!passwordRegex.test(passwordCurrent)) {
+        setCheckPassword(false);
+      } else {
+        setCheckPassword(true);
+      }
+    },
+    []
+  );
+  const onChangeRepassword = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const passwordCurrent = e.target.value;
+      setRepassword(passwordCurrent);
+      if (passwordCurrent !== password) {
         setCheckPassword(false);
       } else {
         setCheckPassword(true);
@@ -116,21 +138,35 @@ const Loginform = () => {
             </div>
           </div>
           {login || signup ? (
-            <div className='grid grid-rows-2 gap-4 mt-4'>
-              <div className='grid place-items-center'>
-                <input
-                  type='text'
-                  placeholder='ID'
-                  className='input w-full max-w-sm outline font-sans  dark:focus:outline-blue-500'
-                  value={id}
-                  onChange={onChangeId}
-                />
+            <div className='mt-4'>
+              <div>
+                <div className='grid place-items-center'>
+                  <input
+                    type='text'
+                    placeholder='ID'
+                    className='input w-full max-w-sm outline font-sans dark:focus:outline-blue-500'
+                    value={id}
+                    onChange={onChangeId}
+                  />
+                </div>
+                {signup ? (
+                  <div className='mt-2 grid place-items-end'>
+                    <button
+                      className='btn btn-sm btn-outline outline outline-black dark:outline-white dark:hover:bg-white'
+                      onClick={async () => {
+                        await IDCheckAPI(id);
+                      }}
+                    >
+                      중복체크
+                    </button>
+                  </div>
+                ) : null}
               </div>
-              <div className='grid place-items-center'>
+              <div className='grid place-items-center mt-2'>
                 <input
                   type='password'
                   placeholder='Password'
-                  className='input w-full max-w-sm outline font-sans  dark:focus:outline-blue-500'
+                  className='input w-full max-w-sm outline font-sans dark:focus:outline-blue-500'
                   value={password}
                   onChange={onChangePassword}
                 />
@@ -147,10 +183,36 @@ const Loginform = () => {
               ) : null}
             </div>
           ) : null}
-
           {signup ? (
-            <div className='grid grid-rows-2 gap-5 mt-4'>
-              <div className='grid place-items-center'>
+            <>
+              <div className='grid place-items-center mt-4'>
+                <input
+                  type='password'
+                  placeholder='Repassword'
+                  className='input w-full max-w-sm outline font-sans dark:focus:outline-blue-500'
+                  value={repassword}
+                  onChange={onChangeRepassword}
+                />
+              </div>
+              <div
+                className='mt-2 grid place-items-end'
+                onClick={() => {
+                  if (password !== repassword) {
+                    return toast.error('비밀번호가 일치하지 않습니다.');
+                  } else {
+                    toast.success('비밀번호가 일치합니다.');
+                  }
+                }}
+              >
+                <button className='btn btn-sm btn-outline outline outline-black dark:outline-white dark:hover:bg-white'>
+                  비밀번호 체크
+                </button>
+              </div>
+            </>
+          ) : null}
+          {signup ? (
+            <div>
+              <div className='grid place-items-center mt-2'>
                 <input
                   type='text'
                   placeholder='Username'
@@ -159,14 +221,26 @@ const Loginform = () => {
                   onChange={onChangeUsername}
                 />
               </div>
-              <div className='grid place-items-center'>
-                <input
-                  type='text'
-                  placeholder='Email'
-                  className='input w-full max-w-sm outline font-sans  dark:focus:outline-blue-500'
-                  value={email}
-                  onChange={onChangeEmail}
-                />
+              <div>
+                <div className='grid place-items-center mt-4'>
+                  <input
+                    type='text'
+                    placeholder='Email'
+                    className='input w-full max-w-sm outline font-sans  dark:focus:outline-blue-500'
+                    value={email}
+                    onChange={onChangeEmail}
+                  />
+                </div>
+                <div className='mt-2 grid place-items-end'>
+                  <button
+                    className='btn btn-sm btn-outline outline outline-black dark:outline-white dark:hover:bg-white'
+                    onClick={async () => {
+                      await EmailCheckAPI(email);
+                    }}
+                  >
+                    중복체크
+                  </button>
+                </div>
               </div>
             </div>
           ) : null}
@@ -180,8 +254,10 @@ const Loginform = () => {
               </div>
             </div>
           ) : null}
-          <div className='w-full divider content-center font-sans'>OR</div>
-          <div className='grid place-items-center mt-4'>
+          {!signup ? (
+            <div className='w-full divider content-center font-sans'>OR</div>
+          ) : null}
+          <div className='grid place-items-center'>
             {!signup ? (
               <>
                 <div
