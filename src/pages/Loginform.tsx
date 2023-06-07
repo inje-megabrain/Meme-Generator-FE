@@ -11,6 +11,7 @@ import {
 import { toast } from 'react-toastify';
 import { useRecoilState } from 'recoil';
 import { EmailCheck, SignupCheck } from '@src/states/atom';
+import { getCookie, removeCookie } from '@src/util/Cookie';
 const { VITE_APP_GOOGLE_OAUTH } = import.meta.env;
 
 const Loginform = () => {
@@ -112,9 +113,15 @@ const Loginform = () => {
     },
     []
   );
+
   if (signupcheck) {
-    EmailPostAPI(email);
     navigate('/auth/email');
+    EmailPostAPI(email);
+  }
+  if (getCookie('status') === 'email success') {
+    toast.success('이메일 인증이 완료되었습니다.');
+    toast.success('회원가입이 완료되었습니다.');
+    removeCookie('status');
   }
 
   return (

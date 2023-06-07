@@ -2,6 +2,7 @@ import { EmailPostAPI } from '@src/apis/auth';
 import EmailLoading from '@src/components/EmailLoading';
 import { API_URL } from '@src/constants/Constants';
 import { EmailCheck } from '@src/states/atom';
+import { setCookie } from '@src/util/Cookie';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -24,11 +25,11 @@ const Emailcheck = () => {
         console.log(response);
         if (response.status === 200) {
           navigate('/login');
+          setCookie('status', 'email success', { path: '/' });
         }
       })
       .catch((error) => {
         setCheck(false);
-        toast.error('이메일 인증 실패');
       });
   }, []);
 

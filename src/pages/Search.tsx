@@ -36,6 +36,7 @@ const Search = () => {
   const [modal, setModal] = useState<string>('');
   const [hoverid, setHoverid] = useState<number>(0);
   const [ishover, setIshover] = useState<boolean>(false);
+  const [research, setResearch] = useState<string>('');
 
   const homebtn = () => {
     navigate('/');
@@ -123,12 +124,31 @@ const Search = () => {
           Meme Generator
         </div>
       </div>
-      <div className='w-[110px] grid place-items-center'>
-        <div className='text-xl font-sans mt-2 grid grid-cols-2 items-center'>
-          <AiOutlineSearch />
-          <div>{totalElements}건</div>
+      <div className='mt-2'>
+        <div className='grid grid-cols-1 place-items-center'>
+          <input
+            type='text'
+            placeholder={'🔍' + '  Search'}
+            className='input input-bordered w-full max-w-xs'
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') {
+                setSearchdata(e.currentTarget.value);
+                navigate('/search');
+              }
+            }}
+          />
         </div>
       </div>
+      {search.length > 0 ? (
+        <div className='grid place-items-center'>
+          <div className='grid grid-cols-8 items-center'>
+            <AiOutlineSearch />
+            <div className='text-xl font-sans mt-2 col-span-7'>
+              총{totalElements}건의 검색결과가 있습니다.
+            </div>
+          </div>
+        </div>
+      ) : null}
       <div className='grid grid-cols-1 md:grid-cols-3 gap-5 mt-4'>
         {search.map((meme) => (
           <>

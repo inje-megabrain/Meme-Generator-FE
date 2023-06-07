@@ -283,10 +283,12 @@ export const MemeSearchAPI = async (
     })
     .then((response) => {
       if (response.status === 200) {
-        toast.success('검색 성공');
         setMeme(response.data.dtos);
         setTotalpage(response.data.pageInfo.totalPages);
         setTotalElements(response.data.pageInfo.totalElements);
+        if (response.data.pageInfo.totalElements === 0) {
+          toast.error('검색 결과가 없습니다.');
+        }
       }
     })
     .catch((error) => {

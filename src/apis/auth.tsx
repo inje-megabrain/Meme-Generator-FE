@@ -99,9 +99,7 @@ const SignUpAPI = (
     .then((response) => {
       if (response.status == 201) {
         setSignupcheck(true);
-        toast.success('회원가입 성공');
       }
-      //window.location.href = '/login';
     })
     .catch((error) => {
       toast.error(error.response.data);
