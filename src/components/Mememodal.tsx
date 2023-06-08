@@ -1,7 +1,7 @@
 import { MemeIdAPI } from '@src/apis/server';
 import { MemeIdDataState } from '@src/states/atom';
 import { MemeOneType } from '@src/types';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import Loading from './Loading';
 
@@ -16,7 +16,7 @@ const Mememodal = (props: props) => {
   const [memeList, setMemeList] = useRecoilState<MemeOneType>(MemeIdDataState);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (id === 0) return;
     MemeIdAPI(id!, setMemeList, setLoading);
   }, [id]);

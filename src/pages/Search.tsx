@@ -6,7 +6,7 @@ import {
   SearchData,
 } from '@src/states/atom';
 import { MemeType } from '@src/types';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import {
@@ -43,7 +43,7 @@ const Search = () => {
   };
 
   if (searchdata !== '') {
-    useEffect(() => {
+    useLayoutEffect(() => {
       MemeSearchAPI(
         searchdata,
         page,
@@ -145,6 +145,16 @@ const Search = () => {
             <AiOutlineSearch />
             <div className='text-xl font-sans mt-2 col-span-7'>
               총{totalElements}건의 검색결과가 있습니다.
+            </div>
+          </div>
+        </div>
+      ) : null}
+      {search.length === 0 ? (
+        <div className='grid place-items-center'>
+          <div className='grid grid-cols-8 items-center'>
+            <AiOutlineSearch />
+            <div className='text-xl font-sans mt-2 col-span-7'>
+              검색결과가 없습니다.
             </div>
           </div>
         </div>

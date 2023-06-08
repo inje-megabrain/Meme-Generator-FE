@@ -256,7 +256,6 @@ export const MemeLikeAPI = async (memeid: number) => {
       },
     })
     .then((response) => {
-      console.log(response);
       if (response.status === 200) {
         window.location.reload();
       }
@@ -288,9 +287,6 @@ export const MemeSearchAPI = async (
         setMeme(response.data.dtos);
         setTotalpage(response.data.pageInfo.totalPages);
         setTotalElements(response.data.pageInfo.totalElements);
-        if (response.data.pageInfo.totalElements === 0) {
-          toast.error('검색 결과가 없습니다.');
-        }
       }
     })
     .catch((error) => {

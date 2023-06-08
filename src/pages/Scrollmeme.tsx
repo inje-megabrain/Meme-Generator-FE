@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { MemeDeleteAPI, MemeLikeAPI } from '../apis/server';
 import { useRecoilState } from 'recoil';
 import { InfinitiPage, MemeDataState, SearchData } from '../states/atom';
 import { MemeType } from '../types';
-import { getCookie } from '@src/util/Cookie';
+import { getCookie, removeCookie, setCookie } from '@src/util/Cookie';
 import { toast } from 'react-toastify';
 import {
   AiOutlineClose,
@@ -42,9 +42,9 @@ const Scrollmeme = () => {
 
   const myurl = 'https://meme.megabrain.kr'; // url 수정해야함
 
-  const memeFetch = async () => {
+  const memeFetch = () => {
     if (typecheck === 'check' && page <= totalpage) {
-      await axios
+      axios
         .get(API_URL + '/meme', {
           params: {
             type: 'MEME',
@@ -71,7 +71,7 @@ const Scrollmeme = () => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setTypecheck('check');
     memeFetch();
   }, [sorttype, inView]);
@@ -130,6 +130,18 @@ const Scrollmeme = () => {
     });
     (document.querySelector('#kakao-share-btn') as HTMLButtonElement).click();
   };
+  const likebtn = async (id: number) => {
+    if (!getCookie('access_token')) {
+      toast.error('로그인이 필요합니다.');
+    }
+    setModal('');
+    setCheck(true);
+    await MemeLikeAPI(id);
+  };
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, parseInt(getCookie('scroll')));
+  }, [inView]);
 
   return (
     <div>
@@ -308,13 +320,12 @@ const Scrollmeme = () => {
                           <div className='grid grid-cols-2'>
                             <div
                               className='font-bold text-xl btn-xs w-[10px] grid place-items-center'
-                              onClick={async () => {
-                                if (!getCookie('access_token')) {
-                                  toast.error('로그인이 필요합니다.');
-                                }
-                                setModal('');
-                                setCheck(true);
-                                await MemeLikeAPI(meme.memeId);
+                              onClick={(e) => {
+                                e.preventDefault();
+                                likebtn(meme.memeId);
+                                setCookie('scroll', window.scrollY.toString(), {
+                                  path: '/',
+                                });
                               }}
                             >
                               {meme.isLiked == false ? (

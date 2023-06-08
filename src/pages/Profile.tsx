@@ -13,7 +13,7 @@ import {
 } from '@src/states/atom';
 import { MemeType, ProfileType, TotalLikeViewType } from '@src/types';
 import { getCookie, removeCookie } from '@src/util/Cookie';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -49,10 +49,10 @@ const Profile = () => {
   const nextpage = () => {
     setPage(page + 1);
   };
-  useEffect(() => {
+  useLayoutEffect(() => {
     ProfileAPI(getCookie('username'), setProfile);
   }, []);
-  useEffect(() => {
+  useLayoutEffect(() => {
     MemberMemeAPI(
       getCookie('username'),
       page,
@@ -62,7 +62,7 @@ const Profile = () => {
       setLoading
     );
   }, [page]);
-  useEffect(() => {
+  useLayoutEffect(() => {
     LikeViewCountAPI(setTotal);
   }, []);
 
