@@ -57,11 +57,18 @@ const Mememodal = (props: props) => {
               {memeList.name}
               {'"'} 짤
             </div>
-            {memeList.tags.map((tag) => (
-              <div>
-                <div className='font-bold text-xl'>{tag}</div>
-              </div>
-            ))}
+            <div className='grid grid-cols-5 mt-2'>
+              {memeList.tags.map((tag, index) => {
+                return (
+                  <div
+                    key={index}
+                    className='text-center font-sans btn btn-ghost rounded-md text-lg'
+                  >
+                    {tag}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </label>
       </label>
