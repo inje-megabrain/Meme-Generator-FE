@@ -141,7 +141,7 @@ const Scrollmeme = () => {
 
   useLayoutEffect(() => {
     window.scrollTo(0, parseInt(getCookie('scroll')));
-  }, [inView]);
+  }, [page]);
 
   return (
     <div>
