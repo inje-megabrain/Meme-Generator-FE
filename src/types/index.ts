@@ -8,6 +8,7 @@ type MemeType = {
   viewCount: number;
   likeCount: number;
   type: string;
+  tags: string;
   isLiked: boolean;
 }[];
 type decodedjwtType = {
@@ -24,6 +25,7 @@ type MemeOneType = {
   imageUrl: string;
   name: string;
   username: string;
+  tags: string[];
 };
 type ItemType = {
   ItemId: number;

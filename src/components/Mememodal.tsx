@@ -30,7 +30,13 @@ const Mememodal = (props: props) => {
             htmlFor={modalnumber}
             className='btn btn-sm btn-circle absolute top-2 right-4 mt-2'
             onClick={() => {
-              setMemeList({ memeId: 0, name: '', imageUrl: '', username: '' });
+              setMemeList({
+                memeId: 0,
+                name: '',
+                imageUrl: '',
+                username: '',
+                tags: [],
+              });
             }}
           >
             X
@@ -51,6 +57,7 @@ const Mememodal = (props: props) => {
               {memeList.name}
               {'"'} 짤
             </div>
+            <div className='btn btn-ghost'>{memeList.tags}</div>
           </div>
         </label>
       </label>

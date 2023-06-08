@@ -225,12 +225,14 @@ const Scrollmeme = () => {
                         className='relative z-10'
                         onClick={() => {
                           setId(meme.memeId);
+                          console.log(hoverid);
                         }}
                         onMouseOver={() => {
                           setIshover(true);
                           if (meme.memeId === hoverid) {
                             setHoverid(meme.memeId);
                           }
+                          setHoverid(meme.memeId);
                           setModal('');
                         }}
                         onMouseOut={() => {

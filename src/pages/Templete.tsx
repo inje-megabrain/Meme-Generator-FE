@@ -41,7 +41,7 @@ const Template = () => {
     navigate('/generator');
   };
   const uploadbtn = async () => {
-    await imageUploadApi(imageSrc as File, name, 'TEMPLATE', true);
+    await imageUploadApi(imageSrc as File, name, 'TEMPLATE', true, '');
     window.location.reload();
   };
   const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {

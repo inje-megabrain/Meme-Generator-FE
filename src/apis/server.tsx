@@ -15,11 +15,12 @@ export const imageUploadApi = async (
   image: File,
   name: string,
   type: string,
-  publicFlag: boolean
+  publicFlag: boolean,
+  tags: string
 ) => {
   const formData = new FormData();
   formData.append('image', image); // {contentType: 'multipart/form-data'}
-  const obj = { name: name, type: type, publicFlag: publicFlag };
+  const obj = { name: name, type: type, publicFlag: publicFlag, tags: tags };
   formData.append(
     'dto',
     new Blob([JSON.stringify(obj)], { type: 'application/json' })
@@ -53,7 +54,6 @@ export const imageDownloadAPI = async (
   sort_type: string,
   setLoading?: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
-  console.log(type);
   await axios
     .get(API_URL + '/meme', {
       params: {

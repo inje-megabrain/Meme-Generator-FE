@@ -45,8 +45,7 @@ const Loginform = () => {
   };
   const SignupFunc = async (e: any) => {
     e.preventDefault();
-
-    if (!checkPassword) {
+    if (checkEmail == true && checkEmail == true && checkId == true) {
       await SignUpAPI(id, password, username, email, setSignupcheck);
     }
   };
@@ -119,9 +118,9 @@ const Loginform = () => {
     EmailPostAPI(email);
   }
   if (getCookie('status') === 'email success') {
+    removeCookie('status', { path: '/' });
     toast.success('이메일 인증이 완료되었습니다.');
     toast.success('회원가입이 완료되었습니다.');
-    removeCookie('status');
   }
 
   return (
@@ -162,6 +161,7 @@ const Loginform = () => {
                       className='btn btn-sm btn-outline outline outline-black dark:outline-white dark:hover:bg-white'
                       onClick={async () => {
                         await IDCheckAPI(id);
+                        setCheckId(true);
                       }}
                     >
                       중복체크
@@ -208,6 +208,7 @@ const Loginform = () => {
                     return toast.error('비밀번호가 일치하지 않습니다.');
                   } else {
                     toast.success('비밀번호가 일치합니다.');
+                    setCheckPassword(true);
                   }
                 }}
               >
@@ -243,6 +244,7 @@ const Loginform = () => {
                     className='btn btn-sm btn-outline outline outline-black dark:outline-white dark:hover:bg-white'
                     onClick={async () => {
                       await EmailCheckAPI(email);
+                      setCheckEmail(true);
                     }}
                   >
                     중복체크
