@@ -18,6 +18,7 @@ export const imageUploadApi = async (
   publicFlag: boolean,
   tags: string
 ) => {
+  console.log(tags);
   const formData = new FormData();
   formData.append('image', image); // {contentType: 'multipart/form-data'}
   const obj = { name: name, type: type, publicFlag: publicFlag, tags: tags };
@@ -44,6 +45,7 @@ export const imageUploadApi = async (
     })
     .catch((error) => {
       toast.error('업로드 실패');
+      toast.error(error.response.data.message);
     });
 };
 export const imageDownloadAPI = async (

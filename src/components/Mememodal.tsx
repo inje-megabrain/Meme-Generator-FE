@@ -57,7 +57,11 @@ const Mememodal = (props: props) => {
               {memeList.name}
               {'"'} 짤
             </div>
-            <div className='btn btn-ghost'>{memeList.tags}</div>
+            {memeList.tags.map((tag) => (
+              <div>
+                <div className='font-bold text-xl'>{tag}</div>
+              </div>
+            ))}
           </div>
         </label>
       </label>

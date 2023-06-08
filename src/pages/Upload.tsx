@@ -15,7 +15,6 @@ const Upload = () => {
   const [name, setName] = useState<string>('meme');
   const [publicFlag, setPublicFlag] = useState<boolean>(false);
   const [tagstext, setTagstext] = useState<string>('');
-  const [taglist, setTaglist] = useState<string[]>([]);
 
   useEffect(() => {
     if (previewimage !== '') {
@@ -38,7 +37,6 @@ const Upload = () => {
     setName(e.target.value);
   };
   const uploadbtn = async () => {
-    const tag = taglist.join(' ');
     if (!imageSrc) {
       toast.error('이미지를 선택해주세요');
     } else {
@@ -47,7 +45,7 @@ const Upload = () => {
         name,
         memetype,
         publicFlag,
-        tag
+        tagstext
       );
     }
   };
@@ -57,23 +55,13 @@ const Upload = () => {
   const homebtn = () => {
     naviage('/');
   };
-  const KeydownChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && taglist.length <= 4) {
-      setTaglist([...taglist, tagstext]);
-      setTagstext('');
-    }
-  };
 
   const TagtextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
-    const regExp = '^#[a-zA-Z0-9가-힣]{1,20}( #[a-zA-Z0-9가-힣]{1,20})*$';
+    const regExp = /^#[a-zA-Z0-9가-힣]{1,20}( #[a-zA-Z0-9가-힣]{1,20})*$/;
     if (value.match(regExp)) {
       setTagstext(value.includes('#') ? value : '#' + value);
     }
-  };
-
-  const test = () => {
-    console.log();
   };
 
   return (
@@ -121,7 +109,6 @@ const Upload = () => {
               type='text'
               className='input input-bordered max-w-xs font-sans mt-2'
               placeholder='#태그(최대 5개)'
-              onKeyDown={KeydownChange}
               onChange={TagtextChange}
             />
           </div>
@@ -144,7 +131,6 @@ const Upload = () => {
             >
               업로드
             </button>
-            <button onClick={test}>테스트</button>
           </div>
         </div>
       </div>
@@ -157,7 +143,7 @@ const Upload = () => {
           />
         ) : null}
       </div>
-      <div>{taglist.filter((item) => item !== '')}</div>
+      <div>{tagstext}</div>
     </div>
   );
 };
