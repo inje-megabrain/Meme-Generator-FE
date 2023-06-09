@@ -1,7 +1,6 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { getCookie, removeCookie, setCookie } from '../util/Cookie';
 import { API_URL } from '../constants/Constants';
-import { toast } from 'react-toastify';
 
 const jinInterceptor = axios.create({
   baseURL: API_URL,
@@ -31,11 +30,14 @@ jinInterceptor.interceptors.response.use(
   },
   async function (error) {
     const originalRequest = error.config;
-    console.log(error.response.status);
+    //console.log('범인' + error.response.status);
     if (error.response.status === 400) {
       throw error;
     }
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (
+      (error.response.status === 401 && !originalRequest._retry) ||
+      error.response.status === 403
+    ) {
       originalRequest._retry = true;
       const res = await fetch(API_URL + '/refresh', {
         method: 'POST',
@@ -56,6 +58,8 @@ jinInterceptor.interceptors.response.use(
       } else {
         removeCookie('access_token', { path: '/' });
         removeCookie('refresh_token', { path: '/' });
+        removeCookie('username', { path: '/' });
+        removeCookie('role', { path: '/' });
       }
     }
   }

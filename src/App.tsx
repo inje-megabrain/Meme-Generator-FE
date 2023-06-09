@@ -9,6 +9,8 @@ import GoogleLogin from './components/GoogleLogin';
 import Upload from './pages/Upload';
 import Profile from './pages/Profile';
 import Errorpage from './pages/Errorpage';
+import Emailcheck from './pages/Emailcheck';
+import Search from './pages/Search';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +48,14 @@ const router = createBrowserRouter([
   {
     path: '*',
     element: <Errorpage />,
+  },
+  {
+    path: '/auth/email',
+    element: <Emailcheck />,
+  },
+  {
+    path: '/search',
+    element: <Search/>,
   },
 ]);
 

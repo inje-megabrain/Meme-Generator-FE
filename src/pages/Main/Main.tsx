@@ -1,13 +1,15 @@
-import React, {  useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCookie, removeCookie, setCookie } from '../../util/Cookie';
-import Meme from '../Meme';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { API_URL } from '@src/constants/Constants';
+import Errorpage from '../Errorpage';
+import Scrollmeme from '../Scrollmeme';
 
 const Main = () => {
   const navigate = useNavigate();
+  const [servercheck, setServercheck] = useState<boolean>(true);
   const status = getCookie('status');
   const cookie = getCookie('access_token');
 
@@ -53,60 +55,94 @@ const Main = () => {
     removeCookie('status', { path: '/' });
   }
   useEffect(() => {
-    axios.get(API_URL + '/test/ping').then((response) => {
-      if (response.status !== 200) {
+    axios
+      .get(API_URL + '/test/ping')
+      .then((response) => {
+        if (response.status !== 200) {
+          toast.error('서버가 꺼져있습니다.');
+        }
+      })
+      .catch((error) => {
+        setServercheck(false);
         toast.error('서버가 꺼져있습니다.');
-      }
-    });
+      });
   }, []);
 
   return (
     <>
-      <div>
+      {servercheck ? (
         <div>
-          <div className='btn btn-ghost normal-case text-3xl' onClick={homebtn}>
-            ME:ME
+          <div>
+            <div className='grid place-items-center'>
+              <img
+                src='/newlogo.png'
+                className='w-40 h-[94px] inline-block object-fill'
+                onClick={homebtn}
+              />
+              <div
+                className='grid place-items-center font-bold text-3xl font-sans'
+                onClick={homebtn}
+              >
+                Meme Generator
+              </div>
+            </div>
+            {!cookie ? (
+              <div className='text-end'>
+                <div
+                  className='btn btn-ghost normal-case text-lg font-sans'
+                  onClick={signbtn}
+                >
+                  로그인
+                </div>
+              </div>
+            ) : (
+              <div className='text-right'>
+                <div
+                  className='btn btn-ghost normal-case text-lg font-sans'
+                  onClick={profilebtn}
+                >
+                  내 정보
+                </div>
+                <div
+                  className='btn btn-ghost normal-case text-lg font-sans'
+                  onClick={logoutbtn}
+                >
+                  로그아웃
+                </div>
+              </div>
+            )}
           </div>
-          {!cookie ? (
-            <div className='text-right'>
-              <div
-                className='btn btn-ghost normal-case text-base'
-                onClick={signbtn}
-              >
-                로그인
+          {cookie ? (
+            <div className='grid place-items-center'>
+              <div className='grid grid-cols-2 gap-2'>
+                <div>
+                  <button
+                    className='btn btn-ghost text-lg font-bold font-sans'
+                    onClick={templatebtn}
+                  >
+                    짤 생성
+                  </button>
+                </div>
+                <div className='text-left'>
+                  <div
+                    className='btn normal-case text-lg font-bold text-white bg-gradient-to-r from-violet-500 to-fuchsia-500 font-sans'
+                    onClick={() => {
+                      window.open(
+                        'https://83fh02wrhoh.typeform.com/to/TsXOKfsj'
+                      );
+                    }}
+                  >
+                    피드백
+                  </div>
+                </div>
               </div>
             </div>
-          ) : (
-            <div className='text-right'>
-              <div
-                className='btn btn-ghost normal-case text-base'
-                onClick={profilebtn}
-              >
-                내 정보
-              </div>
-              <div
-                className='btn btn-ghost normal-case text-base'
-                onClick={logoutbtn}
-              >
-                로그아웃
-              </div>
-            </div>
-          )}
+          ) : null}
         </div>
-        {cookie ? (
-          <div className='grid place-items-center'>
-            <div>
-              <button
-                className='btn btn-ghost text-base font-bold'
-                onClick={templatebtn}
-              >
-                짤 생성
-              </button>
-            </div>
-          </div>
-        ) : null}
-      </div>
-      <Meme />
+      ) : (
+        <Errorpage />
+      )}
+      {servercheck ? <Scrollmeme /> : null}
     </>
   );
 };

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './style/global.css';
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, useRecoilState } from 'recoil';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -20,5 +20,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <RecoilRoot>
     <ToastContainer />
     <App />
+    <footer className='footer footer-center bottom-0 p-4 text-base-content mt-10'>
+      <p>Copyright © 2023 - Megabrain Meme-Generator</p>
+    </footer>
   </RecoilRoot>
 );

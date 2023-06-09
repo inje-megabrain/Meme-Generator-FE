@@ -39,3 +39,10 @@
 .read-the-docs {
   color: #888;
 }
+
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+}
