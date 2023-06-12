@@ -300,7 +300,7 @@ const Loginform = () => {
           <p>구글 로그인 및 회원가입 시</p>
           <p>
             <a
-              href='https://plip.kr/pcc/e4db04de-5766-4eb5-bab7-6d3dff53a6cb/consent/2.html'
+              href='https://plip.kr/pcc/e4db04de-5766-4eb5-bab7-6d3dff53a6cb/consent/3.html'
               target='_blank'
               className='text-blue-500'
             >
