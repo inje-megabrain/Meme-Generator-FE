@@ -194,7 +194,6 @@ const Search = () => {
                       className='w-[300px] h-[300px] object-contain z-0 hover:scale-110 transition-transform duration-300 hover:opacity-70'
                       alt={meme.name}
                     />
-
                     {ishover && hoverid === meme.memeId ? (
                       <div>
                         {getCookie('access_token') ? (
@@ -304,7 +303,7 @@ const Search = () => {
           ) : null}
         </div>
       </div>
-      {!check ? <Mememodal modalnumber='my-modal-1' id={hoverid} /> : null}
+      {!check ? <Mememodal modalnumber='my-modal-1' id={id} /> : null}
     </div>
   );
 };

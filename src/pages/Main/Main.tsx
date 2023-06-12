@@ -14,6 +14,7 @@ const Main = () => {
   const cookie = getCookie('access_token');
   const homebtn = () => {
     window.location.reload();
+    removeCookie('scroll', { path: '/' });
   };
   const signbtn = () => {
     navigate('/login');
