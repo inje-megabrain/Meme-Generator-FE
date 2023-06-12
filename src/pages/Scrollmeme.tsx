@@ -158,6 +158,7 @@ const Scrollmeme = () => {
                 setLatest(true);
                 setLike(false);
                 setView(false);
+                removeCookie('scroll', { path: '/' });
               }}
             >
               최신순
@@ -174,6 +175,7 @@ const Scrollmeme = () => {
                 setLike(true);
                 setLatest(false);
                 setView(false);
+                removeCookie('scroll', { path: '/' });
               }}
             >
               좋아요순
@@ -190,6 +192,7 @@ const Scrollmeme = () => {
                 setView(true);
                 setLike(false);
                 setLatest(false);
+                removeCookie('scroll', { path: '/' });
               }}
             >
               조회순

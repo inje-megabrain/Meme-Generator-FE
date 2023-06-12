@@ -57,7 +57,7 @@ const Mememodal = (props: props) => {
               {memeList.name}
               {'"'} 짤
             </div>
-            <div className='grid grid-cols-5 mt-2'>
+            <div className='grid grid-cols-3 md:grid-cols-5 mt-2'>
               {memeList.tags.map((tag, index) => {
                 return (
                   <div

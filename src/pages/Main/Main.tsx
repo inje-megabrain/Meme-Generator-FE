@@ -15,6 +15,7 @@ const Main = () => {
 
   const homebtn = () => {
     window.location.reload();
+    removeCookie('scroll', { path: '/' });
   };
 
   const signbtn = () => {
