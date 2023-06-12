@@ -1,9 +1,10 @@
 import { MemeIdAPI } from '@src/apis/server';
-import { MemeIdDataState } from '@src/states/atom';
+import { MemeIdDataState, SearchData } from '@src/states/atom';
 import { MemeOneType } from '@src/types';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import Loading from './Loading';
+import { useNavigate } from 'react-router-dom';
 
 interface props {
   modalnumber: string;
@@ -13,7 +14,9 @@ const { VITE_APP_IMAGE_URL } = import.meta.env;
 
 const Mememodal = (props: props) => {
   const { modalnumber, id } = props;
+  const navigate = useNavigate();
   const [memeList, setMemeList] = useRecoilState<MemeOneType>(MemeIdDataState);
+  const [searchdata, setSearchdata] = useRecoilState<string>(SearchData);
   const [loading, setLoading] = useState(true);
 
   useLayoutEffect(() => {
@@ -63,6 +66,10 @@ const Mememodal = (props: props) => {
                   <div
                     key={index}
                     className='text-center font-sans btn btn-ghost rounded-md text-lg'
+                    onClick={() => {
+                      setSearchdata(tag);
+                      navigate('/search');
+                    }}
                   >
                     {tag}
                   </div>
