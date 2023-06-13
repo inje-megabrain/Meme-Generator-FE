@@ -36,7 +36,6 @@ const Search = () => {
   const [modal, setModal] = useState<string>('');
   const [hoverid, setHoverid] = useState<number>(0);
   const [ishover, setIshover] = useState<boolean>(false);
-  const [research, setResearch] = useState<string>('');
 
   const homebtn = () => {
     navigate('/');
@@ -51,7 +50,7 @@ const Search = () => {
         setSearchTotalpage,
         setTotalElements
       );
-    }, [searchdata]);
+    }, [searchdata, page]);
   }
   const myurl = 'https://meme.megabrain.kr';
   const shareurl = async (url: string) => {
@@ -134,6 +133,7 @@ const Search = () => {
               if (e.key === 'Enter') {
                 setSearchdata(e.currentTarget.value);
                 navigate('/search');
+                setPage(0);
               }
             }}
           />

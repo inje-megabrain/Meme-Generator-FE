@@ -221,6 +221,11 @@ const Scrollmeme = () => {
         </div>
       ) : (
         <>
+          {getCookie('access_token') ? null : (
+            <div className='text-blue-500 animate-pulse text-lg'>
+              짤을 생성하시려면 로그인을 해야합니다!!!
+            </div>
+          )}
           <div className='grid grid-cols-1 md:grid-cols-3 gap-5 mt-4'>
             {memeList.map((meme) => (
               <>

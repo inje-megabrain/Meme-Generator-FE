@@ -12,6 +12,7 @@ const Main = () => {
   const [servercheck, setServercheck] = useState<boolean>(true);
   const status = getCookie('status');
   const cookie = getCookie('access_token');
+  const { VITE_APP_GOOGLE_OAUTH } = import.meta.env;
 
   const homebtn = () => {
     window.location.reload();
@@ -68,6 +69,9 @@ const Main = () => {
         toast.error('서버가 꺼져있습니다.');
       });
   }, []);
+  const googlelogin = () => {
+    location.href = VITE_APP_GOOGLE_OAUTH;
+  };
 
   return (
     <>
@@ -88,12 +92,20 @@ const Main = () => {
               </div>
             </div>
             {!cookie ? (
-              <div className='text-end'>
-                <div
-                  className='btn btn-ghost normal-case text-lg font-sans'
-                  onClick={signbtn}
-                >
-                  로그인
+              <div className='grid place-items-end'>
+                <div className='grid grid-cols-2'>
+                  <div
+                    className='btn btn-ghost normal-case text-lg font-sans'
+                    onClick={signbtn}
+                  >
+                    로그인
+                  </div>
+                  <div
+                    className='btn btn-ghost normal-case text-lg font-sans'
+                    onClick={googlelogin}
+                  >
+                    <img src='/small.png' className='h-6 items-center' />
+                  </div>
                 </div>
               </div>
             ) : (
