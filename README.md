@@ -16,6 +16,7 @@
 - toastify
 ## 프로젝트 아키텍쳐
 ![image](https://github.com/inje-megabrain/Meme-Generator-FE/assets/80817196/e94f69c1-6ea9-4b7d-93e7-2e1068e46246)
+<img width="914" alt="image" src="https://github.com/inje-megabrain/Meme-Generator-FE/assets/80817196/baaedfc5-501f-43c9-9787-7c58a5ab82d9">
 ### 구현 기능
 1. Google OAuth
 2. 카카오톡 공유
